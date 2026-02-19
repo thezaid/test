@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Hisab Kitab</title>
-    
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J95YDM55T8"></script>
     <script>
@@ -13,7 +13,7 @@
         gtag('js', new Date());
         gtag('config', 'G-J95YDM55T8');
     </script>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -23,7 +23,6 @@
             --font-sans: 'DM Sans', sans-serif;
             --font-serif: 'DM Serif Display', serif;
 
-            /* Light palette — clean, airy */
             --bg:           #F5F5F7;
             --bg-card:      #FFFFFF;
             --bg-input:     #F2F2F4;
@@ -45,6 +44,7 @@
             --green:          #34C759;
             --green-light:    #EBF9EE;
             --green-text:     #1A7A33;
+            --green-dark:     #28A745;
 
             --red:            #FF3B30;
             --red-light:      #FFF0EE;
@@ -52,6 +52,10 @@
 
             --amber:          #FF9500;
             --amber-light:    #FFF7E6;
+
+            --step-inactive:  #D1D1D6;
+            --step-active:    #3B7AFF;
+            --step-done:      #34C759;
 
             --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.04);
@@ -66,12 +70,7 @@
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
+        html, body { height: 100%; width: 100%; overflow: hidden; }
 
         body {
             font-family: var(--font-sans);
@@ -80,80 +79,62 @@
             font-size: 15px;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
         }
 
-        /* ── Scrollbars ── */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 
-        /* ── Remove number spinners ── */
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
         input[type=number] { -moz-appearance: textfield; }
 
-        /* ─────────────────────────────────────────
-           ANIMATIONS
-        ───────────────────────────────────────── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.96); }
-            to   { opacity: 1; transform: scale(1); }
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes shake {
-            10%, 90% { transform: translateX(-2px); }
-            20%, 80% { transform: translateX(3px); }
-            30%, 50%, 70% { transform: translateX(-5px); }
-            40%, 60% { transform: translateX(5px); }
-        }
-        @keyframes msgIn {
-            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-            to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-        .animate-fade-up  { animation: fadeUp  0.45s cubic-bezier(.22,1,.36,1) both; }
-        .animate-scale-in { animation: scaleIn 0.35s cubic-bezier(.22,1,.36,1) both; }
-        .animate-shake    { animation: shake   0.6s cubic-bezier(.36,.07,.19,.97) both; }
-        .animate-spin     { animation: spin 0.9s linear infinite; }
+        /* ─── Animations ─── */
+        @keyframes fadeUp   { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes scaleIn  { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
+        @keyframes spin     { to { transform:rotate(360deg); } }
+        @keyframes shake    { 10%,90%{transform:translateX(-2px);} 20%,80%{transform:translateX(3px);} 30%,50%,70%{transform:translateX(-5px);} 40%,60%{transform:translateX(5px);} }
+        @keyframes pulse    { 0%,100%{opacity:1;} 50%{opacity:.45;} }
+        @keyframes chipPop  { 0%{transform:scale(1);} 40%{transform:scale(0.93);} 100%{transform:scale(1);} }
+        @keyframes btnSuccess { 0%{transform:scale(1);} 50%{transform:scale(0.97);} 100%{transform:scale(1);} }
+        @keyframes entriesFadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+        @keyframes toastIn  { from{opacity:0;transform:translate(-50%,-50%) scale(0.88);} to{opacity:1;transform:translate(-50%,-50%) scale(1);} }
+        @keyframes toastOut { from{opacity:1;transform:translate(-50%,-50%) scale(1);} to{opacity:0;transform:translate(-50%,-50%) scale(0.88);} }
 
-        /* ─────────────────────────────────────────
-           BUTTONS
-        ───────────────────────────────────────── */
+        .animate-fade-up   { animation: fadeUp 0.45s cubic-bezier(.22,1,.36,1) both; }
+        .animate-scale-in  { animation: scaleIn 0.32s cubic-bezier(.22,1,.36,1) both; }
+        .animate-shake     { animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
+        .animate-spin      { animation: spin 0.9s linear infinite; }
+        .skeleton          { background: var(--bg-input); border-radius: 6px; animation: pulse 1.4s ease-in-out infinite; }
+
+        /* ─── Buttons ─── */
         button { font-family: var(--font-sans); cursor: pointer; border: none; }
 
         .btn-primary {
-            display: flex; align-items: center; justify-content: center;
-            gap: 8px;
-            background: var(--accent);
-            color: #fff;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            padding: 0 20px;
-            height: 48px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: var(--accent); color: #fff;
+            font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+            padding: 0 20px; height: 50px;
             border-radius: var(--radius-md);
             transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
             box-shadow: 0 2px 8px rgba(59,122,255,0.28);
-            white-space: nowrap;
+            white-space: nowrap; position: relative; overflow: hidden;
         }
         .btn-primary:hover  { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(59,122,255,0.36); }
-        .btn-primary:active { transform: translateY(0); }
-        .btn-primary:disabled { opacity: 0.6; cursor: default; transform: none; }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.7; cursor: default; transform: none; }
+        .btn-primary.success {
+            background: var(--green-dark) !important;
+            box-shadow: 0 2px 8px rgba(52,199,89,0.35) !important;
+            animation: btnSuccess 0.3s ease both;
+        }
 
         .btn-ghost {
-            display: flex; align-items: center; justify-content: center;
-            gap: 6px;
-            background: var(--bg-input);
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
-            height: 40px;
-            padding: 0 14px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            background: var(--bg-input); color: var(--text-secondary);
+            font-size: 14px; font-weight: 500;
+            height: 42px; padding: 0 16px;
             border-radius: var(--radius-sm);
             transition: background 0.15s, color 0.15s;
         }
@@ -161,540 +142,417 @@
 
         .btn-icon {
             display: flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: transparent;
-            color: var(--text-secondary);
-            transition: background 0.15s, color 0.15s;
-            flex-shrink: 0;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: transparent; color: var(--text-secondary);
+            transition: background 0.15s, color 0.15s; flex-shrink: 0;
+            font-size: 22px; line-height: 1;
         }
         .btn-icon:hover { background: var(--bg-hover); color: var(--text-primary); }
 
         .btn-danger-icon {
             display: flex; align-items: center; justify-content: center;
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            background: var(--red-light);
-            color: var(--red-text);
-            flex-shrink: 0;
-            transition: background 0.15s;
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--red-light); color: var(--red-text); flex-shrink: 0;
+            transition: background 0.15s, color 0.15s;
         }
         .btn-danger-icon:hover { background: var(--red); color: #fff; }
 
-        /* ─────────────────────────────────────────
-           INPUTS
-        ───────────────────────────────────────── */
-        .input {
-            width: 100%;
-            height: 48px;
-            background: var(--bg-input);
-            border: 1.5px solid transparent;
+        .btn-clear {
+            height: 50px; padding: 0 20px;
             border-radius: var(--radius-md);
-            padding: 0 14px;
-            font-family: var(--font-sans);
-            font-size: 15px;
-            color: var(--text-primary);
-            transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
-            outline: none;
+            background: var(--bg-input); color: var(--text-secondary);
+            font-size: 14px; font-weight: 500;
+            transition: background 0.15s; white-space: nowrap; border: none;
+        }
+        .btn-clear:hover { background: var(--bg-hover); }
+
+        /* ─── Inputs ─── */
+        .input {
+            width: 100%; height: 48px;
+            background: var(--bg-input); border: 1.5px solid transparent;
+            border-radius: var(--radius-md); padding: 0 14px;
+            font-family: var(--font-sans); font-size: 15px; color: var(--text-primary);
+            transition: border-color 0.18s, box-shadow 0.18s, background 0.18s; outline: none;
         }
         .input::placeholder { color: var(--text-muted); }
-        .input:focus {
-            border-color: var(--border-focus);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(59,122,255,0.12);
+        .input:focus { border-color: var(--border-focus); background: #fff; box-shadow: 0 0 0 3px rgba(59,122,255,0.12); }
+
+        /* ─── Step Progress (improvement #1) ─── */
+        .step-progress {
+            display: flex; align-items: center;
+            margin-bottom: 20px; padding: 0 4px;
+            gap: 0;
         }
+        .step-item {
+            display: flex; flex-direction: column; align-items: center; flex: 1; position: relative;
+        }
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 14px; left: calc(50% + 14px);
+            width: calc(100% - 28px); height: 2px;
+            background: var(--step-inactive);
+            transition: background 0.4s ease;
+            z-index: 0;
+        }
+        .step-item.done:not(:last-child)::after { background: var(--step-done); }
+        .step-item.active:not(:last-child)::after { background: var(--step-inactive); }
 
-        /* ─────────────────────────────────────────
-           RADIO CHIP
-        ───────────────────────────────────────── */
+        .step-bubble {
+            width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700;
+            background: var(--step-inactive); color: #fff;
+            transition: background 0.3s, transform 0.3s;
+            z-index: 1; position: relative;
+            flex-shrink: 0;
+        }
+        .step-item.active  .step-bubble { background: var(--step-active); transform: scale(1.1); }
+        .step-item.done    .step-bubble { background: var(--step-done); }
+        .step-label {
+            font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+            text-transform: uppercase; color: var(--text-disabled);
+            margin-top: 5px; white-space: nowrap;
+            transition: color 0.3s;
+        }
+        .step-item.active .step-label { color: var(--accent); }
+        .step-item.done   .step-label { color: var(--green-text); }
+
+        /* ─── Chips ─── */
         .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
-
+        .chip { position: relative; }
         .chip input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
-
         .chip label {
             display: inline-flex; align-items: center; justify-content: center;
-            height: 38px;
-            padding: 0 14px;
+            height: 38px; padding: 0 14px;
             border-radius: 99px;
-            background: var(--bg-input);
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border: 1.5px solid transparent;
-            transition: all 0.15s;
-            user-select: none;
-            white-space: nowrap;
+            background: var(--bg-input); color: var(--text-secondary);
+            font-size: 14px; font-weight: 500;
+            cursor: pointer; border: 1.5px solid transparent;
+            transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
+            user-select: none; white-space: nowrap;
         }
+        /* improvement #7 — chip tap spring */
+        .chip label:active { transform: scale(0.93); }
         .chip input[type="radio"]:checked + label {
-            background: var(--accent-light);
-            border-color: var(--accent);
-            color: var(--accent-dark);
-            font-weight: 600;
+            background: var(--accent-light); border-color: var(--accent);
+            color: var(--accent-dark); font-weight: 600;
+            box-shadow: 0 0 0 3px rgba(59,122,255,0.1);
+            animation: chipPop 0.25s cubic-bezier(.22,1,.36,1) both;
         }
-        .chip label:hover { background: var(--bg-hover); }
-        .chip input[type="radio"]:checked + label:hover { background: var(--accent-light); }
+        .chip label:hover:not(.checked) { background: var(--bg-hover); }
 
-        /* Larger name chips */
-        .chip-name label {
-            height: 44px;
-            padding: 0 18px;
-            font-size: 15px;
+        .chip-name label { height: 46px; padding: 0 22px; font-size: 15px; font-weight: 500; }
+
+        /* Other tag expand (improvement #3) */
+        .other-tag-trigger {
+            display: inline-flex; align-items: center; justify-content: center;
+            height: 38px; padding: 0 14px;
+            border-radius: 99px;
+            background: var(--bg-input); color: var(--text-muted);
+            font-size: 14px; font-weight: 500;
+            cursor: pointer; border: 1.5px dashed var(--border);
+            transition: all 0.15s; user-select: none; gap: 6px;
         }
+        .other-tag-trigger:hover { background: var(--bg-hover); color: var(--text-secondary); border-color: var(--text-muted); }
+        .other-tag-trigger:active { transform: scale(0.93); }
+        .other-tag-trigger.active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 
-        /* ─────────────────────────────────────────
-           CARD
-        ───────────────────────────────────────── */
+        .other-tag-reveal {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(.22,1,.36,1), opacity 0.25s, margin 0.25s;
+            opacity: 0; margin-top: 0;
+        }
+        .other-tag-reveal.open { max-height: 80px; opacity: 1; margin-top: 12px; }
+
+        /* ─── Card ─── */
         .card {
-            background: var(--bg-card);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
+            background: var(--bg-card); border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm); border: 1px solid var(--border);
         }
 
-        /* ─────────────────────────────────────────
-           AUTH SCREEN
-        ───────────────────────────────────────── */
+        /* ─── Auth ─── */
         #auth-container {
             position: fixed; inset: 0;
             display: flex; align-items: center; justify-content: center;
-            padding: 20px;
-            background: var(--bg);
+            padding: 20px; background: var(--bg);
         }
-
         .auth-card {
             width: 100%; max-width: 380px;
-            background: var(--bg-card);
-            border-radius: var(--radius-2xl);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
+            background: var(--bg-card); border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border);
             padding: 36px 32px;
             animation: fadeUp 0.5s cubic-bezier(.22,1,.36,1) both;
         }
-
         .auth-logo {
             width: 52px; height: 52px;
             background: linear-gradient(135deg, var(--accent) 0%, #7B5EA7 100%);
             border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(59,122,255,0.3);
+            margin-bottom: 20px; box-shadow: 0 4px 12px rgba(59,122,255,0.3);
         }
-
         .auth-logo svg { width: 28px; height: 28px; color: white; }
-
-        .auth-title {
-            font-family: var(--font-serif);
-            font-size: 28px;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            line-height: 1.2;
-        }
-
-        .auth-sub {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 28px;
-        }
-
+        .auth-title { font-family: var(--font-serif); font-size: 28px; color: var(--text-primary); margin-bottom: 4px; line-height: 1.2; }
+        .auth-sub   { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
         .form-group { margin-bottom: 12px; }
-
-        .remember-row {
-            display: flex; align-items: center; gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .remember-row input[type="checkbox"] {
-            width: 18px; height: 18px;
-            accent-color: var(--accent);
-            cursor: pointer;
-        }
-
-        .remember-row label {
-            font-size: 14px; color: var(--text-secondary);
-            cursor: pointer;
-        }
-
-        .auth-footer {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-top: 16px;
-        }
-
+        .remember-row { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+        .remember-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+        .remember-row label { font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+        .auth-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
         .link-btn {
-            background: none; border: none;
-            font-family: var(--font-sans);
-            font-size: 14px;
-            color: var(--accent);
-            cursor: pointer;
-            font-weight: 500;
-            padding: 0;
-            transition: color 0.15s;
+            background: none; border: none; font-family: var(--font-sans);
+            font-size: 14px; color: var(--accent); cursor: pointer; font-weight: 500;
+            padding: 0; transition: color 0.15s;
         }
         .link-btn:hover { color: var(--accent-dark); }
+        a.contact-link { font-size: 17px; font-weight: 600; color: var(--accent); display: block; text-align: center; margin: 10px 0; text-decoration: none; }
+        a.contact-link:hover { color: var(--accent-dark); }
 
-        .divider {
-            display: flex; align-items: center; gap: 12px;
-            margin: 8px 0;
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-        .divider::before, .divider::after {
-            content: ''; flex: 1; height: 1px; background: var(--border);
-        }
+        /* ─── App shell ─── */
+        #app-container { position: fixed; inset: 0; display: flex; flex-direction: column; }
 
-        /* ─────────────────────────────────────────
-           APP SHELL
-        ───────────────────────────────────────── */
-        #app-container {
-            position: fixed; inset: 0;
-            display: flex; flex-direction: column;
-        }
-
-        /* ── Header ── */
+        /* ─── Header (improvement #6 — summary pill) ─── */
         .app-header {
             display: flex; align-items: center;
-            padding: 12px 16px 8px;
+            padding: 12px 16px 10px;
             padding-top: calc(12px + env(safe-area-inset-top));
-            background: rgba(245,245,247,0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(245,245,247,0.88);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            gap: 10px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 10;
+            gap: 10px; flex-shrink: 0; position: relative; z-index: 10;
         }
+        .app-header-title { font-family: var(--font-serif); font-size: 21px; color: var(--text-primary); flex: 1; }
 
-        .app-header-title {
-            font-family: var(--font-serif);
-            font-size: 22px;
-            color: var(--text-primary);
-            flex: 1;
+        .header-summary-pill {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: var(--green-light); color: var(--green-text);
+            font-size: 12px; font-weight: 700;
+            padding: 5px 11px; border-radius: 99px;
+            opacity: 0; transform: scale(0.9);
+            transition: opacity 0.35s, transform 0.35s;
+            white-space: nowrap; flex-shrink: 0;
+            max-width: 160px; overflow: hidden; text-overflow: ellipsis;
         }
+        .header-summary-pill.visible { opacity: 1; transform: scale(1); }
 
-        /* ── Scroll body ── */
+        /* ─── Main scroll ─── */
         #main-scroll {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+            flex: 1; overflow-y: auto;
+            padding: 16px 16px calc(20px + env(safe-area-inset-bottom));
         }
-
         .content-wrap { max-width: 440px; margin: 0 auto; }
 
-        /* ── Section label ── */
         .section-label {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            padding: 0 4px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.07em;
+            text-transform: uppercase; color: var(--text-muted);
+            margin-bottom: 8px; padding: 0 2px;
         }
 
-        /* ── Form sections ── */
+        /* ─── Form sections ─── */
         .form-section {
-            background: var(--bg-card);
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-xs);
-            padding: 16px;
-            margin-bottom: 12px;
+            background: var(--bg-card); border-radius: var(--radius-xl);
+            border: 1px solid var(--border); box-shadow: var(--shadow-xs);
+            padding: 16px; margin-bottom: 12px;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        .form-section.active-step {
+            border-color: rgba(59,122,255,0.25);
+            box-shadow: 0 0 0 3px rgba(59,122,255,0.07), var(--shadow-xs);
         }
 
-        .form-section + .form-section { }
-
-        .form-actions {
-            display: flex; gap: 10px;
-            margin-top: 14px;
+        /* ─── Amount input with pinned ₹ (improvement #2) ─── */
+        .amount-wrap {
+            display: flex; align-items: center; gap: 0;
+            background: transparent; border: none;
         }
-
-        .btn-clear {
-            height: 48px;
-            padding: 0 18px;
-            border-radius: var(--radius-md);
-            background: var(--bg-input);
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.15s;
-            white-space: nowrap;
-            border: none;
+        .amount-prefix {
+            font-size: 22px; font-weight: 700; color: var(--text-muted);
+            padding-right: 4px; flex-shrink: 0; line-height: 1;
+            user-select: none; transition: color 0.18s;
         }
-        .btn-clear:hover { background: var(--bg-hover); }
-
-        /* ── Recent Entries ── */
-        .recent-header {
-            display: flex; align-items: center; justify-content: space-between;
-            margin: 20px 0 10px;
+        .amount-prefix.filled { color: var(--green-text); }
+        .amount-input-inner {
+            flex: 1; background: transparent; border: none; outline: none;
+            font-family: var(--font-sans); font-size: 28px; font-weight: 700;
+            color: var(--text-primary); height: 52px; padding: 0;
+            caret-color: var(--accent);
         }
+        .amount-input-inner::placeholder { color: var(--text-disabled); font-weight: 400; font-size: 22px; }
 
-        .recent-title {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
+        .form-actions { display: flex; gap: 10px; margin-top: 16px; }
+
+        /* ─── Recent entries (improvement #5 — fade-in) ─── */
+        .recent-header { display: flex; align-items: center; justify-content: space-between; margin: 20px 0 10px; }
+        .recent-title { font-size: 17px; font-weight: 600; color: var(--text-primary); }
 
         .entry-item {
             display: flex; align-items: flex-start; justify-content: space-between;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
+            padding: 13px 0; border-bottom: 1px solid var(--border);
+            animation: entriesFadeIn 0.35s cubic-bezier(.22,1,.36,1) both;
         }
+        .entry-item:nth-child(1) { animation-delay: 0ms; }
+        .entry-item:nth-child(2) { animation-delay: 50ms; }
+        .entry-item:nth-child(3) { animation-delay: 100ms; }
+        .entry-item:nth-child(4) { animation-delay: 150ms; }
+        .entry-item:nth-child(5) { animation-delay: 200ms; }
         .entry-item:last-child { border-bottom: none; }
 
-        .entry-name  { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-        .entry-tag   { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-        .entry-amount {
-            font-size: 16px; font-weight: 600;
-            color: var(--green-text);
-        }
-        .entry-date  { font-size: 11px; color: var(--text-disabled); text-align: right; margin-top: 2px; }
+        .entry-name   { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        .entry-tag    { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+        .entry-amount { font-size: 16px; font-weight: 700; color: var(--green-text); }
+        .entry-date   { font-size: 11px; color: var(--text-disabled); text-align: right; margin-top: 3px; }
+        .entry-right  { text-align: right; flex-shrink: 0; margin-left: 12px; }
 
-        .entry-right { text-align: right; flex-shrink: 0; }
-
-        /* Skeleton */
-        .skeleton { background: var(--bg-input); border-radius: 6px; animation: pulse 1.4s ease-in-out infinite; }
-        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.45; } }
-
-        /* ─────────────────────────────────────────
-           DROPDOWN MENU (hamburger → slide-in panel)
-        ───────────────────────────────────────── */
+        /* ─── Hamburger menu ─── */
         .hamburger-menu { position: relative; }
-
         .menu-panel {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            width: 220px;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-md);
-            padding: 8px;
-            transform-origin: top left;
-            transform: scale(0.94) translateY(-6px);
-            opacity: 0;
-            pointer-events: none;
-            transition: transform 0.22s cubic-bezier(.22,1,.36,1), opacity 0.18s;
-            z-index: 50;
+            position: absolute; top: calc(100% + 8px); left: 0; width: 224px;
+            background: var(--bg-card); border-radius: var(--radius-lg);
+            border: 1px solid var(--border); box-shadow: var(--shadow-md);
+            padding: 8px; transform-origin: top left;
+            transform: scale(0.94) translateY(-6px); opacity: 0; pointer-events: none;
+            transition: transform 0.22s cubic-bezier(.22,1,.36,1), opacity 0.18s; z-index: 50;
         }
         .menu-panel.show { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
 
         .menu-user-row {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 8px 10px 10px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 6px;
-            gap: 6px;
+            padding: 8px 10px 10px; border-bottom: 1px solid var(--border);
+            margin-bottom: 6px; gap: 6px;
         }
-
-        #user-email-display {
-            font-size: 12px;
-            color: var(--text-muted);
-            word-break: break-all;
-            line-height: 1.4;
-            flex: 1;
-        }
+        #user-email-display { font-size: 12px; color: var(--text-muted); word-break: break-all; line-height: 1.4; flex: 1; }
 
         .menu-item {
             display: flex; align-items: center; gap: 10px;
-            width: 100%;
-            padding: 10px 10px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            background: transparent;
-            text-align: left;
-            transition: background 0.13s, color 0.13s;
-            min-height: 40px;
+            width: 100%; padding: 10px; border-radius: var(--radius-sm);
+            font-size: 14px; font-weight: 500; color: var(--text-secondary);
+            background: transparent; text-align: left;
+            transition: background 0.13s, color 0.13s; min-height: 40px;
         }
         .menu-item:hover { background: var(--bg-input); color: var(--text-primary); }
         .menu-item svg { flex-shrink: 0; }
 
-        /* ─────────────────────────────────────────
-           MODALS
-        ───────────────────────────────────────── */
+        /* ─── Modals ─── */
         .modal-overlay {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.35);
-            backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.32); backdrop-filter: blur(6px);
             display: flex; align-items: center; justify-content: center;
-            padding: 16px;
-            z-index: 80;
+            padding: 16px; z-index: 80;
         }
-
         .modal-sheet {
-            width: 100%; max-width: 560px;
-            max-height: 90dvh;
-            background: var(--bg-card);
-            border-radius: var(--radius-2xl);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
+            width: 100%; max-width: 560px; max-height: 90dvh;
+            background: var(--bg-card); border-radius: var(--radius-2xl);
+            border: 1px solid var(--border); box-shadow: var(--shadow-lg);
             display: flex; flex-direction: column;
-            animation: scaleIn 0.3s cubic-bezier(.22,1,.36,1) both;
-            overflow: hidden;
+            animation: scaleIn 0.3s cubic-bezier(.22,1,.36,1) both; overflow: hidden;
         }
-
         .modal-sheet-wide { max-width: min(95vw, 700px); }
 
+        /* improvement #8 — close button top-left + swipe hint */
         .modal-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 20px 20px 16px;
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
+            display: flex; align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border); flex-shrink: 0; gap: 12px;
         }
-
-        .modal-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+        .modal-title    { font-size: 18px; font-weight: 700; color: var(--text-primary); flex: 1; }
         .modal-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 
-        .modal-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
-        .modal-footer { padding: 12px 20px 16px; border-top: 1px solid var(--border); flex-shrink: 0; }
-
-        /* ── Summary pill ── */
-        .summary-pill {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: var(--green-light);
-            color: var(--green-text);
-            font-size: 14px; font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 99px;
-            margin-bottom: 6px;
+        /* Swipe-to-close handle */
+        .modal-handle {
+            width: 36px; height: 4px; border-radius: 2px;
+            background: var(--border); margin: 10px auto 0; flex-shrink: 0;
         }
 
+        .modal-body   { flex: 1; overflow-y: auto; padding: 16px 20px; }
+        .modal-footer { padding: 12px 20px 16px; border-top: 1px solid var(--border); flex-shrink: 0; }
+
+        /* ─── Summary in header ─── */
+        .summary-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--green-light); color: var(--green-text);
+            font-size: 14px; font-weight: 600; padding: 6px 14px;
+            border-radius: 99px; margin-bottom: 6px;
+        }
         .summary-sub { font-size: 12px; color: var(--text-muted); }
 
-        /* ── Table ── */
+        /* ─── Table (improvement #9 — alternating rows) ─── */
         .entries-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .entries-table th {
-            text-align: left;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            padding: 8px 10px;
-            background: var(--bg);
-            position: sticky; top: 0;
-            cursor: pointer;
-            user-select: none;
-            white-space: nowrap;
+            text-align: left; font-size: 11px; font-weight: 700;
+            letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted);
+            padding: 10px 12px; background: var(--bg);
+            position: sticky; top: 0; cursor: pointer; user-select: none; white-space: nowrap;
         }
         .entries-table th:hover { color: var(--text-primary); }
         .entries-table td {
-            padding: 10px 10px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-primary);
-            vertical-align: middle;
+            padding: 11px 12px; border-bottom: 1px solid var(--border);
+            color: var(--text-primary); vertical-align: middle;
         }
+        /* improvement #9 — alternating row backgrounds */
+        .entries-table tbody tr:nth-child(even) td { background: #FAFAFA; }
         .entries-table tr:last-child td { border-bottom: none; }
-        .entries-table tr:hover td { background: var(--bg); }
+        .entries-table tr:hover td { background: var(--accent-light) !important; transition: background 0.12s; }
 
-        .amount-cell { font-weight: 600; color: var(--green-text); }
+        .amount-cell { font-weight: 700; color: var(--green-text); }
         .tag-badge {
-            display: inline-block;
-            background: var(--accent-light);
-            color: var(--accent-dark);
-            font-size: 11px; font-weight: 600;
-            padding: 2px 8px; border-radius: 99px;
+            display: inline-block; background: var(--accent-light); color: var(--accent-dark);
+            font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px;
         }
         .date-cell { color: var(--text-muted); font-size: 12px; }
-
-        .sort-arrow { font-size: 10px; margin-left: 4px; opacity: 0.5; }
+        .sort-arrow { font-size: 10px; margin-left: 4px; opacity: 0.45; }
         th.sorted .sort-arrow { opacity: 1; color: var(--accent); }
 
-        /* Load more */
         .load-more-group { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .btn-load-more {
-            height: 34px; padding: 0 14px;
-            border-radius: 99px;
-            background: var(--bg-input);
-            color: var(--text-secondary);
-            font-size: 13px; font-weight: 500;
-            border: none; cursor: pointer;
+            height: 34px; padding: 0 14px; border-radius: 99px;
+            background: var(--bg-input); color: var(--text-secondary);
+            font-size: 13px; font-weight: 500; border: none; cursor: pointer;
             transition: background 0.15s;
         }
         .btn-load-more:hover { background: var(--bg-hover); }
 
-        /* ── Help sections ── */
+        /* ─── Help ─── */
         .help-section { margin-bottom: 24px; }
-        .help-section-title {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 15px; font-weight: 600; color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-        .help-icon-wrap {
-            width: 30px; height: 30px;
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-        .help-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-        .help-list li {
-            display: flex; align-items: flex-start; gap: 8px;
-            font-size: 14px; color: var(--text-secondary); line-height: 1.5;
-        }
-        .help-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+        .help-section-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
+        .help-icon-wrap { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .help-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+        .help-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+        .help-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
 
-        /* ─────────────────────────────────────────
-           MESSAGE TOAST
-        ───────────────────────────────────────── */
+        /* ─── Toast (improvement — cleaner) ─── */
         #message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 200;
-            min-width: 240px;
-            max-width: 320px;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.88);
+            opacity: 0; pointer-events: none; z-index: 200;
+            min-width: 240px; max-width: 320px;
+            background: var(--bg-card); border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border);
             padding: 14px 18px;
-            transition: opacity 0.2s, transform 0.2s;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 12px;
         }
-        #message-box.show {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        .msg-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        #message-box.show   { animation: toastIn  0.28s cubic-bezier(.22,1,.36,1) forwards; }
+        #message-box.hiding { animation: toastOut 0.22s ease forwards; }
+
+        .msg-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         #message-text { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
 
-        /* Utilities */
+        /* ─── Utils ─── */
         .hidden { display: none !important; }
         .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-        .text-muted { color: var(--text-muted); }
         .w-full { width: 100%; }
         .flex-1 { flex: 1; }
-
-        /* Iframe */
         iframe { border: none; display: block; }
-
-        /* Contact email */
-        a.contact-link {
-            font-size: 17px; font-weight: 600;
-            color: var(--accent);
-            display: block; text-align: center;
-            margin: 10px 0;
-            text-decoration: none;
-        }
-        a.contact-link:hover { color: var(--accent-dark); }
 
         @media (max-width: 400px) {
             .auth-card { padding: 28px 20px; }
             .form-section { padding: 14px 12px; }
+            .amount-input-inner { font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-<!-- ╔═══════════════════════════════════╗
-     ║         AUTH CONTAINER           ║
-     ╚═══════════════════════════════════╝ -->
+<!-- ══ AUTH ══════════════════════════════════════════ -->
 <div id="auth-container">
     <div class="auth-card">
 
@@ -703,12 +561,11 @@
             <div class="auth-logo">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                 </svg>
             </div>
             <h1 class="auth-title">Hisab Kitab</h1>
             <p class="auth-sub">Personal accounting for busy people.</p>
-
             <form id="login-form">
                 <div class="form-group">
                     <input type="email" id="email" placeholder="Email" required class="input">
@@ -728,14 +585,11 @@
                     </svg>
                 </button>
             </form>
-
             <div class="auth-footer">
                 <button class="link-btn" id="forgot-password-link">Forgot password?</button>
                 <button class="link-btn" id="signup-button">Create account</button>
             </div>
-            <p style="text-align:center;font-size:11px;color:var(--text-disabled);margin-top:18px;">
-                Turn off adblocker if unresponsive.
-            </p>
+            <p style="text-align:center;font-size:11px;color:var(--text-disabled);margin-top:18px;">Turn off adblocker if unresponsive.</p>
         </div>
 
         <!-- Password Reset UI -->
@@ -765,16 +619,13 @@
             <p class="auth-sub" style="text-align:center;margin-bottom:20px;">You'll be notified once your account is ready.</p>
             <button id="go-back-button" class="btn-ghost w-full">← Back to Sign In</button>
         </div>
-
     </div>
 </div>
 
-<!-- ╔═══════════════════════════════════╗
-     ║           APP CONTAINER          ║
-     ╚═══════════════════════════════════╝ -->
+<!-- ══ APP ════════════════════════════════════════════ -->
 <div id="app-container" class="hidden">
 
-    <!-- Header -->
+    <!-- Header (#6 — summary pill in header) -->
     <header class="app-header">
         <div class="hamburger-menu" id="hamburger-container">
             <button class="btn-icon" id="hamburger-btn" aria-label="Menu">
@@ -811,18 +662,36 @@
         </div>
 
         <h1 class="app-header-title">Hisab Kitab</h1>
+
+        <!-- #6: live summary pill in header -->
+        <div id="header-summary-pill" class="header-summary-pill"></div>
     </header>
 
-    <!-- Main scroll body -->
+    <!-- Scroll body -->
     <div id="main-scroll">
         <div class="content-wrap">
 
-            <!-- Entry form -->
-            <form id="data-form" novalidate style="margin-top: 8px;">
+            <!-- #1: Step progress indicator -->
+            <div class="step-progress" id="step-progress">
+                <div class="step-item active" id="step-1">
+                    <div class="step-bubble">1</div>
+                    <span class="step-label">Who</span>
+                </div>
+                <div class="step-item" id="step-2">
+                    <div class="step-bubble">2</div>
+                    <span class="step-label">Amount</span>
+                </div>
+                <div class="step-item" id="step-3">
+                    <div class="step-bubble">3</div>
+                    <span class="step-label">Category</span>
+                </div>
+            </div>
 
-                <!-- Who -->
-                <p class="section-label">Who owes?</p>
-                <div class="form-section" style="margin-bottom:12px;">
+            <form id="data-form" novalidate>
+
+                <!-- Step 1: Who -->
+                <div class="form-section active-step" id="section-1">
+                    <p class="section-label">Who owes?</p>
                     <fieldset style="border:none;padding:0;">
                         <legend class="sr-only">Select Name</legend>
                         <div class="chip-group">
@@ -838,39 +707,56 @@
                     </fieldset>
                 </div>
 
-                <!-- Amount -->
-                <p class="section-label">Amount</p>
-                <div class="form-section" style="margin-bottom:12px; padding: 8px;">
-                    <input type="number" id="amount" name="amount" placeholder="₹ 0" pattern="[0-9]*" inputmode="numeric" class="input" style="background:transparent; border-color:transparent; font-size:22px; font-weight:600; height:52px; padding: 0 8px;">
+                <!-- Step 2: Amount (#2 — pinned ₹) -->
+                <div class="form-section" id="section-2">
+                    <p class="section-label">Amount</p>
+                    <div class="amount-wrap">
+                        <span class="amount-prefix" id="amount-prefix">₹</span>
+                        <input type="number" id="amount" name="amount"
+                               placeholder="0" pattern="[0-9]*" inputmode="numeric"
+                               class="amount-input-inner">
+                    </div>
                 </div>
 
-                <!-- Tag -->
-                <p class="section-label">Category</p>
-                <div class="form-section" style="margin-bottom:16px;">
+                <!-- Step 3: Category (#3 — "+ Other" chip expand) -->
+                <div class="form-section" id="section-3">
+                    <p class="section-label">Category</p>
                     <fieldset style="border:none;padding:0;">
                         <legend class="sr-only">Tag</legend>
-                        <div class="chip-group" style="margin-bottom:12px;">
-                            <div class="chip"><input type="radio" name="tag" id="tag-mutton" value="Mutton"><label for="tag-mutton">🐑 Mutton</label></div>
-                            <div class="chip"><input type="radio" name="tag" id="tag-beef" value="Beef"><label for="tag-beef">🥩 Beef</label></div>
-                            <div class="chip"><input type="radio" name="tag" id="tag-chicken" value="Chicken"><label for="tag-chicken">🍗 Chicken</label></div>
-                            <div class="chip"><input type="radio" name="tag" id="tag-fish" value="Fish"><label for="tag-fish">🐟 Fish</label></div>
+                        <div class="chip-group">
+                            <div class="chip"><input type="radio" name="tag" id="tag-mutton"    value="Mutton">   <label for="tag-mutton">🐑 Mutton</label></div>
+                            <div class="chip"><input type="radio" name="tag" id="tag-beef"      value="Beef">     <label for="tag-beef">🥩 Beef</label></div>
+                            <div class="chip"><input type="radio" name="tag" id="tag-chicken"   value="Chicken">  <label for="tag-chicken">🍗 Chicken</label></div>
+                            <div class="chip"><input type="radio" name="tag" id="tag-fish"      value="Fish">     <label for="tag-fish">🐟 Fish</label></div>
                             <div class="chip"><input type="radio" name="tag" id="tag-lightbill" value="Light Bill"><label for="tag-lightbill">💡 Light Bill</label></div>
-                            <div class="chip"><input type="radio" name="tag" id="tag-kirana" value="Kirana"><label for="tag-kirana">🛒 Kirana</label></div>
+                            <div class="chip"><input type="radio" name="tag" id="tag-kirana"    value="Kirana">   <label for="tag-kirana">🛒 Kirana</label></div>
+                            <!-- #3: + Other chip that expands input -->
+                            <button type="button" id="other-tag-trigger" class="other-tag-trigger">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 5v14M5 12h14"/></svg>
+                                Other
+                            </button>
                         </div>
-                        <input type="text" id="other-tag-input" name="other-tag" placeholder="Other category…" class="input" style="height:42px; font-size:14px;">
+                        <div class="other-tag-reveal" id="other-tag-reveal">
+                            <input type="text" id="other-tag-input" name="other-tag"
+                                   placeholder="Type custom category…" class="input" style="height:42px;font-size:14px;">
+                        </div>
                     </fieldset>
                 </div>
 
-                <!-- Submit -->
+                <!-- Submit (#4 — button success state, #10 — remember last) -->
                 <div class="form-actions">
-                    <button type="submit" id="submit-button" class="btn-primary flex-1" style="height:52px; font-size:16px;">
+                    <button type="submit" id="submit-button" class="btn-primary flex-1" style="font-size:16px;">
                         <span id="submit-text">Add Entry</span>
                         <svg id="submit-spinner" class="animate-spin hidden" width="18" height="18" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
                         </svg>
+                        <!-- #4: checkmark for success state -->
+                        <svg id="submit-checkmark" class="hidden" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                        </svg>
                     </button>
-                    <button type="reset" class="btn-clear">Clear</button>
+                    <button type="button" id="clear-btn" class="btn-clear">Clear</button>
                 </div>
             </form>
 
@@ -878,39 +764,43 @@
             <div class="recent-header">
                 <span class="recent-title">Recent</span>
             </div>
-            <div class="card" style="padding: 4px 16px;">
+            <div class="card" style="padding:4px 16px;">
                 <div id="recent-entries">
-                    <!-- skeleton -->
-                    <div class="entry-item">
-                        <div><div class="skeleton" style="height:14px;width:120px;margin-bottom:6px;"></div><div class="skeleton" style="height:12px;width:60px;"></div></div>
-                        <div style="text-align:right"><div class="skeleton" style="height:16px;width:60px;margin-bottom:4px;"></div><div class="skeleton" style="height:11px;width:50px;"></div></div>
+                    <!-- Skeleton -->
+                    <div class="entry-item" style="animation:none;">
+                        <div><div class="skeleton" style="height:14px;width:110px;margin-bottom:7px;"></div><div class="skeleton" style="height:12px;width:60px;"></div></div>
+                        <div style="text-align:right;"><div class="skeleton" style="height:16px;width:60px;margin-bottom:5px;"></div><div class="skeleton" style="height:11px;width:50px;"></div></div>
                     </div>
-                    <div class="entry-item">
-                        <div><div class="skeleton" style="height:14px;width:100px;margin-bottom:6px;"></div><div class="skeleton" style="height:12px;width:50px;"></div></div>
-                        <div style="text-align:right"><div class="skeleton" style="height:16px;width:70px;margin-bottom:4px;"></div><div class="skeleton" style="height:11px;width:50px;"></div></div>
+                    <div class="entry-item" style="animation:none;">
+                        <div><div class="skeleton" style="height:14px;width:90px;margin-bottom:7px;"></div><div class="skeleton" style="height:12px;width:50px;"></div></div>
+                        <div style="text-align:right;"><div class="skeleton" style="height:16px;width:70px;margin-bottom:5px;"></div><div class="skeleton" style="height:11px;width:50px;"></div></div>
                     </div>
-                    <div class="entry-item">
-                        <div><div class="skeleton" style="height:14px;width:110px;margin-bottom:6px;"></div><div class="skeleton" style="height:12px;width:55px;"></div></div>
-                        <div style="text-align:right"><div class="skeleton" style="height:16px;width:55px;margin-bottom:4px;"></div><div class="skeleton" style="height:11px;width:50px;"></div></div>
+                    <div class="entry-item" style="animation:none;">
+                        <div><div class="skeleton" style="height:14px;width:100px;margin-bottom:7px;"></div><div class="skeleton" style="height:12px;width:55px;"></div></div>
+                        <div style="text-align:right;"><div class="skeleton" style="height:16px;width:55px;margin-bottom:5px;"></div><div class="skeleton" style="height:11px;width:50px;"></div></div>
                     </div>
                 </div>
             </div>
 
-        </div><!-- /content-wrap -->
-    </div><!-- /main-scroll -->
+        </div>
+    </div>
 
-    <!-- ── Entries Modal ── -->
+    <!-- ── Entries Modal (#8 — close left, handle top) ── -->
     <div id="entries-modal" class="modal-overlay hidden">
-        <div class="modal-sheet">
+        <div class="modal-sheet" id="entries-sheet">
+            <div class="modal-handle"></div>
             <div class="modal-header">
+                <!-- #8: close button on the LEFT -->
+                <button id="close-modal-btn" class="btn-icon" style="margin-left:-4px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                </button>
                 <div>
                     <h2 class="modal-title">All Entries</h2>
-                    <div id="summary-container" class="modal-subtitle" style="margin-top:6px;"></div>
+                    <div id="summary-container" class="modal-subtitle" style="margin-top:4px;"></div>
                 </div>
-                <button id="close-modal-btn" class="btn-icon">&times;</button>
             </div>
-            <div style="padding: 12px 20px; border-bottom: 1px solid var(--border); flex-shrink:0;">
-                <input type="text" id="filter-input" placeholder="Search entries…" class="input" style="height:40px; font-size:14px;">
+            <div style="padding:10px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;">
+                <input type="text" id="filter-input" placeholder="Search entries…" class="input" style="height:40px;font-size:14px;">
             </div>
             <div id="entries-table-container" class="modal-body" style="padding:0;"></div>
             <div id="load-more-container" class="modal-footer" style="text-align:center;"></div>
@@ -920,18 +810,19 @@
     <!-- ── Help Modal ── -->
     <div id="help-modal" class="modal-overlay hidden">
         <div class="modal-sheet">
+            <div class="modal-handle"></div>
             <div class="modal-header">
+                <button id="close-help-modal-btn" class="btn-icon" style="margin-left:-4px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                </button>
                 <h2 class="modal-title">Help & Feedback</h2>
-                <button id="close-help-modal-btn" class="btn-icon">&times;</button>
             </div>
             <div class="modal-body">
-
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-icon-wrap" style="background:var(--red-light);">
                             <svg width="16" height="16" fill="none" stroke="var(--red)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                        Found a Bug?
+                        </div>Found a Bug?
                     </div>
                     <ul class="help-list">
                         <li><span class="help-dot" style="background:var(--red);"></span>Contact us with a detailed description of the issue</li>
@@ -940,13 +831,11 @@
                         <li><span class="help-dot" style="background:var(--red);"></span>Share a screenshot if possible</li>
                     </ul>
                 </div>
-
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-icon-wrap" style="background:var(--green-light);">
                             <svg width="16" height="16" fill="none" stroke="var(--green)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                        </div>
-                        Have Ideas?
+                        </div>Have Ideas?
                     </div>
                     <ul class="help-list">
                         <li><span class="help-dot" style="background:var(--green);"></span>Share your feature suggestions with us</li>
@@ -954,35 +843,30 @@
                         <li><span class="help-dot" style="background:var(--green);"></span>All feedback is valuable and considered</li>
                     </ul>
                 </div>
-
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-icon-wrap" style="background:var(--accent-light);">
                             <svg width="16" height="16" fill="none" stroke="var(--accent)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        </div>
-                        Contact
+                        </div>Contact
                     </div>
                     <ul class="help-list">
                         <li><span class="help-dot" style="background:var(--accent);"></span>Email: me@zaid.ovh</li>
                         <li><span class="help-dot" style="background:var(--accent);"></span>Response within 24–48 hours</li>
                     </ul>
                 </div>
-
                 <div class="help-section">
                     <div class="help-section-title">
                         <div class="help-icon-wrap" style="background:var(--amber-light);">
                             <svg width="16" height="16" fill="none" stroke="var(--amber)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                        Tips
+                        </div>Tips
                     </div>
                     <ul class="help-list">
-                        <li><span class="help-dot" style="background:var(--amber);"></span>Use the "Other" field for custom categories</li>
+                        <li><span class="help-dot" style="background:var(--amber);"></span>Use "+ Other" for custom categories</li>
                         <li><span class="help-dot" style="background:var(--amber);"></span>Data syncs automatically on submit</li>
-                        <li><span class="help-dot" style="background:var(--amber);"></span>Turn off adblocker if the app seems unresponsive</li>
+                        <li><span class="help-dot" style="background:var(--amber);"></span>Turn off adblocker if unresponsive</li>
                         <li><span class="help-dot" style="background:var(--amber);"></span>Amounts should be whole numbers</li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </div>
@@ -990,11 +874,14 @@
     <!-- ── Trend Chart Modal ── -->
     <div id="trend-chart-modal" class="modal-overlay hidden">
         <div class="modal-sheet modal-sheet-wide" style="max-height:95dvh;">
+            <div class="modal-handle"></div>
             <div class="modal-header">
+                <button id="close-trend-chart-btn" class="btn-icon" style="margin-left:-4px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                </button>
                 <h2 class="modal-title">Trend Chart</h2>
-                <button id="close-trend-chart-btn" class="btn-icon">&times;</button>
             </div>
-            <div style="flex:1; overflow:hidden; padding:12px;">
+            <div style="flex:1;overflow:hidden;padding:12px;">
                 <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRYy1LaCl91me7-ViRJrzlJe1f9qWs3Qy1nA1sRww_RF7GObcrhgHf8y1jHffYdv0g9K6eX2IiIj65Z/pubchart?oid=1363302817&format=interactive&font=Open+Sans"
                         width="100%" height="100%" allowfullscreen allowtransparency
                         style="border-radius:var(--radius-lg);"></iframe>
@@ -1007,12 +894,8 @@
 <!-- Toast -->
 <div id="message-box">
     <div class="msg-icon" id="msg-icon-wrap">
-        <svg id="msg-icon-success" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-        </svg>
-        <svg id="msg-icon-error" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
+        <svg id="msg-icon-success" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        <svg id="msg-icon-error"   width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
     </div>
     <p id="message-text"></p>
 </div>
@@ -1021,494 +904,580 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-    const firebaseAnalyticsConfig = {
-        apiKey: "AIzaSyA5bKSAZN0JHAK_atwbSRz4dCTJ8NaH4vI",
-        authDomain: "auth-demo-9a4bc.firebaseapp.com",
-        projectId: "auth-demo-9a4bc",
-        storageBucket: "auth-demo-9a4bc.firebasestorage.app",
-        messagingSenderId: "554871726025",
-        appId: "1:554871726025:web:ec8d1171f6a85b13c65218",
-        measurementId: "G-J95YDM55T8"
-    };
-    const analyticsApp = initializeApp(firebaseAnalyticsConfig, 'analytics');
-    const analytics = getAnalytics(analyticsApp);
+    const cfg = { apiKey:"AIzaSyA5bKSAZN0JHAK_atwbSRz4dCTJ8NaH4vI", authDomain:"auth-demo-9a4bc.firebaseapp.com", projectId:"auth-demo-9a4bc", storageBucket:"auth-demo-9a4bc.firebasestorage.app", messagingSenderId:"554871726025", appId:"1:554871726025:web:ec8d1171f6a85b13c65218", measurementId:"G-J95YDM55T8" };
+    const analyticsApp = initializeApp(cfg, 'analytics');
+    getAnalytics(analyticsApp);
 </script>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyA5bKSAZN0JHAK_atwbSRz4dCTJ8NaH4vI",
-        authDomain: "auth-demo-9a4bc.firebaseapp.com",
-        projectId: "auth-demo-9a4bc",
-        storageBucket: "auth-demo-9a4bc.firebasestorage.app",
-        messagingSenderId: "554871726025",
-        appId: "1:554871726025:web:ec8d1171f6a85b13c65218"
-    };
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+const firebaseConfig = { apiKey:"AIzaSyA5bKSAZN0JHAK_atwbSRz4dCTJ8NaH4vI", authDomain:"auth-demo-9a4bc.firebaseapp.com", projectId:"auth-demo-9a4bc", storageBucket:"auth-demo-9a4bc.firebasestorage.app", messagingSenderId:"554871726025", appId:"1:554871726025:web:ec8d1171f6a85b13c65218" };
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    // ── Elements ──
-    const authContainer      = document.getElementById('auth-container');
-    const authUi             = document.getElementById('auth-ui');
-    const contactUi          = document.getElementById('contact-ui');
-    const passwordResetUi    = document.getElementById('password-reset-ui');
-    const appContainer       = document.getElementById('app-container');
-    const loginForm          = document.getElementById('login-form');
-    const signupButton       = document.getElementById('signup-button');
-    const goBackButton       = document.getElementById('go-back-button');
-    const logoutButton       = document.getElementById('logout-button');
-    const userEmailDisplay   = document.getElementById('user-email-display');
-    const rememberMeCheckbox = document.getElementById('remember-me');
-    const forgotPasswordLink = document.getElementById('forgot-password-link');
-    const passwordResetForm  = document.getElementById('password-reset-form');
-    const resetGoBackButton  = document.getElementById('reset-go-back-button');
-    const messageBox         = document.getElementById('message-box');
-    const messageText        = document.getElementById('message-text');
-    const hamburgerBtn       = document.getElementById('hamburger-btn');
-    const menuContent        = document.getElementById('menu-content');
-    const hamburgerContainer = document.getElementById('hamburger-container');
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoFc2VyGtJMtFIh2D_qf99BBFLNfQLnFO5MjFv3EtKL3AYYj0C9uNpvmAh-eYy-cisMg/exec';
+const INITIAL_LOAD_COUNT = 50;
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoFc2VyGtJMtFIh2D_qf99BBFLNfQLnFO5MjFv3EtKL3AYYj0C9uNpvmAh-eYy-cisMg/exec';
-    const INITIAL_LOAD_COUNT = 50;
+let sessionStartTime, allEntries = [], filteredEntries = [], visibleCount = INITIAL_LOAD_COUNT;
+let sortState = { column:3, direction:'desc' };
+let deviceDetails = {};
+let msgTimer = null;
+// #10 — persist last-used name
+let lastUsedName = null;
 
-    let sessionStartTime, allEntries = [], filteredEntries = [], visibleCount = INITIAL_LOAD_COUNT;
-    let sortState = { column: 3, direction: 'desc' };
-    let deviceDetails = {};
-    let msgTimer = null;
+const trackEvent = (name, params={}) => { if (typeof gtag !== 'undefined') gtag('event', name, params); };
 
-    // Analytics
-    const trackEvent = (name, params = {}) => { if (typeof gtag !== 'undefined') gtag('event', name, params); };
+// ── Elements ──
+const authContainer      = document.getElementById('auth-container');
+const authUi             = document.getElementById('auth-ui');
+const contactUi          = document.getElementById('contact-ui');
+const passwordResetUi    = document.getElementById('password-reset-ui');
+const appContainer       = document.getElementById('app-container');
+const loginForm          = document.getElementById('login-form');
+const signupButton       = document.getElementById('signup-button');
+const goBackButton       = document.getElementById('go-back-button');
+const logoutButton       = document.getElementById('logout-button');
+const userEmailDisplay   = document.getElementById('user-email-display');
+const rememberMeCheckbox = document.getElementById('remember-me');
+const forgotPasswordLink = document.getElementById('forgot-password-link');
+const passwordResetForm  = document.getElementById('password-reset-form');
+const resetGoBackButton  = document.getElementById('reset-go-back-button');
+const messageBox         = document.getElementById('message-box');
+const messageText        = document.getElementById('message-text');
+const hamburgerBtn       = document.getElementById('hamburger-btn');
+const menuContent        = document.getElementById('menu-content');
+const hamburgerContainer = document.getElementById('hamburger-container');
+const amountInput        = document.getElementById('amount');
+const amountPrefix       = document.getElementById('amount-prefix');
+const otherTagTrigger    = document.getElementById('other-tag-trigger');
+const otherTagReveal     = document.getElementById('other-tag-reveal');
+const otherTagInput      = document.getElementById('other-tag-input');
 
-    // ── Hamburger ──
-    hamburgerBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        menuContent.classList.toggle('show');
-        trackEvent('hamburger_menu_toggle');
+// ── Hamburger ──
+hamburgerBtn.addEventListener('click', e => { e.stopPropagation(); menuContent.classList.toggle('show'); trackEvent('hamburger_menu_toggle'); });
+document.addEventListener('click', e => { if (!hamburgerBtn.contains(e.target) && !menuContent.contains(e.target)) menuContent.classList.remove('show'); });
+
+// ── Spinners ──
+const showSpinner = (btnId, textId, spinnerId) => {
+    document.getElementById(btnId).disabled = true;
+    document.getElementById(textId).style.display = 'none';
+    document.getElementById(spinnerId).classList.remove('hidden');
+};
+const hideSpinner = (btnId, textId, spinnerId, txt) => {
+    document.getElementById(btnId).disabled = false;
+    document.getElementById(textId).style.display = '';
+    document.getElementById(textId).textContent = txt;
+    document.getElementById(spinnerId).classList.add('hidden');
+};
+const showLogoutSpinner = () => { logoutButton.disabled=true; document.getElementById('logout-icon').classList.add('hidden'); document.getElementById('logout-spinner').classList.remove('hidden'); };
+const hideLogoutSpinner = () => { logoutButton.disabled=false; document.getElementById('logout-icon').classList.remove('hidden'); document.getElementById('logout-spinner').classList.add('hidden'); };
+
+// ── Toast ──
+const showMessage = (msg, isError=true) => {
+    messageText.textContent = msg;
+    const iconOk  = document.getElementById('msg-icon-success');
+    const iconErr = document.getElementById('msg-icon-error');
+    const wrap    = document.getElementById('msg-icon-wrap');
+    if (isError) {
+        wrap.style.background='var(--red-light)'; iconOk.style.display='none'; iconErr.style.display=''; iconErr.style.color='var(--red)';
+    } else {
+        wrap.style.background='var(--green-light)'; iconOk.style.display=''; iconErr.style.display='none'; iconOk.style.color='var(--green)';
+    }
+    messageBox.classList.remove('hiding');
+    messageBox.classList.add('show');
+    if (msgTimer) clearTimeout(msgTimer);
+    msgTimer = setTimeout(() => {
+        messageBox.classList.remove('show');
+        messageBox.classList.add('hiding');
+        setTimeout(() => messageBox.classList.remove('hiding'), 250);
+    }, 4500);
+    trackEvent(isError ? 'error_message_shown' : 'success_message_shown', { message: msg });
+};
+
+// ── Auth ──
+loginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email=e.target.email.value, password=e.target.password.value, rm=rememberMeCheckbox.checked;
+    trackEvent('login_attempt',{email});
+    showSpinner('login-btn','login-text','login-spinner');
+    try {
+        await setPersistence(auth, rm ? browserLocalPersistence : browserSessionPersistence);
+        await signInWithEmailAndPassword(auth, email, password);
+        showMessage('Login successful!', false);
+        trackEvent('login_success',{email,remember_me:rm});
+    } catch(err) {
+        showMessage("Oops! Check your password");
+        trackEvent('login_error',{error:err.message});
+    } finally { hideSpinner('login-btn','login-text','login-spinner','Sign In'); }
+});
+
+forgotPasswordLink.addEventListener('click', e => { e.preventDefault(); authUi.classList.add('hidden'); passwordResetUi.classList.remove('hidden'); trackEvent('forgot_password_clicked'); });
+passwordResetForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email=e.target['reset-email'].value;
+    trackEvent('password_reset_attempt',{email});
+    showSpinner('reset-btn','reset-text','reset-spinner');
+    try {
+        await sendPasswordResetEmail(auth, email);
+        showMessage('Reset link sent — check your inbox!', false);
+        passwordResetForm.reset();
+        trackEvent('password_reset_success',{email});
+    } catch(err) {
+        showMessage(err.message);
+        trackEvent('password_reset_error',{error:err.message});
+    } finally { hideSpinner('reset-btn','reset-text','reset-spinner','Send Reset Link'); }
+});
+
+signupButton.addEventListener('click',   () => { authUi.classList.add('hidden'); contactUi.classList.remove('hidden'); trackEvent('signup_button_clicked'); });
+goBackButton.addEventListener('click',   () => { contactUi.classList.add('hidden'); authUi.classList.remove('hidden'); trackEvent('go_back_clicked'); });
+resetGoBackButton.addEventListener('click', () => { passwordResetUi.classList.add('hidden'); authUi.classList.remove('hidden'); trackEvent('reset_go_back_clicked'); });
+
+logoutButton.addEventListener('click', async () => {
+    trackEvent('logout_attempt'); showLogoutSpinner();
+    try {
+        await signOut(auth);
+        showMessage('Signed out.', false);
+        menuContent.classList.remove('show');
+        trackEvent('logout_success');
+    } catch(err) {
+        showMessage(err.message);
+        trackEvent('logout_error',{error:err.message});
+    } finally { hideLogoutSpinner(); }
+});
+
+onAuthStateChanged(auth, user => {
+    if (user) {
+        authContainer.classList.add('hidden');
+        appContainer.classList.remove('hidden');
+        userEmailDisplay.textContent = user.email;
+        trackEvent('user_authenticated',{email:user.email});
+        initApp();
+    } else {
+        authContainer.classList.remove('hidden');
+        appContainer.classList.add('hidden');
+        authUi.classList.remove('hidden');
+        contactUi.classList.add('hidden');
+        passwordResetUi.classList.add('hidden');
+        trackEvent('user_signed_out');
+    }
+});
+
+// ══════════════════════════════════════════════════════
+//  APP
+// ══════════════════════════════════════════════════════
+function initApp() {
+    sessionStartTime = new Date();
+    trackEvent('app_initialized');
+
+    const form            = document.getElementById('data-form');
+    const viewEntriesBtn  = document.getElementById('view-entries-btn');
+    const helpFeedbackBtn = document.getElementById('help-feedback-btn');
+    const trendChartBtn   = document.getElementById('trend-chart-btn');
+    const entriesModal    = document.getElementById('entries-modal');
+    const helpModal       = document.getElementById('help-modal');
+    const trendChartModal = document.getElementById('trend-chart-modal');
+    const closeModalBtn   = document.getElementById('close-modal-btn');
+    const closeHelpBtn    = document.getElementById('close-help-modal-btn');
+    const closeTrendBtn   = document.getElementById('close-trend-chart-btn');
+    const filterInput     = document.getElementById('filter-input');
+    const clearBtn        = document.getElementById('clear-btn');
+
+    // Clear button (#10 — does NOT reset name, only clears amount+tag)
+    clearBtn.addEventListener('click', () => {
+        amountInput.value = '';
+        amountPrefix.classList.remove('filled');
+        document.querySelectorAll('input[name="tag"]').forEach(r => r.checked=false);
+        otherTagInput.value = '';
+        otherTagReveal.classList.remove('open');
+        otherTagTrigger.classList.remove('active');
+        updateStepProgress();
+        trackEvent('form_cleared');
     });
-    document.addEventListener('click', e => {
-        if (!hamburgerBtn.contains(e.target) && !menuContent.contains(e.target)) menuContent.classList.remove('show');
+
+    form.addEventListener('submit', handleFormSubmit);
+    viewEntriesBtn.addEventListener('click', openEntriesModal);
+
+    helpFeedbackBtn.addEventListener('click', () => { helpModal.classList.remove('hidden'); hamburgerContainer.classList.add('hidden'); menuContent.classList.remove('show'); trackEvent('help_feedback_opened'); });
+    closeHelpBtn.addEventListener('click',    () => { helpModal.classList.add('hidden');    hamburgerContainer.classList.remove('hidden'); trackEvent('help_modal_closed'); });
+
+    trendChartBtn.addEventListener('click',  () => { trendChartModal.classList.remove('hidden'); hamburgerContainer.classList.add('hidden'); menuContent.classList.remove('show'); trackEvent('trend_chart_opened'); });
+    closeTrendBtn.addEventListener('click',  () => { trendChartModal.classList.add('hidden');    hamburgerContainer.classList.remove('hidden'); trackEvent('trend_chart_closed'); });
+
+    closeModalBtn.addEventListener('click',  () => { entriesModal.classList.add('hidden');  hamburgerContainer.classList.remove('hidden'); trackEvent('entries_modal_closed'); });
+
+    filterInput.addEventListener('input', handleFilter);
+
+    // #1 — Step progress on name change
+    document.querySelectorAll('input[name="name"]').forEach(r => r.addEventListener('change', () => {
+        lastUsedName = r.value;
+        updateStepProgress();
+        trackEvent('name_changed', { name: r.value });
+    }));
+
+    // #1 — Step progress on amount change
+    // #2 — Color prefix when filled
+    amountInput.addEventListener('input', () => {
+        const filled = amountInput.value.trim().length > 0;
+        amountPrefix.classList.toggle('filled', filled);
+        updateStepProgress();
     });
 
-    // ── Spinner helpers ──
-    const showSpinner = (btnId, textId, spinnerId) => {
-        document.getElementById(btnId).disabled = true;
-        document.getElementById(textId).style.display = 'none';
-        document.getElementById(spinnerId).classList.remove('hidden');
-    };
-    const hideSpinner = (btnId, textId, spinnerId, txt) => {
-        document.getElementById(btnId).disabled = false;
-        document.getElementById(textId).style.display = '';
-        document.getElementById(textId).textContent = txt;
-        document.getElementById(spinnerId).classList.add('hidden');
-    };
+    // #1 — Step progress on tag change
+    document.querySelectorAll('input[name="tag"]').forEach(r => r.addEventListener('change', () => {
+        otherTagInput.value = '';
+        otherTagReveal.classList.remove('open');
+        otherTagTrigger.classList.remove('active');
+        updateStepProgress();
+        trackEvent('tag_changed', { tag: r.value });
+    }));
 
-    const showLogoutSpinner = () => {
-        logoutButton.disabled = true;
-        document.getElementById('logout-icon').classList.add('hidden');
-        document.getElementById('logout-spinner').classList.remove('hidden');
-    };
-    const hideLogoutSpinner = () => {
-        logoutButton.disabled = false;
-        document.getElementById('logout-icon').classList.remove('hidden');
-        document.getElementById('logout-spinner').classList.add('hidden');
-    };
-
-    // ── Toast ──
-    const showMessage = (msg, isError = true) => {
-        messageText.textContent = msg;
-        const iconOk  = document.getElementById('msg-icon-success');
-        const iconErr = document.getElementById('msg-icon-error');
-        const wrap    = document.getElementById('msg-icon-wrap');
-        if (isError) {
-            wrap.style.background = 'var(--red-light)';
-            iconOk.style.display  = 'none';
-            iconErr.style.display = '';
-            iconErr.style.color   = 'var(--red)';
+    // #3 — Other tag expand
+    otherTagTrigger.addEventListener('click', () => {
+        const open = otherTagReveal.classList.toggle('open');
+        otherTagTrigger.classList.toggle('active', open);
+        if (open) {
+            document.querySelectorAll('input[name="tag"]').forEach(r => r.checked=false);
+            setTimeout(() => otherTagInput.focus(), 310);
         } else {
-            wrap.style.background = 'var(--green-light)';
-            iconOk.style.display  = '';
-            iconErr.style.display = 'none';
-            iconOk.style.color    = 'var(--green)';
+            otherTagInput.value = '';
         }
-        messageBox.classList.add('show');
-        if (msgTimer) clearTimeout(msgTimer);
-        msgTimer = setTimeout(() => messageBox.classList.remove('show'), 5000);
-        trackEvent(isError ? 'error_message_shown' : 'success_message_shown', { message: msg });
-    };
-
-    // ── Auth ──
-    loginForm.addEventListener('submit', async e => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        const rememberMe = rememberMeCheckbox.checked;
-        trackEvent('login_attempt', { email });
-        showSpinner('login-btn', 'login-text', 'login-spinner');
-        try {
-            await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
-            await signInWithEmailAndPassword(auth, email, password);
-            showMessage('Login successful!', false);
-            trackEvent('login_success', { email, remember_me: rememberMe });
-        } catch (err) {
-            showMessage("Oops! Check your password");
-            trackEvent('login_error', { error: err.message });
-        } finally {
-            hideSpinner('login-btn', 'login-text', 'login-spinner', 'Sign In');
-        }
+        updateStepProgress();
+        trackEvent('other_tag_toggled', { open });
     });
 
-    forgotPasswordLink.addEventListener('click', e => {
-        e.preventDefault();
-        authUi.classList.add('hidden');
-        passwordResetUi.classList.remove('hidden');
-        trackEvent('forgot_password_clicked');
+    otherTagInput.addEventListener('input', () => {
+        if (otherTagInput.value.trim()) document.querySelectorAll('input[name="tag"]').forEach(r => r.checked=false);
+        updateStepProgress();
+        trackEvent('other_tag_input_used', { value_length: otherTagInput.value.length });
     });
 
-    passwordResetForm.addEventListener('submit', async e => {
-        e.preventDefault();
-        const email = e.target['reset-email'].value;
-        trackEvent('password_reset_attempt', { email });
-        showSpinner('reset-btn', 'reset-text', 'reset-spinner');
-        try {
-            await sendPasswordResetEmail(auth, email);
-            showMessage("Reset link sent — check your inbox!", false);
-            passwordResetForm.reset();
-            trackEvent('password_reset_success', { email });
-        } catch (err) {
-            showMessage(err.message);
-            trackEvent('password_reset_error', { error: err.message });
-        } finally {
-            hideSpinner('reset-btn', 'reset-text', 'reset-spinner', 'Send Reset Link');
-        }
-    });
+    // #8 — Swipe-to-close modal sheet
+    addSwipeToClose('entries-sheet', entriesModal, () => hamburgerContainer.classList.remove('hidden'));
 
-    signupButton.addEventListener('click', () => { authUi.classList.add('hidden'); contactUi.classList.remove('hidden'); trackEvent('signup_button_clicked'); });
-    goBackButton.addEventListener('click', () => { contactUi.classList.add('hidden'); authUi.classList.remove('hidden'); trackEvent('go_back_clicked'); });
-    resetGoBackButton.addEventListener('click', () => { passwordResetUi.classList.add('hidden'); authUi.classList.remove('hidden'); trackEvent('reset_go_back_clicked'); });
+    fetchInitialData();
+    getDeviceDetails();
+}
 
-    logoutButton.addEventListener('click', async () => {
-        trackEvent('logout_attempt');
-        showLogoutSpinner();
-        try {
-            await signOut(auth);
-            showMessage('Signed out.', false);
-            menuContent.classList.remove('show');
-            trackEvent('logout_success');
-        } catch (err) {
-            showMessage(err.message);
-            trackEvent('logout_error', { error: err.message });
-        } finally {
-            hideLogoutSpinner();
-        }
-    });
+// ── Step Progress (#1) ──
+function updateStepProgress() {
+    const nameSelected   = !!document.querySelector('input[name="name"]:checked');
+    const amountFilled   = amountInput.value.trim().length > 0;
+    const tagSelected    = !!document.querySelector('input[name="tag"]:checked') || otherTagInput.value.trim().length > 0;
 
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            authContainer.classList.add('hidden');
-            appContainer.classList.remove('hidden');
-            userEmailDisplay.textContent = user.email;
-            trackEvent('user_authenticated', { email: user.email });
-            initApp();
+    const s1 = document.getElementById('step-1');
+    const s2 = document.getElementById('step-2');
+    const s3 = document.getElementById('step-3');
+    const b1 = s1.querySelector('.step-bubble');
+    const b2 = s2.querySelector('.step-bubble');
+    const b3 = s3.querySelector('.step-bubble');
+
+    const sec1 = document.getElementById('section-1');
+    const sec2 = document.getElementById('section-2');
+    const sec3 = document.getElementById('section-3');
+
+    // State machine
+    if (nameSelected && amountFilled && tagSelected) {
+        setStep(s1,b1,'done','✓'); setStep(s2,b2,'done','✓'); setStep(s3,b3,'done','✓');
+        sec1.classList.remove('active-step'); sec2.classList.remove('active-step'); sec3.classList.remove('active-step');
+    } else if (nameSelected && amountFilled) {
+        setStep(s1,b1,'done','✓'); setStep(s2,b2,'done','✓'); setStep(s3,b3,'active','3');
+        sec1.classList.remove('active-step'); sec2.classList.remove('active-step'); sec3.classList.add('active-step');
+    } else if (nameSelected) {
+        setStep(s1,b1,'done','✓'); setStep(s2,b2,'active','2'); setStep(s3,b3,'','3');
+        sec1.classList.remove('active-step'); sec2.classList.add('active-step'); sec3.classList.remove('active-step');
+    } else {
+        setStep(s1,b1,'active','1'); setStep(s2,b2,'','2'); setStep(s3,b3,'','3');
+        sec1.classList.add('active-step'); sec2.classList.remove('active-step'); sec3.classList.remove('active-step');
+    }
+}
+function setStep(item, bubble, state, text) {
+    item.classList.remove('active','done');
+    if (state) item.classList.add(state);
+    bubble.textContent = text;
+}
+
+// ── Swipe-to-close (#8) ──
+function addSwipeToClose(sheetId, overlay, onClose) {
+    const sheet = document.getElementById(sheetId);
+    if (!sheet) return;
+    let startY=0, dy=0, dragging=false;
+    sheet.addEventListener('touchstart', e => { startY = e.touches[0].clientY; dragging=true; dy=0; }, { passive:true });
+    sheet.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        dy = e.touches[0].clientY - startY;
+        if (dy > 0) { sheet.style.transform=`translateY(${dy}px)`; sheet.style.transition='none'; }
+    }, { passive:true });
+    sheet.addEventListener('touchend', () => {
+        dragging=false;
+        sheet.style.transition='transform 0.28s cubic-bezier(.22,1,.36,1)';
+        if (dy > 100) {
+            sheet.style.transform='translateY(100%)';
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                sheet.style.transform='';
+                if (onClose) onClose();
+                trackEvent('modal_swipe_closed');
+            }, 280);
         } else {
-            authContainer.classList.remove('hidden');
-            appContainer.classList.add('hidden');
-            authUi.classList.remove('hidden');
-            contactUi.classList.add('hidden');
-            passwordResetUi.classList.add('hidden');
-            trackEvent('user_signed_out');
+            sheet.style.transform='';
         }
     });
+}
 
-    // ── App ──
-    function initApp() {
-        sessionStartTime = new Date();
-        trackEvent('app_initialized');
+const formatAmount = n => n ? Number(n).toLocaleString('en-IN') : '';
 
-        const form             = document.getElementById('data-form');
-        const viewEntriesBtn   = document.getElementById('view-entries-btn');
-        const helpFeedbackBtn  = document.getElementById('help-feedback-btn');
-        const trendChartBtn    = document.getElementById('trend-chart-btn');
-        const entriesModal     = document.getElementById('entries-modal');
-        const helpModal        = document.getElementById('help-modal');
-        const trendChartModal  = document.getElementById('trend-chart-modal');
-        const closeModalBtn    = document.getElementById('close-modal-btn');
-        const closeHelpBtn     = document.getElementById('close-help-modal-btn');
-        const closeTrendBtn    = document.getElementById('close-trend-chart-btn');
-        const filterInput      = document.getElementById('filter-input');
+async function getDeviceDetails() {
+    deviceDetails = { browserName:'Unknown', osVersion:'Unknown', manufacturer:'Unknown', deviceModel:'Unknown' };
+    const ua=navigator.userAgent, pl=navigator.platform;
+    if (/Win/.test(pl)) deviceDetails.osVersion='Windows';
+    else if (/Mac/.test(pl)) deviceDetails.osVersion='MacOS';
+    else if (/Linux/.test(pl)) deviceDetails.osVersion='Linux';
+    else if (/iPhone|iPad|iPod/.test(ua)) deviceDetails.osVersion='iOS';
+    else if (/Android/.test(ua)) deviceDetails.osVersion='Android';
+    if (ua.includes('Firefox')) deviceDetails.browserName='Firefox';
+    else if (ua.includes('SamsungBrowser')) deviceDetails.browserName='Samsung Internet';
+    else if (ua.includes('OPR')) deviceDetails.browserName='Opera';
+    else if (ua.includes('Edge')) deviceDetails.browserName='Edge';
+    else if (ua.includes('Chrome')) deviceDetails.browserName='Chrome';
+    else if (ua.includes('Safari')) deviceDetails.browserName='Safari';
+    if (navigator.userAgentData) {
+        try {
+            const d=await navigator.userAgentData.getHighEntropyValues(['platform','platformVersion','model']);
+            deviceDetails.osVersion=`${d.platform} ${d.platformVersion}`;
+            deviceDetails.deviceModel=d.model||'N/A';
+        } catch(e){}
+    }
+    trackEvent('device_details_collected', deviceDetails);
+}
 
-        form.addEventListener('submit', handleFormSubmit);
-        viewEntriesBtn.addEventListener('click', openEntriesModal);
+// ── Form Submit (#4 — success state, #10 — restore name) ──
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    const fd     = new FormData(e.target);
+    const name   = fd.get('name');
+    const amount = fd.get('amount');
+    const checked= document.querySelector('input[name="tag"]:checked');
+    const tag    = checked ? checked.value : otherTagInput.value.trim();
 
-        helpFeedbackBtn.addEventListener('click', () => {
-            helpModal.classList.remove('hidden');
-            hamburgerContainer.classList.add('hidden');
-            menuContent.classList.remove('show');
-            trackEvent('help_feedback_opened');
-        });
-        closeHelpBtn.addEventListener('click', () => {
-            helpModal.classList.add('hidden');
-            hamburgerContainer.classList.remove('hidden');
-            trackEvent('help_modal_closed');
-        });
+    trackEvent('form_submit_attempt',{name,amount,tag});
 
-        trendChartBtn.addEventListener('click', () => {
-            trendChartModal.classList.remove('hidden');
-            hamburgerContainer.classList.add('hidden');
-            menuContent.classList.remove('show');
-            trackEvent('trend_chart_opened');
-        });
-        closeTrendBtn.addEventListener('click', () => {
-            trendChartModal.classList.add('hidden');
-            hamburgerContainer.classList.remove('hidden');
-            trackEvent('trend_chart_closed');
-        });
+    if (!name)   { showMessage('Please select a name.'); trackEvent('form_validation_error',{field:'name'}); return; }
+    if (!amount) { showMessage('Please enter an amount.'); trackEvent('form_validation_error',{field:'amount'}); return; }
+    if (!/^\d+$/.test(amount)) { showMessage('Amount must be a whole number.'); trackEvent('form_validation_error',{field:'amount',error:'not_numeric'}); return; }
+    if (!tag)    { showMessage('Please select a category.'); trackEvent('form_validation_error',{field:'tag'}); return; }
 
-        closeModalBtn.addEventListener('click', () => {
-            entriesModal.classList.add('hidden');
-            hamburgerContainer.classList.remove('hidden');
-            trackEvent('entries_modal_closed');
-        });
+    const btn    = document.getElementById('submit-button');
+    const txtEl  = document.getElementById('submit-text');
+    const spinner= document.getElementById('submit-spinner');
+    const check  = document.getElementById('submit-checkmark');
 
-        filterInput.addEventListener('input', handleFilter);
+    btn.disabled=true; txtEl.style.display='none'; spinner.classList.remove('hidden');
 
-        document.querySelectorAll('input[name="tag"]').forEach(r => r.addEventListener('change', handleTagChange));
-        document.getElementById('other-tag-input').addEventListener('input', e => {
-            if (e.target.value.trim()) document.querySelectorAll('input[name="tag"]').forEach(r => r.checked = false);
-            trackEvent('other_tag_input_used', { value_length: e.target.value.length });
-        });
+    const userEmail = auth.currentUser?.email || 'Unknown';
+    const sfd = new FormData();
+    sfd.append('name',name); sfd.append('amount',amount); sfd.append('tag',tag);
+    sfd.append('sessionDuration',`${Math.round((new Date()-sessionStartTime)/1000)}s`);
+    sfd.append('browserName',deviceDetails.browserName); sfd.append('osVersion',deviceDetails.osVersion);
+    sfd.append('manufacturer',deviceDetails.manufacturer); sfd.append('deviceModel',deviceDetails.deviceModel);
+    sfd.append('userEmail',userEmail);
+
+    try {
+        const res = await fetch(SCRIPT_URL, { method:'POST', body:sfd });
+        if (!res.ok) throw new Error(`Network error: ${res.statusText}`);
+        const data = await res.json();
+        if (data.result !== 'success') throw new Error(data.error||'Server error.');
+
+        // #4 — success button state
+        spinner.classList.add('hidden');
+        check.classList.remove('hidden');
+        btn.classList.add('success');
+        txtEl.textContent = 'Saved!';
+        txtEl.style.display = '';
+
+        showMessage('Entry added!', false);
+        trackEvent('form_submit_success',{name,amount,tag,user_email:userEmail});
+
+        // After 1.5s reset (keep name — #10)
+        setTimeout(() => {
+            btn.disabled=false;
+            check.classList.add('hidden');
+            btn.classList.remove('success');
+            txtEl.textContent='Add Entry';
+
+            // #10 — preserve last-used name
+            amountInput.value = '';
+            amountPrefix.classList.remove('filled');
+            document.querySelectorAll('input[name="tag"]').forEach(r => r.checked=false);
+            otherTagInput.value='';
+            otherTagReveal.classList.remove('open');
+            otherTagTrigger.classList.remove('active');
+
+            // Re-apply last name
+            if (lastUsedName) {
+                const nameRadio = document.querySelector(`input[name="name"][value="${lastUsedName}"]`);
+                if (nameRadio) nameRadio.checked = true;
+            }
+            updateStepProgress();
+        }, 1500);
 
         fetchInitialData();
-        getDeviceDetails();
+
+    } catch(err) {
+        console.error(err);
+        spinner.classList.add('hidden');
+        txtEl.style.display='';
+        btn.disabled=false;
+        showMessage("Couldn't save. Please contact us.");
+        e.target.classList.add('animate-shake');
+        e.target.addEventListener('animationend', () => e.target.classList.remove('animate-shake'), {once:true});
+        trackEvent('form_submit_error',{error:err.message});
     }
+}
 
-    const formatAmount = n => n ? Number(n).toLocaleString('en-IN') : '';
+function openEntriesModal() {
+    document.getElementById('entries-modal').classList.remove('hidden');
+    hamburgerContainer.classList.add('hidden');
+    menuContent.classList.remove('show');
+    filteredEntries = [...allEntries];
+    visibleCount = INITIAL_LOAD_COUNT;
+    sortAndRenderTable();
+    trackEvent('entries_modal_opened');
+}
 
-    function handleTagChange() {
-        const checked = document.querySelector('input[name="tag"]:checked');
-        if (checked) document.getElementById('other-tag-input').value = '';
-        trackEvent('tag_changed', { tag_selected: checked ? checked.value : 'other' });
+async function fetchInitialData() {
+    try {
+        const res = await fetch(SCRIPT_URL + '?cacheBust=' + Date.now());
+        if (!res.ok) throw new Error(res.statusText);
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        allEntries = Array.isArray(data.entries) ? data.entries : [];
+        renderRecentEntries(allEntries);
+        renderSummary(data.summary);
+        trackEvent('data_fetch_success',{entries_count:allEntries.length});
+    } catch(err) {
+        console.error(err);
+        document.getElementById('recent-entries').innerHTML =
+            `<p style="padding:16px 0;text-align:center;color:var(--text-muted);font-size:14px;">Could not load entries. Please contact us.</p>`;
+        trackEvent('data_fetch_error',{error:err.message});
     }
+}
 
-    async function getDeviceDetails() {
-        deviceDetails = { browserName:'Unknown', osVersion:'Unknown', manufacturer:'Unknown', deviceModel:'Unknown' };
-        const ua = navigator.userAgent;
-        const pl = navigator.platform;
-        if (/Win/.test(pl)) deviceDetails.osVersion = 'Windows';
-        else if (/Mac/.test(pl)) deviceDetails.osVersion = 'MacOS';
-        else if (/Linux/.test(pl)) deviceDetails.osVersion = 'Linux';
-        else if (/iPhone|iPad|iPod/.test(ua)) deviceDetails.osVersion = 'iOS';
-        else if (/Android/.test(ua)) deviceDetails.osVersion = 'Android';
-        if (ua.includes('Firefox')) deviceDetails.browserName = 'Firefox';
-        else if (ua.includes('SamsungBrowser')) deviceDetails.browserName = 'Samsung Internet';
-        else if (ua.includes('OPR')) deviceDetails.browserName = 'Opera';
-        else if (ua.includes('Edge')) deviceDetails.browserName = 'Edge';
-        else if (ua.includes('Chrome')) deviceDetails.browserName = 'Chrome';
-        else if (ua.includes('Safari')) deviceDetails.browserName = 'Safari';
-        if (navigator.userAgentData) {
-            try {
-                const d = await navigator.userAgentData.getHighEntropyValues(['platform','platformVersion','model','brand']);
-                deviceDetails.osVersion = `${d.platform} ${d.platformVersion}`;
-                deviceDetails.deviceModel = d.model || 'N/A';
-                if (d.brands?.length) deviceDetails.browserName = d.brands.find(b => !b.brand.includes('Not'))?.brand || deviceDetails.browserName;
-            } catch(e) {}
-        }
-        trackEvent('device_details_collected', deviceDetails);
+// #5 — entries fade in via CSS animation-delay on .entry-item
+function renderRecentEntries(entries) {
+    const el = document.getElementById('recent-entries');
+    if (!entries.length) {
+        el.innerHTML = '<p style="padding:16px 0;text-align:center;color:var(--text-muted);font-size:14px;">No entries yet.</p>';
+        return;
     }
-
-    async function handleFormSubmit(e) {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        const name   = fd.get('name');
-        const amount = fd.get('amount');
-        const checked = document.querySelector('input[name="tag"]:checked');
-        const tag = checked ? checked.value : document.getElementById('other-tag-input').value.trim();
-
-        trackEvent('form_submit_attempt', { name, amount, tag });
-
-        if (!name)   { showMessage('Please select a name.'); trackEvent('form_validation_error', { field:'name' }); return; }
-        if (!amount) { showMessage('Please enter an amount.'); trackEvent('form_validation_error', { field:'amount' }); return; }
-        if (!/^\d+$/.test(amount)) { showMessage('Amount must be a whole number.'); trackEvent('form_validation_error', { field:'amount', error:'not_numeric' }); return; }
-        if (!tag)    { showMessage('Please select a category.'); trackEvent('form_validation_error', { field:'tag' }); return; }
-
-        showSpinner('submit-button', 'submit-text', 'submit-spinner');
-
-        const userEmail = auth.currentUser?.email || 'Unknown';
-        const sfd = new FormData();
-        sfd.append('name', name); sfd.append('amount', amount); sfd.append('tag', tag);
-        sfd.append('sessionDuration', `${Math.round((new Date() - sessionStartTime) / 1000)}s`);
-        sfd.append('browserName', deviceDetails.browserName);
-        sfd.append('osVersion', deviceDetails.osVersion);
-        sfd.append('manufacturer', deviceDetails.manufacturer);
-        sfd.append('deviceModel', deviceDetails.deviceModel);
-        sfd.append('userEmail', userEmail);
-
-        try {
-            const res = await fetch(SCRIPT_URL, { method:'POST', body: sfd });
-            if (!res.ok) throw new Error(`Network error: ${res.statusText}`);
-            const data = await res.json();
-            if (data.result !== 'success') throw new Error(data.error || 'Server error.');
-            showMessage('Entry added!', false);
-            e.target.reset();
-            fetchInitialData();
-            trackEvent('form_submit_success', { name, amount, tag, user_email: userEmail });
-        } catch (err) {
-            console.error(err);
-            showMessage("Couldn't save. Please contact us.");
-            e.target.classList.add('animate-shake');
-            e.target.addEventListener('animationend', () => e.target.classList.remove('animate-shake'), { once: true });
-            trackEvent('form_submit_error', { error: err.message });
-        } finally {
-            hideSpinner('submit-button', 'submit-text', 'submit-spinner', 'Add Entry');
-        }
-    }
-
-    function openEntriesModal() {
-        document.getElementById('entries-modal').classList.remove('hidden');
-        hamburgerContainer.classList.add('hidden');
-        menuContent.classList.remove('show');
-        filteredEntries = [...allEntries];
-        visibleCount = INITIAL_LOAD_COUNT;
-        sortAndRenderTable();
-        trackEvent('entries_modal_opened');
-    }
-
-    async function fetchInitialData() {
-        // skeleton already showing from HTML
-        try {
-            const res = await fetch(SCRIPT_URL + '?cacheBust=' + Date.now());
-            if (!res.ok) throw new Error(res.statusText);
-            const data = await res.json();
-            if (data.error) throw new Error(data.error);
-            allEntries = Array.isArray(data.entries) ? data.entries : [];
-            renderRecentEntries(allEntries);
-            renderSummary(data.summary);
-            trackEvent('data_fetch_success', { entries_count: allEntries.length });
-        } catch (err) {
-            console.error(err);
-            document.getElementById('recent-entries').innerHTML =
-                `<p style="padding:16px 0;text-align:center;color:var(--text-muted);font-size:14px;">Could not load entries. Please contact us.</p>`;
-            trackEvent('data_fetch_error', { error: err.message });
-        }
-    }
-
-    function renderRecentEntries(entries) {
-        const el = document.getElementById('recent-entries');
-        if (!entries.length) {
-            el.innerHTML = '<p style="padding:16px 0;text-align:center;color:var(--text-muted);font-size:14px;">No entries yet.</p>';
-            return;
-        }
-        el.innerHTML = entries.slice(0, 5).map(([gAmt, zAmt, tag, ts]) => {
-            const name   = gAmt ? 'Gulnaz dena' : 'Ghazala dena';
-            const amount = gAmt || zAmt;
-            const date   = ts ? ts.substring(0, 11) : '';
-            return `
-                <div class="entry-item">
-                    <div>
-                        <p class="entry-name">${name}</p>
-                        <p class="entry-tag">${tag}</p>
-                    </div>
-                    <div class="entry-right">
-                        <p class="entry-amount">₹ ${formatAmount(amount)}</p>
-                        <p class="entry-date">${date}</p>
-                    </div>
-                </div>`;
-        }).join('');
-    }
-
-    function renderSummary(summary) {
-        if (!summary) return;
-        document.getElementById('summary-container').innerHTML = `
-            <div class="summary-pill">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                ${summary.h1 || ''} owes ₹ ${formatAmount(summary.i1)}
+    // Force reflow so animations replay
+    el.innerHTML = '';
+    el.innerHTML = entries.slice(0,5).map(([gAmt,zAmt,tag,ts]) => {
+        const name  = gAmt ? 'Gulnaz dena' : 'Ghazala dena';
+        const amount= gAmt || zAmt;
+        const date  = ts ? ts.substring(0,11) : '';
+        return `<div class="entry-item">
+            <div>
+                <p class="entry-name">${name}</p>
+                <p class="entry-tag">${tag}</p>
             </div>
-            <p class="summary-sub">Gulnaz ₹${formatAmount(summary.f1)} · Ghazala ₹${formatAmount(summary.g1)}</p>`;
-    }
+            <div class="entry-right">
+                <p class="entry-amount">₹ ${formatAmount(amount)}</p>
+                <p class="entry-date">${date}</p>
+            </div>
+        </div>`;
+    }).join('');
+}
 
-    function sortAndRenderTable() {
-        const { column, direction } = sortState;
-        filteredEntries.sort((a, b) => {
-            let A = a[column], B = b[column];
-            if (column === 0 || column === 1) { A = parseFloat(A)||0; B = parseFloat(B)||0; }
-            else if (column === 3) { A = new Date(A); B = new Date(B); }
-            else { A = String(A).toLowerCase(); B = String(B).toLowerCase(); }
-            if (A < B) return direction === 'asc' ? -1 : 1;
-            if (A > B) return direction === 'asc' ? 1 : -1;
-            return 0;
-        });
+// #6 — header summary pill
+function renderSummary(summary) {
+    if (!summary) return;
+    const pill = document.getElementById('header-summary-pill');
+    pill.textContent = `${summary.h1||''} ₹${formatAmount(summary.i1)}`;
+    pill.classList.add('visible');
+
+    document.getElementById('summary-container').innerHTML = `
+        <div class="summary-pill">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            ${summary.h1||''} owes ₹${formatAmount(summary.i1)}
+        </div>
+        <p class="summary-sub">Gulnaz ₹${formatAmount(summary.f1)} · Ghazala ₹${formatAmount(summary.g1)}</p>`;
+}
+
+function sortAndRenderTable() {
+    const {column, direction} = sortState;
+    filteredEntries.sort((a,b) => {
+        let A=a[column], B=b[column];
+        if (column===0||column===1){A=parseFloat(A)||0;B=parseFloat(B)||0;}
+        else if(column===3){A=new Date(A);B=new Date(B);}
+        else{A=String(A).toLowerCase();B=String(B).toLowerCase();}
+        if(A<B)return direction==='asc'?-1:1;
+        if(A>B)return direction==='asc'?1:-1;
+        return 0;
+    });
+    renderTable();
+}
+
+function renderTable() {
+    const container = document.getElementById('entries-table-container');
+    const loadMore  = document.getElementById('load-more-container');
+    if (!filteredEntries.length) {
+        container.innerHTML = '<p style="padding:20px;text-align:center;color:var(--text-muted);font-size:14px;">No entries match your filter.</p>';
+        loadMore.innerHTML=''; return;
+    }
+    const cols = [{title:'Gulnaz',idx:0},{title:'Ghazala',idx:1},{title:'Tag',idx:2},{title:'Date',idx:3}];
+    const headerHTML = cols.map(c => {
+        const active = sortState.column===c.idx;
+        const arrow  = active?(sortState.direction==='asc'?'↑':'↓'):'↕';
+        return `<th data-index="${c.idx}" class="${active?'sorted':''}">${c.title}<span class="sort-arrow">${arrow}</span></th>`;
+    }).join('');
+
+    const rows = filteredEntries.slice(0,visibleCount).map(([g,z,tag,ts]) => {
+        const isG=!!g, amt=g||z;
+        return `<tr>
+            <td class="${isG?'amount-cell':''}">${isG?'₹ '+formatAmount(amt):'—'}</td>
+            <td class="${!isG?'amount-cell':''}">${!isG?'₹ '+formatAmount(amt):'—'}</td>
+            <td><span class="tag-badge">${tag}</span></td>
+            <td class="date-cell">${ts?ts.substring(0,11):''}</td>
+        </tr>`;
+    }).join('');
+
+    container.innerHTML = `<table class="entries-table"><thead><tr>${headerHTML}</tr></thead><tbody>${rows}</tbody></table>`;
+    container.querySelectorAll('th[data-index]').forEach(th => th.addEventListener('click', handleSort));
+    renderLoadMore();
+}
+
+function renderLoadMore() {
+    const c = document.getElementById('load-more-container');
+    if (visibleCount >= filteredEntries.length) {
+        c.innerHTML=`<p style="font-size:12px;color:var(--text-muted);">All ${filteredEntries.length} entries shown.</p>`; return;
+    }
+    const rem = filteredEntries.length - visibleCount;
+    let html=`<div class="load-more-group"><span style="font-size:12px;color:var(--text-muted);margin-right:4px;">Load:</span>`;
+    [50,100,200].filter(v=>rem>=v).forEach(v=>{ html+=`<button class="btn-load-more" data-amount="${v}">${v}</button>`; });
+    html+=`<button class="btn-load-more" data-amount="${rem}">All (${rem})</button></div>`;
+    c.innerHTML=html;
+    c.querySelectorAll('.btn-load-more').forEach(btn=>btn.addEventListener('click',e=>{
+        visibleCount+=parseInt(e.currentTarget.dataset.amount,10);
         renderTable();
-    }
+        trackEvent('load_more_entries',{amount:parseInt(e.currentTarget.dataset.amount,10),total_visible:visibleCount});
+    }));
+}
 
-    function renderTable() {
-        const container = document.getElementById('entries-table-container');
-        const loadMore  = document.getElementById('load-more-container');
-        if (!filteredEntries.length) {
-            container.innerHTML = '<p style="padding:20px;text-align:center;color:var(--text-muted);font-size:14px;">No entries match your filter.</p>';
-            loadMore.innerHTML = '';
-            return;
-        }
-        const cols = [
-            { title:'Gulnaz', idx:0 }, { title:'Ghazala', idx:1 },
-            { title:'Tag', idx:2 }, { title:'Date', idx:3 }
-        ];
-        const headerHTML = cols.map(c => {
-            const active = sortState.column === c.idx;
-            const arrow  = active ? (sortState.direction === 'asc' ? '↑' : '↓') : '↕';
-            return `<th data-index="${c.idx}" class="${active ? 'sorted' : ''}">${c.title}<span class="sort-arrow">${arrow}</span></th>`;
-        }).join('');
+function handleSort(e) {
+    const col=parseInt(e.currentTarget.dataset.index,10);
+    sortState.direction = sortState.column===col?(sortState.direction==='asc'?'desc':'asc'):(col===3?'desc':'asc');
+    sortState.column=col; sortAndRenderTable();
+    trackEvent('table_sorted',{column:col,direction:sortState.direction});
+}
 
-        const rows = filteredEntries.slice(0, visibleCount).map(([g, z, tag, ts]) => {
-            const amt = g || z;
-            const isG = !!g;
-            return `<tr>
-                <td class="${isG ? 'amount-cell' : ''}">${isG ? '₹ '+formatAmount(amt) : '—'}</td>
-                <td class="${!isG ? 'amount-cell' : ''}">${!isG ? '₹ '+formatAmount(amt) : '—'}</td>
-                <td><span class="tag-badge">${tag}</span></td>
-                <td class="date-cell">${ts ? ts.substring(0,11) : ''}</td>
-            </tr>`;
-        }).join('');
-
-        container.innerHTML = `<table class="entries-table"><thead><tr>${headerHTML}</tr></thead><tbody>${rows}</tbody></table>`;
-        container.querySelectorAll('th[data-index]').forEach(th => th.addEventListener('click', handleSort));
-        renderLoadMore();
-    }
-
-    function renderLoadMore() {
-        const container = document.getElementById('load-more-container');
-        if (visibleCount >= filteredEntries.length) {
-            container.innerHTML = `<p style="font-size:12px;color:var(--text-muted);">All ${filteredEntries.length} entries shown.</p>`;
-            return;
-        }
-        const remaining = filteredEntries.length - visibleCount;
-        const amounts   = [50, 100, 200].filter(v => remaining >= v);
-        let html = `<div class="load-more-group"><span style="font-size:12px;color:var(--text-muted);margin-right:4px;">Load:</span>`;
-        amounts.forEach(v => html += `<button class="btn-load-more" data-amount="${v}">${v}</button>`);
-        html += `<button class="btn-load-more" data-amount="${remaining}">All (${remaining})</button></div>`;
-        container.innerHTML = html;
-        container.querySelectorAll('.btn-load-more').forEach(btn => btn.addEventListener('click', e => {
-            visibleCount += parseInt(e.currentTarget.dataset.amount, 10);
-            renderTable();
-            trackEvent('load_more_entries', { amount: parseInt(e.currentTarget.dataset.amount, 10), total_visible: visibleCount });
-        }));
-    }
-
-    function handleSort(e) {
-        const col = parseInt(e.currentTarget.dataset.index, 10);
-        sortState.direction = sortState.column === col ? (sortState.direction === 'asc' ? 'desc' : 'asc') : (col === 3 ? 'desc' : 'asc');
-        sortState.column = col;
-        sortAndRenderTable();
-        trackEvent('table_sorted', { column: col, direction: sortState.direction });
-    }
-
-    function handleFilter() {
-        const q = document.getElementById('filter-input').value.toLowerCase();
-        filteredEntries = allEntries.filter(e => e.some(c => String(c).toLowerCase().includes(q)));
-        visibleCount = INITIAL_LOAD_COUNT;
-        sortAndRenderTable();
-        trackEvent('table_filtered', { query: q, results: filteredEntries.length });
-    }
+function handleFilter() {
+    const q=document.getElementById('filter-input').value.toLowerCase();
+    filteredEntries=allEntries.filter(e=>e.some(c=>String(c).toLowerCase().includes(q)));
+    visibleCount=INITIAL_LOAD_COUNT; sortAndRenderTable();
+    trackEvent('table_filtered',{query:q,results:filteredEntries.length});
+}
 </script>
 </body>
 </html>
