@@ -49,6 +49,7 @@
         @keyframes entryIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
         @keyframes successPop{0%{transform:scale(1)}30%{transform:scale(1.06)}100%{transform:scale(1)}}
+        @keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
         @keyframes groupIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
         .anim-fade-up{animation:fadeUp 0.45s cubic-bezier(.22,1,.36,1) both;}
@@ -142,9 +143,25 @@
         #main-scroll{flex:1;overflow-y:auto;padding:14px 14px calc(14px + env(safe-area-inset-bottom));}
         .content-wrap{max-width:440px;margin:0 auto;}
 
+        /* HOMEPAGE TALLY CARD */
+        .tally-card{background:var(--bg-card);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-xs);overflow:hidden;margin-bottom:14px;display:none;}
+        .tally-card.visible{display:block;animation:fadeUp 0.4s cubic-bezier(.22,1,.36,1) both;}
+        .tally-card-inner{display:flex;align-items:stretch;}
+        .tally-cell{flex:1;padding:14px 12px;text-align:center;border-right:1px solid var(--border);}
+        .tally-cell:last-child{border-right:none;}
+        .tally-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+        .tally-value{font-size:18px;font-weight:700;letter-spacing:-0.02em;}
+        .tally-value.gulnaz{color:var(--gulnaz-color);}
+        .tally-value.ghazala{color:var(--ghazala-color);}
+        .tally-value.owed{color:var(--green-text);}
+        .tally-owed-label{font-size:10px;color:var(--text-muted);margin-top:2px;font-weight:500;}
+
         /* RECENT ENTRIES */
-        .recent-header{display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px;}
+        .recent-header{display:flex;align-items:center;justify-content:space-between;margin:4px 0 10px;}
         .recent-title{font-size:17px;font-weight:600;color:var(--text-primary);}
+        .btn-view-all{display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 12px;border-radius:99px;background:var(--accent-light);color:var(--accent-dark);font-size:13px;font-weight:600;border:none;cursor:pointer;transition:background 0.15s,color 0.15s;}
+        .btn-view-all:hover{background:var(--accent);color:#fff;}
+        .btn-view-all svg{width:13px;height:13px;}
         .entries-card{background:var(--bg-card);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-xs);overflow:hidden;}
         .entry-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);animation:entryIn 0.35s cubic-bezier(.22,1,.36,1) both;}
         .entry-item:last-child{border-bottom:none;}
@@ -157,6 +174,13 @@
         .entry-right{text-align:right;flex-shrink:0;}
         .entry-amount{font-size:15px;font-weight:700;color:var(--green-text);}
         .entry-date{font-size:11px;color:var(--text-disabled);margin-top:2px;}
+
+        /* View All row at bottom of recent */
+        .view-all-row{display:flex;align-items:center;justify-content:center;padding:11px 16px;border-top:1px solid var(--border);gap:6px;cursor:pointer;background:transparent;transition:background 0.12s;width:100%;}
+        .view-all-row:hover{background:var(--bg);}
+        .view-all-row span{font-size:13px;font-weight:600;color:var(--accent);}
+        .view-all-row svg{color:var(--accent);}
+
         .skeleton{background:var(--bg-input);border-radius:6px;animation:pulse 1.4s ease-in-out infinite;}
         .skeleton-entry{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);}
         .skeleton-entry:last-child{border-bottom:none;}
@@ -200,7 +224,7 @@
 
         /* DATE-GROUPED ROWS */
         .date-group{animation:groupIn 0.3s cubic-bezier(.22,1,.36,1) both;}
-        .date-group-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px;position:sticky;top:0;background:rgba(245,245,247,0.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2;}
+        .date-group-header{display:flex;align-items:center;padding:10px 16px 6px;position:sticky;top:0;background:rgba(245,245,247,0.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2;}
         .date-group-label{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase;}
         .tx-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(0,0,0,0.04);transition:background 0.12s;gap:12px;}
         .tx-row:last-child{border-bottom:none;}
@@ -214,26 +238,6 @@
         .tx-amount{font-size:15px;font-weight:700;text-align:right;flex-shrink:0;}
         .tx-amount.gulnaz{color:var(--gulnaz-color);}
         .tx-amount.ghazala{color:var(--ghazala-color);}
-
-        /* TALLY CARD */
-        .tally-card{background:var(--bg-card);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-xs);overflow:hidden;margin-bottom:12px;}
-        .tally-row{display:flex;align-items:stretch;}
-        .tally-cell{flex:1;padding:14px 16px;display:flex;flex-direction:column;gap:3px;}
-        .tally-cell:first-child{border-right:1px solid var(--border);}
-        .tally-cell-label{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted);}
-        .tally-cell-amount{font-size:20px;font-weight:700;letter-spacing:-0.02em;}
-        .tally-cell-amount.gulnaz{color:var(--gulnaz-color);}
-        .tally-cell-amount.ghazala{color:var(--ghazala-color);}
-        .tally-owed-bar{border-top:1px solid var(--border);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;}
-        .tally-owed-label{font-size:13px;font-weight:500;color:var(--text-muted);}
-        .tally-owed-value{font-size:15px;font-weight:700;color:var(--green-text);}
-        .tally-skeleton .tally-cell-amount{height:20px;width:80px;border-radius:6px;background:var(--bg-input);animation:pulse 1.4s ease-in-out infinite;}
-
-        /* VIEW ALL FOOTER */
-        .view-all-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:13px 16px;border-top:1px solid var(--border);background:transparent;font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;transition:background 0.15s,color 0.15s;}
-        .view-all-btn:hover{background:var(--accent-light);color:var(--accent-dark);}
-        .view-all-btn svg{transition:transform 0.18s;}
-        .view-all-btn:hover svg{transform:translateX(3px);}
 
         /* LOAD MORE */
         .load-more-group{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;}
@@ -258,7 +262,7 @@
         .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
         .w-full{width:100%;} .flex-1{flex:1;}
         iframe{border:none;display:block;}
-        @media(max-width:400px){.auth-card{padding:28px 20px;}.form-section{padding:12px;}.tx-summary-cell{padding:10px 8px;}.tx-summary-value{font-size:13px;}}
+        @media(max-width:400px){.auth-card{padding:28px 20px;}.form-section{padding:12px;}.tx-summary-cell{padding:10px 8px;}.tx-summary-value{font-size:13px;}.tally-value{font-size:15px;}}
     </style>
 </head>
 <body>
@@ -300,7 +304,7 @@
         <div id="contact-ui" class="hidden">
             <h1 class="auth-title" style="margin-bottom:6px;">Create Account</h1>
             <p class="auth-sub" style="margin-bottom:20px;">To get access, email us and we'll set you up:</p>
-            <a href="/cdn-cgi/l/email-protection#b7dad2f7cdd6ded399d8c1df" class="contact-link"><span class="__cf_email__" data-cfemail="1f727a5f657e767b31706977">[email&#160;protected]</span></a>
+            <a href="mailto:me@zaid.ovh" class="contact-link">me@zaid.ovh</a>
             <p class="auth-sub" style="text-align:center;margin-bottom:20px;">You'll be notified once your account is ready.</p>
             <button id="go-back-button" class="btn-ghost w-full">← Back to Sign In</button>
         </div>
@@ -322,7 +326,6 @@
                         <svg id="logout-spinner" class="anim-spin hidden" width="14" height="14" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
                     </button>
                 </div>
-                <!-- Trend Chart removed from menu ② -->
                 <button class="menu-item" id="help-feedback-btn">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     Help
@@ -341,24 +344,6 @@
                 <div class="step-col"><div class="step-circle inactive" id="step2-circle"><span>2</span></div><div class="step-label inactive" id="step2-label">Amount</div></div>
                 <div class="step-item"><div class="step-line"><div class="step-line-fill" id="line2"></div></div></div>
                 <div class="step-col"><div class="step-circle inactive" id="step3-circle"><span>3</span></div><div class="step-label inactive" id="step3-label">Category</div></div>
-            </div>
-
-            <!-- Tally card -->
-            <div class="tally-card tally-skeleton" id="tally-card">
-                <div class="tally-row">
-                    <div class="tally-cell">
-                        <span class="tally-cell-label">Gulnaz</span>
-                        <span class="tally-cell-amount gulnaz" id="tally-gulnaz">—</span>
-                    </div>
-                    <div class="tally-cell">
-                        <span class="tally-cell-label">Ghazala</span>
-                        <span class="tally-cell-amount ghazala" id="tally-ghazala">—</span>
-                    </div>
-                </div>
-                <div class="tally-owed-bar">
-                    <span class="tally-owed-label" id="tally-owed-label">Loading…</span>
-                    <span class="tally-owed-value" id="tally-owed-value"></span>
-                </div>
             </div>
 
             <form id="data-form" novalidate>
@@ -382,7 +367,7 @@
                     </div>
                 </div>
 
-                <!-- Category — ① full updated list -->
+                <!-- Category -->
                 <p class="section-label">Category</p>
                 <div class="form-section" style="margin-bottom:16px;">
                     <fieldset style="border:none;padding:0;"><legend class="sr-only">Tag</legend>
@@ -417,22 +402,49 @@
                 </div>
             </form>
 
-            <div class="recent-header"><span class="recent-title">Recent</span></div>
+            <!-- TOTAL TALLY CARD (homepage) -->
+            <div id="tally-card" class="tally-card">
+                <div class="tally-card-inner">
+                    <div class="tally-cell">
+                        <div class="tally-label">Gulnaz</div>
+                        <div class="tally-value gulnaz" id="home-sum-gulnaz">—</div>
+                    </div>
+                    <div class="tally-cell">
+                        <div class="tally-label">Ghazala</div>
+                        <div class="tally-value ghazala" id="home-sum-ghazala">—</div>
+                    </div>
+                    <div class="tally-cell">
+                        <div class="tally-label">Owes</div>
+                        <div class="tally-value owed" id="home-sum-owed">—</div>
+                        <div class="tally-owed-label" id="home-owed-name"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent header with View All button -->
+            <div class="recent-header">
+                <span class="recent-title">Recent</span>
+                <button class="btn-view-all" id="view-entries-btn">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    All Transactions
+                </button>
+            </div>
             <div class="entries-card">
                 <div id="recent-entries">
                     <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:100px;margin-bottom:6px;"></div><div class="skeleton" style="height:10px;width:55px;"></div></div></div>
                     <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:120px;margin-bottom:6px;"></div><div class="skeleton" style="height:10px;width:45px;"></div></div></div>
                     <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:90px;margin-bottom:6px;"></div><div class="skeleton" style="height:10px;width:60px;"></div></div></div>
                 </div>
-                <button type="button" class="view-all-btn" id="view-all-home-btn">
-                    View all transactions
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                <!-- View all at bottom of recent -->
+                <button class="view-all-row" id="view-all-bottom-btn">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    <span>View all transactions</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Transactions Modal — date-grouped ③ -->
+    <!-- Transactions Modal — date-grouped, no daily totals -->
     <div id="entries-modal" class="modal-overlay hidden">
         <div class="modal-sheet" style="max-height:95dvh;">
             <div class="sheet-handle"></div>
@@ -471,7 +483,7 @@
                 </div>
                 <div class="help-section">
                     <div class="help-section-title"><div class="help-icon-wrap" style="background:var(--accent-light);"><svg width="16" height="16" fill="none" stroke="var(--accent)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>Contact</div>
-                    <ul class="help-list"><li><span class="help-dot" style="background:var(--accent);"></span>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="503d35102a3139347e3f2638">[email&#160;protected]</a></li><li><span class="help-dot" style="background:var(--accent);"></span>Response within 24–48 hours</li></ul>
+                    <ul class="help-list"><li><span class="help-dot" style="background:var(--accent);"></span>Email: me@zaid.ovh</li><li><span class="help-dot" style="background:var(--accent);"></span>Response within 24–48 hours</li></ul>
                 </div>
                 <div class="help-section">
                     <div class="help-section-title"><div class="help-icon-wrap" style="background:var(--amber-light);"><svg width="16" height="16" fill="none" stroke="var(--amber)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>Tips</div>
@@ -490,7 +502,7 @@
     <p id="message-text"></p>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
     import { getAnalytics }  from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
     const c={apiKey:"AIzaSyA5bKSAZN0JHAK_atwbSRz4dCTJ8NaH4vI",authDomain:"auth-demo-9a4bc.firebaseapp.com",projectId:"auth-demo-9a4bc",storageBucket:"auth-demo-9a4bc.firebasestorage.app",messagingSenderId:"554871726025",appId:"1:554871726025:web:ec8d1171f6a85b13c65218",measurementId:"G-J95YDM55T8"};
@@ -600,22 +612,19 @@
         });
         $('amount').addEventListener('input',updateSteps);
 
-        $('view-all-home-btn').addEventListener('click',openEntriesModal);
+        // All 3 entry points to open transactions modal
+        $('view-entries-btn').addEventListener('click',openEntriesModal);
+        $('view-all-bottom-btn').addEventListener('click',openEntriesModal);
+
         $('help-feedback-btn').addEventListener('click',()=>{$('help-modal').classList.remove('hidden');hamburgerContainer.classList.add('hidden');menuContent.classList.remove('show');trackEvent('help_feedback_opened');});
         $('close-help-modal-btn').addEventListener('click',()=>{$('help-modal').classList.add('hidden');hamburgerContainer.classList.remove('hidden');trackEvent('help_modal_closed');});
-        $('close-modal-btn').addEventListener('click',()=>{$('entries-modal').classList.add('hidden');trackEvent('entries_modal_closed');});
+        $('close-modal-btn').addEventListener('click',()=>{$('entries-modal').classList.add('hidden');hamburgerContainer.classList.remove('hidden');trackEvent('entries_modal_closed');});
         $('filter-input').addEventListener('input',handleFilter);
 
         [$('entries-modal'),$('help-modal')].forEach(overlay=>{
-            const isHelp=overlay.id==='help-modal';
             let startY=0;const sheet=overlay.querySelector('.modal-sheet');
             sheet.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;},{passive:true});
-            sheet.addEventListener('touchend',e=>{
-                if(e.changedTouches[0].clientY-startY>80){
-                    overlay.classList.add('hidden');
-                    if(isHelp)hamburgerContainer.classList.remove('hidden');
-                }
-            },{passive:true});
+            sheet.addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-startY>80){overlay.classList.add('hidden');hamburgerContainer.classList.remove('hidden');}},{passive:true});
         });
 
         fetchInitialData();getDeviceDetails();
@@ -693,7 +702,7 @@
 
     function openEntriesModal(){
         $('entries-modal').classList.remove('hidden');
-        menuContent.classList.remove('show');
+        hamburgerContainer.classList.add('hidden');menuContent.classList.remove('show');
         filteredEntries=[...allEntries];visibleCount=INITIAL_LOAD_COUNT;
         renderGrouped();trackEvent('entries_modal_opened');
     }
@@ -706,7 +715,14 @@
             if(data.error)throw new Error(data.error);
             allEntries=Array.isArray(data.entries)?data.entries:[];
             renderRecentEntries(allEntries);
-            updateHeaderAndSummary(data.summary);
+            updateHomeTally(data.summary);
+            // Also keep modal summary in sync
+            if(data.summary){
+                $('tx-sum-gulnaz').textContent=data.summary.f1?'₹'+fmt(data.summary.f1):'₹0';
+                $('tx-sum-ghazala').textContent=data.summary.g1?'₹'+fmt(data.summary.g1):'₹0';
+                $('tx-sum-owed').textContent=data.summary.i1?'₹'+fmt(data.summary.i1):'₹0';
+                $('tx-summary-bar').style.display='flex';
+            }
             trackEvent('data_fetch_success',{entries_count:allEntries.length});
         }catch(err){
             console.error(err);
@@ -715,21 +731,14 @@
         }
     }
 
-    function updateHeaderAndSummary(summary){
+    function updateHomeTally(summary){
         if(!summary)return;
-        // Tally card
-        $('tally-gulnaz').textContent=summary.f1?'₹'+fmt(summary.f1):'₹0';
-        $('tally-ghazala').textContent=summary.g1?'₹'+fmt(summary.g1):'₹0';
-        const owedName=summary.h1||'';
-        const owedAmt=summary.i1?'₹'+fmt(summary.i1):'₹0';
-        $('tally-owed-label').textContent=owedName?`${owedName} owes`:'Balance';
-        $('tally-owed-value').textContent=owedAmt;
-        $('tally-card').classList.remove('tally-skeleton');
-        // Modal summary bar (keep in sync)
-        $('tx-sum-gulnaz').textContent=summary.f1?'₹'+fmt(summary.f1):'₹0';
-        $('tx-sum-ghazala').textContent=summary.g1?'₹'+fmt(summary.g1):'₹0';
-        $('tx-sum-owed').textContent=summary.i1?'₹'+fmt(summary.i1):'₹0';
-        $('tx-summary-bar').style.display='flex';
+        const card=$('tally-card');
+        $('home-sum-gulnaz').textContent=summary.f1?'₹'+fmt(summary.f1):'₹0';
+        $('home-sum-ghazala').textContent=summary.g1?'₹'+fmt(summary.g1):'₹0';
+        $('home-sum-owed').textContent=summary.i1?'₹'+fmt(summary.i1):'₹0';
+        if(summary.h1)$('home-owed-name').textContent=summary.h1;
+        card.classList.add('visible');
     }
 
     function renderRecentEntries(entries){
@@ -745,7 +754,7 @@
         }).join('');
     }
 
-    /* ── DATE-GROUPED VIEW ③ ── */
+    /* ── DATE-GROUPED VIEW — no daily totals ── */
     function formatDateLabel(ts){
         if(!ts)return 'Unknown Date';
         const d=new Date(ts);if(isNaN(d))return ts.substring(0,11);
@@ -771,9 +780,8 @@
         const groups={},order=[];
         toShow.forEach(entry=>{
             const key=getDayKey(entry[3]);
-            if(!groups[key]){groups[key]={label:formatDateLabel(entry[3]),entries:[],total:0};order.push(key);}
+            if(!groups[key]){groups[key]={label:formatDateLabel(entry[3]),entries:[]};order.push(key);}
             groups[key].entries.push(entry);
-            groups[key].total+=(parseFloat(entry[0])||0)+(parseFloat(entry[1])||0);
         });
 
         container.innerHTML=order.map((key,gi)=>{
@@ -811,4 +819,12 @@
         }));
     }
 
-    f
+    function handleFilter(){
+        const q=$('filter-input').value.toLowerCase();
+        filteredEntries=allEntries.filter(e=>e.some(c=>String(c).toLowerCase().includes(q)));
+        visibleCount=INITIAL_LOAD_COUNT;renderGrouped();
+        trackEvent('table_filtered',{query:q,results:filteredEntries.length});
+    }
+</script>
+</body>
+</html>
