@@ -462,9 +462,8 @@
                     </button>
                 </div>
 
-                <div id="owes-banner" class="owes-banner" role="button" tabindex="0" style="cursor:pointer;" title="View all transactions">
-                    <div class="owes-banner-inner" style="position:relative;">
-                        <div style="position:absolute;top:10px;right:12px;opacity:0.5;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#fff;">Tap to view all →</div>
+                <div id="owes-banner" class="owes-banner">
+                    <div class="owes-banner-inner">
                         <div class="owes-eyebrow">Outstanding Balance</div>
                         <div class="owes-row">
                             <span class="owes-name" id="owes-name">—</span>
@@ -565,40 +564,6 @@
 
         <div id="entries-table-container" style="flex:1;overflow-y:auto;"></div>
         <div id="load-more-container" class="modal-footer" style="text-align:center;"></div>
-    </div>
-</div>
-
-<!-- ENTRY DETAIL MODAL -->
-<div id="entry-detail-modal" class="modal-overlay hidden" style="align-items:center;justify-content:center;padding:20px;">
-    <div class="modal-sheet" style="border-radius:var(--r-2xl);max-width:360px;width:100%;max-height:auto;animation:fadeUp .3s cubic-bezier(.22,1,.36,1);">
-        <div class="modal-header" style="border-bottom:none;padding:16px 16px 0;">
-            <button id="close-detail-modal-btn" class="btn-icon" style="margin-left:auto;">&times;</button>
-        </div>
-        <div style="padding:0 24px 28px;display:flex;flex-direction:column;align-items:center;gap:0;">
-            <div id="detail-emoji" style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:14px;"></div>
-            <div id="detail-name" style="font-size:13px;font-weight:600;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;"></div>
-            <div id="detail-amount" style="font-family:var(--font-serif);font-size:44px;letter-spacing:-0.04em;line-height:1;margin-bottom:6px;"></div>
-            <div id="detail-tag-wrap" style="display:inline-flex;align-items:center;gap:6px;background:var(--bg-input);border-radius:99px;padding:5px 14px;margin-bottom:20px;">
-                <span id="detail-tag-emoji" style="font-size:15px;"></span>
-                <span id="detail-tag" style="font-size:13px;font-weight:600;color:var(--text-secondary);"></span>
-            </div>
-            <div style="width:100%;background:var(--bg);border-radius:var(--r-lg);padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:12px;color:var(--text-muted);font-weight:500;">Date</span>
-                    <span id="detail-date" style="font-size:13px;font-weight:600;color:var(--text-primary);"></span>
-                </div>
-                <div style="height:1px;background:var(--border);"></div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:12px;color:var(--text-muted);font-weight:500;">Time</span>
-                    <span id="detail-time" style="font-size:13px;font-weight:600;color:var(--text-primary);"></span>
-                </div>
-                <div style="height:1px;background:var(--border);"></div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:12px;color:var(--text-muted);font-weight:500;">Person</span>
-                    <span id="detail-person" style="font-size:13px;font-weight:600;"></span>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -775,16 +740,6 @@ function initApp(){
     $('view-entries-btn').addEventListener('click',openTransactions);
     $('view-all-bottom-btn').addEventListener('click',openTransactions);
     $('tx-back-btn').addEventListener('click',closeTransactions);
-
-    // Fix 3: Clicking owes-banner opens all transactions
-    const banner=$('owes-banner');
-    banner.addEventListener('click',openTransactions);
-    banner.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openTransactions();});
-
-    // Close detail modal
-    $('close-detail-modal-btn').addEventListener('click',()=>$('entry-detail-modal').classList.add('hidden'));
-    $('entry-detail-modal').addEventListener('click',e=>{if(e.target===$('entry-detail-modal'))$('entry-detail-modal').classList.add('hidden');});
-
     $('help-feedback-btn').addEventListener('click',()=>{$('help-modal').classList.remove('hidden');menuContent.classList.remove('show');});
     $('close-help-modal-btn').addEventListener('click',()=>{$('help-modal').classList.add('hidden');});
 
@@ -865,31 +820,10 @@ async function handleSubmit(e){
     const name=fd.get('name'),amount=fd.get('amount');
     const checked=document.querySelector('input[name="tag"]:checked');
     const tag=checked?checked.value:$('other-tag-input').value.trim();
-
-    // Fix 4: All fields mandatory with visual feedback
-    let hasError=false;
-    if(!name){
-        showMsg('Please select who owes (Gulnaz or Ghazala).');
-        haptic([30,20,30]);
-        document.querySelector('.chip-name').closest('.form-section')?.classList.add('anim-shake');
-        setTimeout(()=>document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('anim-shake')),700);
-        hasError=true;
-    } else if(!amount||parseInt(amount,10)<=0){
-        showMsg(amount?'Amount must be a positive whole number.':'Please enter an amount.');
-        haptic([30,20,30]);
-        $('amount').style.borderColor='var(--red)';
-        setTimeout(()=>$('amount').style.borderColor='',1500);
-        hasError=true;
-    } else if(!tag){
-        showMsg('Please select a category.');
-        haptic([30,20,30]);
-        document.querySelector('#tag-kirana')?.closest('.form-section')?.classList.add('anim-shake');
-        setTimeout(()=>document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('anim-shake')),700);
-        hasError=true;
-    } else if(!/^\d+$/.test(amount)){
-        showMsg('Amount must be a whole number.');haptic([30,20,30]);hasError=true;
-    }
-    if(hasError)return;
+    if(!name){showMsg('Please select a name.');haptic([30,20,30]);return;}
+    if(!amount){showMsg('Please enter an amount.');haptic([30,20,30]);return;}
+    if(!/^\d+$/.test(amount)||parseInt(amount,10)<=0){showMsg('Amount must be a positive whole number.');haptic([30,20,30]);return;}
+    if(!tag){showMsg('Please select a category.');haptic([30,20,30]);return;}
     showSpin('submit-button','submit-text','submit-spinner');
     const userEmail=auth.currentUser?.email||'Unknown';
     const sfd=new FormData();
@@ -968,27 +902,16 @@ function updateBanner(s){
     banner.classList.add('visible');
 }
 
-function fmtFullDateTime(ts){
-    if(!ts)return{date:'',time:''};
-    const d=new Date(ts);if(isNaN(d))return{date:ts.substring(0,11),time:''};
-    const date=d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
-    let h=d.getHours(),m=d.getMinutes();const ampm=h>=12?'PM':'AM';
-    h=h%12||12;const time=`${h}:${m.toString().padStart(2,'0')} ${ampm}`;
-    return{date,time};
-}
-
 function renderRecent(entries){
     const el=$('recent-entries');
     if(!entries.length){el.innerHTML='<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:14px;">No entries yet.</div>';return;}
     el.innerHTML=entries.slice(0,5).map(([gAmt,zAmt,tag,ts],i)=>{
         const isG=!!gAmt,amount=gAmt||zAmt,name=isG?'Gulnaz':'Ghazala',cls=isG?'gulnaz':'ghazala';
-        const {date,time}=fmtFullDateTime(ts);
-        // Show both date AND time in recent entries
-        const dateTimeLine=[date,time].filter(Boolean).join(' · ');
+        const t=fmt12(ts);
         return`<div class="entry-item" style="animation-delay:${i*65}ms;">
             <div class="entry-emoji ${cls}">${tagEmoji(tag)}</div>
             <div class="entry-info"><div class="entry-name">${name} dena</div><div class="entry-tag">${tag}</div></div>
-            <div class="entry-right"><div class="entry-amount ${cls}">₹ ${fmt(amount)}</div><div class="entry-date">${dateTimeLine}</div></div>
+            <div class="entry-right"><div class="entry-amount ${cls}">₹ ${fmt(amount)}</div><div class="entry-date">${ts?ts.substring(0,11):''} ${t?'· '+t:''}</div></div>
         </div>`;
     }).join('');
 }
@@ -1001,27 +924,14 @@ function applyFiltersAndRender(){
     if(personFilter==='gulnaz')res=res.filter(([g])=>!!g);
     else if(personFilter==='ghazala')res=res.filter(([g])=>!g);
 
-    // FIX: Date range filtering — robust parsing handles Sheets formats like "DD/MM/YYYY, HH:MM:SS"
-    function parseTs(ts){
-        if(!ts)return null;
-        // Try native parse first (ISO, etc.)
-        let d=new Date(ts);
-        if(!isNaN(d))return d;
-        // Try DD/MM/YYYY or DD/MM/YYYY, HH:MM:SS (Google Sheets locale)
-        const m=String(ts).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
-        if(m)return new Date(+m[3],+m[2]-1,+m[1],+m[4],+m[5],+(m[6]||0));
-        // Try DD-MM-YYYY
-        const m2=String(ts).match(/^(\d{1,2})-(\d{1,2})-(\d{4})/);
-        if(m2)return new Date(+m2[3],+m2[2]-1,+m2[1]);
-        return null;
-    }
+    // FIX 4: Date range filtering (inclusive of both endpoints)
     if(dateFrom){
         const from=new Date(dateFrom);from.setHours(0,0,0,0);
-        res=res.filter(e=>{const d=parseTs(e[3]);return d&&d>=from;});
+        res=res.filter(e=>{const d=new Date(e[3]);return!isNaN(d)&&d>=from;});
     }
     if(dateTo){
         const to=new Date(dateTo);to.setHours(23,59,59,999);
-        res=res.filter(e=>{const d=parseTs(e[3]);return d&&d<=to;});
+        res=res.filter(e=>{const d=new Date(e[3]);return!isNaN(d)&&d<=to;});
     }
 
     res=[...res].sort((a,b)=>{
@@ -1067,26 +977,6 @@ function groupHeaderLabel(ts,key){
         return new Date(+y,+m-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
     }
     return fmtDateLabel(ts);
-}
-
-function openEntryDetail(entry){
-    const [gAmt,zAmt,tag,ts]=entry;
-    const isG=!!gAmt,amount=gAmt||zAmt,name=isG?'Gulnaz':'Ghazala',cls=isG?'gulnaz':'ghazala';
-    const emoji=tagEmoji(tag);
-    const {date,time}=fmtFullDateTime(ts);
-    $('detail-emoji').textContent=emoji;
-    $('detail-emoji').style.background=isG?'var(--gulnaz-light)':'var(--ghazala-light)';
-    $('detail-name').textContent=name+' dena';
-    $('detail-amount').textContent='₹ '+fmt(amount);
-    $('detail-amount').style.color=isG?'var(--gulnaz-color)':'var(--ghazala-color)';
-    $('detail-tag-emoji').textContent=emoji;
-    $('detail-tag').textContent=tag;
-    $('detail-date').textContent=date||'—';
-    $('detail-time').textContent=time||'—';
-    $('detail-person').textContent=name;
-    $('detail-person').style.color=isG?'var(--gulnaz-color)':'var(--ghazala-color)';
-    $('entry-detail-modal').classList.remove('hidden');
-    haptic([6]);
 }
 
 function renderGrouped(){
