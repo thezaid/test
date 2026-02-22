@@ -34,37 +34,46 @@
         input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;}
         input[type=number]{-moz-appearance:textfield;}
 
-        /* ── ANIMATIONS ── */
-        @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+        /* ANIMATIONS */
+        @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
         @keyframes spin{to{transform:rotate(360deg)}}
         @keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(3px)}30%,50%,70%{transform:translateX(-5px)}40%,60%{transform:translateX(5px)}}
-        @keyframes entryIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-        @keyframes successPop{0%{transform:scale(1)}30%{transform:scale(1.06)}100%{transform:scale(1)}}
-        @keyframes groupIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes owesIn{from{opacity:0;transform:scale(0.97) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        @keyframes entryIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.42}}
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        @keyframes successPop{0%{transform:scale(1)}35%{transform:scale(1.07)}100%{transform:scale(1)}}
+        @keyframes groupIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
         @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-        @keyframes pageSlideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
-        @keyframes pageSlideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(-30%);opacity:0}}
-        @keyframes ripple{0%{transform:scale(0);opacity:0.5}100%{transform:scale(4);opacity:0}}
-        @keyframes chipPop{0%{transform:scale(0.9)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
-        @keyframes bannerSlide{from{opacity:0;transform:translateY(20px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-        @keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes floatBubble{0%,100%{transform:translateY(0px)}50%{transform:translateY(-6px)}}
+        @keyframes chipPop{0%{transform:scale(0.88)}55%{transform:scale(1.06)}100%{transform:scale(1)}}
+        @keyframes bannerSlide{from{opacity:0;transform:translateY(22px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+        @keyframes dotBounce{0%,80%,100%{transform:scale(0);opacity:.3}40%{transform:scale(1);opacity:1}}
+        @keyframes filterBarIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes rowIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes overlayIn{from{opacity:0}to{opacity:1}}
 
-        .anim-spin{animation:spin 0.9s linear infinite;}
+        /* Shimmer skeleton */
+        .skeleton{border-radius:6px;background:linear-gradient(90deg,var(--bg-input) 25%,var(--bg-hover) 50%,var(--bg-input) 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite;}
+        .skeleton-entry{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);}
+        .skeleton-entry:last-child{border-bottom:none;}
+        .sk-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;}
+        .sk-lines{flex:1;}
+
+        /* Loading dots */
+        .loading-dots{display:inline-flex;align-items:center;gap:5px;}
+        .loading-dots span{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:dotBounce 1.2s ease-in-out infinite;}
+        .loading-dots span:nth-child(2){animation-delay:.2s;}
+        .loading-dots span:nth-child(3){animation-delay:.4s;}
+
+        .anim-spin{animation:spin 0.85s linear infinite;}
         .anim-shake{animation:shake 0.6s cubic-bezier(.36,.07,.19,.97) both;}
-        
-        /* Chip animations */
-        .chip label{transition:background .18s,border-color .18s,color .18s,transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .18s;}
-        .chip label:active{transform:scale(0.88);}
-        .chip input[type="radio"]:checked+label{animation:chipPop 0.3s cubic-bezier(.34,1.56,.64,1);}
 
-        /* Ripple effect on buttons */
+        .chip label{transition:background .18s,border-color .18s,color .18s,transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .18s;}
+        .chip label:active{transform:scale(0.86)!important;}
+        .chip input[type="radio"]:checked+label{animation:chipPop 0.28s cubic-bezier(.34,1.56,.64,1) both;}
         .btn-primary{position:relative;overflow:hidden;}
-        .btn-primary::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.2);border-radius:inherit;transform:scale(0);opacity:0;transition:transform 0.4s,opacity 0.4s;}
-        .btn-primary:active::after{transform:scale(4);opacity:0;transition:0s;}
+        .btn-primary::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.18);border-radius:inherit;transform:scale(0);opacity:0;transition:transform 0.5s,opacity 0.5s;}
+        .btn-primary:active::after{transform:scale(3.5);opacity:0;transition:0s;}
 
         /* AUTH */
         #auth-container{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg);z-index:100;}
@@ -97,7 +106,7 @@
         button{font-family:var(--font-sans);cursor:pointer;border:none;}
         .btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;font-size:15px;font-weight:600;letter-spacing:-0.01em;padding:0 20px;height:52px;border-radius:var(--r-md);transition:background .18s,transform .18s,box-shadow .18s;box-shadow:0 2px 8px rgba(59,122,255,0.28);white-space:nowrap;}
         .btn-primary:hover:not(:disabled){background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(59,122,255,0.36);}
-        .btn-primary:active:not(:disabled){transform:translateY(0) scale(0.98);}
+        .btn-primary:active:not(:disabled){transform:translateY(0) scale(0.97);}
         .btn-primary:disabled{opacity:0.65;cursor:default;transform:none;}
         .btn-primary.btn-success{background:var(--green-dark)!important;box-shadow:0 2px 8px rgba(40,163,72,0.28)!important;animation:successPop 0.4s cubic-bezier(.34,1.56,.64,1);}
         .btn-ghost{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--bg-input);color:var(--text-secondary);font-size:14px;font-weight:500;height:52px;padding:0 18px;border-radius:var(--r-md);transition:background .15s,color .15s,transform .15s;}
@@ -105,10 +114,10 @@
         .btn-ghost:active{transform:scale(0.97);}
         .btn-icon{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:transparent;color:var(--text-secondary);transition:background .15s,color .15s,transform .15s;}
         .btn-icon:hover{background:var(--bg-hover);color:var(--text-primary);}
-        .btn-icon:active{transform:scale(0.9);}
+        .btn-icon:active{transform:scale(0.88);}
         .btn-danger-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--red-light);color:var(--red-text);flex-shrink:0;transition:background .15s,color .15s,transform .15s;}
         .btn-danger-icon:hover{background:var(--red);color:#fff;}
-        .btn-danger-icon:active{transform:scale(0.9);}
+        .btn-danger-icon:active{transform:scale(0.88);}
 
         /* CHIPS */
         .chip-group{display:flex;flex-wrap:wrap;gap:7px;}
@@ -118,33 +127,33 @@
         .chip label:hover{background:var(--bg-hover);}
         .chip input[type="radio"]:checked+label:hover{background:var(--accent-light);}
         .chip-name label{height:44px;padding:0 20px;font-size:15px;}
-        .other-expand-chip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 13px;border-radius:99px;background:var(--bg-input);color:var(--text-muted);font-size:13px;font-weight:500;cursor:pointer;border:1.5px dashed var(--border);transition:background .15s,border-color .15s,color .15s,transform .2s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;}
+        .other-expand-chip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 13px;border-radius:99px;background:var(--bg-input);color:var(--text-muted);font-size:13px;font-weight:500;cursor:pointer;border:1.5px dashed var(--border);transition:background .15s,border-color .15s,color .15s,transform .22s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;}
         .other-expand-chip:hover{background:var(--bg-hover);border-color:var(--text-muted);color:var(--text-secondary);}
-        .other-expand-chip:active{transform:scale(0.88);}
+        .other-expand-chip:active{transform:scale(0.86);}
         .other-expand-chip.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark);border-style:solid;font-weight:600;}
         .other-input-wrap{overflow:hidden;max-height:0;opacity:0;transition:max-height .35s cubic-bezier(.22,1,.36,1),opacity .25s;}
         .other-input-wrap.open{max-height:60px;opacity:1;margin-top:10px;}
 
         /* FORM SECTIONS */
-        .form-section{background:var(--bg-card);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-xs);padding:16px;margin-bottom:12px;transition:box-shadow .2s,transform .2s;}
+        .form-section{background:var(--bg-card);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-xs);padding:16px;margin-bottom:12px;transition:box-shadow .2s;}
         .form-section:focus-within{box-shadow:var(--shadow-sm);}
         .section-label{font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;padding:0 2px;}
         .form-actions{display:flex;gap:10px;margin-top:14px;}
 
-        /* ── PAGE SYSTEM ── */
+        /* PAGE SYSTEM */
         #root{position:fixed;inset:0;overflow:hidden;}
         #page-home{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg);transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;}
-        #page-home.page-exit{transform:translateX(-35px);opacity:0;pointer-events:none;}
+        #page-home.page-exit{transform:translateX(-38px);opacity:0;pointer-events:none;}
         #page-transactions{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg);transform:translateX(100%);opacity:0;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;pointer-events:none;}
         #page-transactions.page-enter{transform:translateX(0);opacity:1;pointer-events:auto;}
 
         /* HEADER */
-        .app-header{display:flex;align-items:center;padding:10px 14px 8px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(245,245,247,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);gap:10px;flex-shrink:0;z-index:10;}
+        .app-header{display:flex;align-items:center;padding:10px 14px 8px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(245,245,247,0.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);gap:10px;flex-shrink:0;z-index:10;}
         .app-header-title{font-family:var(--font-serif);font-size:21px;color:var(--text-primary);flex:1;}
 
         /* HAMBURGER */
         .hamburger-menu{position:relative;}
-        .menu-panel{position:absolute;top:calc(100% + 8px);left:0;width:220px;background:var(--bg-card);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow-md);padding:8px;transform-origin:top left;transform:scale(0.9) translateY(-8px);opacity:0;pointer-events:none;transition:transform .25s cubic-bezier(.22,1,.36,1),opacity .2s;z-index:50;}
+        .menu-panel{position:absolute;top:calc(100% + 8px);left:0;width:220px;background:var(--bg-card);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow-md);padding:8px;transform-origin:top left;transform:scale(0.88) translateY(-10px);opacity:0;pointer-events:none;transition:transform .26s cubic-bezier(.22,1,.36,1),opacity .2s;z-index:50;}
         .menu-panel.show{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
         .menu-user-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 10px;border-bottom:1px solid var(--border);margin-bottom:6px;gap:6px;}
         #user-email-display{font-size:12px;color:var(--text-muted);word-break:break-all;line-height:1.4;flex:1;}
@@ -157,22 +166,22 @@
         .page-scroll{flex:1;overflow-y:auto;padding:14px 14px calc(14px + env(safe-area-inset-bottom));}
         .content-wrap{max-width:440px;margin:0 auto;}
 
-        /* ── OWES HERO BANNER (moved to bottom) ── */
+        /* OWES BANNER */
         .owes-banner{display:none;margin-top:18px;margin-bottom:4px;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-md);}
-        .owes-banner.visible{display:block;animation:bannerSlide 0.6s cubic-bezier(.22,1,.36,1) both;}
-        .owes-banner-inner{padding:14px 18px 14px;}
-        .owes-banner.gulnaz-owes .owes-banner-inner{background:linear-gradient(140deg,#4C1D95 0%,#6D28D9 50%,#8B5CF6 100%);}
-        .owes-banner.ghazala-owes .owes-banner-inner{background:linear-gradient(140deg,#78350F 0%,#B45309 50%,#D97706 100%);}
-        .owes-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;}
+        .owes-banner.visible{display:block;animation:bannerSlide 0.55s cubic-bezier(.22,1,.36,1) both;}
+        .owes-banner-inner{padding:14px 18px;}
+        .owes-banner.gulnaz-owes .owes-banner-inner{background:linear-gradient(140deg,#4C1D95 0%,#6D28D9 55%,#8B5CF6 100%);}
+        .owes-banner.ghazala-owes .owes-banner-inner{background:linear-gradient(140deg,#78350F 0%,#B45309 55%,#D97706 100%);}
+        .owes-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;}
         .owes-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:2px;}
         .owes-name{font-family:var(--font-serif);font-size:20px;color:#fff;line-height:1.1;}
-        .owes-verb{font-size:13px;color:rgba(255,255,255,0.65);font-weight:500;}
+        .owes-verb{font-size:13px;color:rgba(255,255,255,.65);font-weight:500;}
         .owes-amount{font-family:var(--font-serif);font-size:38px;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:2px;}
-        .owes-amount-sub{font-size:11px;color:rgba(255,255,255,0.5);font-weight:500;margin-bottom:10px;}
-        .owes-breakdown{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.15);padding-top:10px;}
+        .owes-amount-sub{font-size:11px;color:rgba(255,255,255,.5);font-weight:500;margin-bottom:10px;}
+        .owes-breakdown{display:flex;border-top:1px solid rgba(255,255,255,.15);padding-top:10px;}
         .owes-breakdown-cell{flex:1;text-align:center;}
-        .owes-breakdown-cell+.owes-breakdown-cell{border-left:1px solid rgba(255,255,255,0.15);}
-        .owes-bd-label{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:3px;}
+        .owes-breakdown-cell+.owes-breakdown-cell{border-left:1px solid rgba(255,255,255,.15);}
+        .owes-bd-label{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;}
         .owes-bd-value{font-size:14px;font-weight:700;color:#fff;}
 
         /* RECENT */
@@ -180,18 +189,19 @@
         .recent-title{font-size:17px;font-weight:600;color:var(--text-primary);}
         .btn-view-all{display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 12px;border-radius:99px;background:var(--accent-light);color:var(--accent-dark);font-size:13px;font-weight:600;border:none;cursor:pointer;transition:background .15s,color .15s,transform .15s;}
         .btn-view-all:hover{background:var(--accent);color:#fff;}
-        .btn-view-all:active{transform:scale(0.95);}
+        .btn-view-all:active{transform:scale(0.94);}
         .entries-card{background:var(--bg-card);border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-xs);overflow:hidden;}
-        .entry-item{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);animation:entryIn .4s cubic-bezier(.22,1,.36,1) both;transition:background .12s;}
+        .entry-item{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);animation:entryIn .38s cubic-bezier(.22,1,.36,1) both;transition:background .12s;}
         .entry-item:hover{background:var(--bg);}
         .entry-item:last-child{border-bottom:none;}
-        .entry-emoji{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;margin-right:12px;transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
-        .entry-item:hover .entry-emoji{transform:scale(1.1);}
+        .entry-emoji{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;margin-right:12px;transition:transform .22s cubic-bezier(.34,1.56,.64,1);}
+        .entry-item:hover .entry-emoji{transform:scale(1.12);}
         .entry-emoji.gulnaz{background:var(--gulnaz-light);}
         .entry-emoji.ghazala{background:var(--ghazala-light);}
         .entry-info{flex:1;min-width:0;}
         .entry-name{font-size:13px;font-weight:600;color:var(--text-primary);}
-        .entry-tag{font-size:13px;color:var(--text-muted);margin-top:1px;}
+        /* BIGGER category font in recent */
+        .entry-tag{font-size:14px;font-weight:500;color:var(--text-secondary);margin-top:1px;}
         .entry-right{text-align:right;flex-shrink:0;margin-left:10px;}
         .entry-amount{font-size:15px;font-weight:700;}
         .entry-amount.gulnaz{color:var(--gulnaz-color);}
@@ -202,50 +212,114 @@
         .view-all-row span{font-size:13px;font-weight:600;color:var(--accent);}
         .view-all-row svg{color:var(--accent);}
 
-        .skeleton{background:var(--bg-input);border-radius:6px;animation:pulse 1.4s ease-in-out infinite;}
-        .skeleton-entry{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);}
-        .skeleton-entry:last-child{border-bottom:none;}
-        .sk-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;}.sk-lines{flex:1;}
+        /* STAGGER ENTRANCE */
+        .form-section{opacity:0;animation:fadeUp 0.42s cubic-bezier(.22,1,.36,1) both;}
+        .form-section:nth-of-type(1){animation-delay:.04s;}
+        .form-section:nth-of-type(2){animation-delay:.09s;}
+        .form-section:nth-of-type(3){animation-delay:.14s;}
+        .form-actions{opacity:0;animation:fadeUp 0.42s cubic-bezier(.22,1,.36,1) .18s both;}
+        .recent-header{opacity:0;animation:fadeUp 0.42s cubic-bezier(.22,1,.36,1) .22s both;}
+        .entries-card{opacity:0;animation:fadeUp 0.42s cubic-bezier(.22,1,.36,1) .26s both;}
 
-        /* ── TRANSACTIONS PAGE ── */
-        .tx-page-header{display:flex;align-items:center;padding:10px 6px 8px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(245,245,247,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);gap:4px;flex-shrink:0;}
+        /* TRANSACTIONS PAGE */
+        .tx-page-header{display:flex;align-items:center;padding:10px 6px 8px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(245,245,247,0.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);gap:4px;flex-shrink:0;}
         .tx-page-title{font-family:var(--font-serif);font-size:21px;color:var(--text-primary);flex:1;}
+
+        /* Summary bar – 3 cells, last shows who owes */
         .tx-summary-bar{display:flex;align-items:stretch;border-bottom:1px solid var(--border);flex-shrink:0;}
-        .tx-summary-cell{flex:1;padding:12px 10px;text-align:center;border-right:1px solid var(--border);}
-        .tx-summary-cell:last-child{border-right:none;}
-        .tx-summary-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;}
-        .tx-summary-value{font-size:15px;font-weight:700;}
-        .tx-summary-value.gulnaz{color:var(--gulnaz-color);}
-        .tx-summary-value.ghazala{color:var(--ghazala-color);}
-        .tx-summary-value.owed{color:var(--green-text);}
-        .tx-toolbar{display:flex;align-items:center;padding:10px 16px 12px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg-card);}
-        .tx-toolbar .input{height:40px;font-size:14px;}
-        .date-group{animation:groupIn .32s cubic-bezier(.22,1,.36,1) both;}
-        .date-group-header{padding:10px 16px 6px;position:sticky;top:0;background:rgba(245,245,247,0.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2;}
-        .date-group-label{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase;}
-        .tx-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(0,0,0,0.04);transition:background .12s;gap:12px;}
+        .tx-sum-cell{flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--border);}
+        .tx-sum-cell:last-child{border-right:none;}
+        .tx-sum-label{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;}
+        .tx-sum-value{font-size:14px;font-weight:700;}
+        .tx-sum-value.gulnaz{color:var(--gulnaz-color);}
+        .tx-sum-value.ghazala{color:var(--ghazala-color);}
+        /* Owes cell: person name + diff amount */
+        .tx-owes-name{font-size:13px;font-weight:700;}
+        .tx-owes-name.gulnaz{color:var(--gulnaz-color);}
+        .tx-owes-name.ghazala{color:var(--ghazala-color);}
+        .tx-owes-diff{font-size:10px;font-weight:500;color:var(--text-muted);margin-top:1px;}
+
+        /* FILTER TOOLBAR */
+        .tx-toolbar{flex-shrink:0;background:var(--bg-card);border-bottom:1px solid var(--border);}
+        .tx-search-row{display:flex;align-items:center;gap:8px;padding:10px 12px 8px;}
+        .tx-search-wrap{flex:1;position:relative;}
+        .tx-search-wrap .input{height:38px;font-size:14px;padding-left:36px;padding-right:32px;}
+        .tx-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;}
+        .tx-clear-search{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:var(--text-disabled);color:#fff;font-size:10px;display:none;align-items:center;justify-content:center;cursor:pointer;border:none;line-height:1;font-weight:700;}
+        .tx-clear-search.show{display:flex;}
+        .btn-filter-toggle{display:flex;align-items:center;gap:5px;height:38px;padding:0 12px;border-radius:var(--r-md);background:var(--bg-input);color:var(--text-secondary);font-size:13px;font-weight:600;border:none;cursor:pointer;transition:background .15s,color .15s,transform .15s;white-space:nowrap;flex-shrink:0;}
+        .btn-filter-toggle:hover{background:var(--bg-hover);color:var(--text-primary);}
+        .btn-filter-toggle:active{transform:scale(0.94);}
+        .btn-filter-toggle.active{background:var(--accent-light);color:var(--accent-dark);}
+        .filter-badge{min-width:16px;height:16px;background:var(--accent);color:#fff;border-radius:99px;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px;}
+        .filter-badge.show{display:flex;}
+
+        /* Filter panel */
+        .tx-filter-panel{overflow:hidden;max-height:0;opacity:0;transition:max-height .32s cubic-bezier(.22,1,.36,1),opacity .22s;}
+        .tx-filter-panel.open{max-height:240px;opacity:1;}
+        .tx-filter-inner{padding:0 12px 12px;display:flex;flex-direction:column;gap:10px;animation:filterBarIn .28s cubic-bezier(.22,1,.36,1) both;}
+        .filter-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+        .filter-row-label{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);flex-shrink:0;min-width:36px;}
+        .filter-divider{height:1px;background:var(--border);}
+
+        /* Sort + person pills */
+        .sort-pill{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 11px;border-radius:99px;background:var(--bg-input);color:var(--text-secondary);font-size:12px;font-weight:500;border:1.5px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .2s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;}
+        .sort-pill:hover{background:var(--bg-hover);}
+        .sort-pill:active{transform:scale(0.9);}
+        .sort-pill.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark);font-weight:600;}
+        .sort-pill .arr{display:inline-block;transition:transform .22s;}
+        .sort-pill.desc .arr{transform:rotate(0deg);}
+        .sort-pill.asc .arr{transform:rotate(180deg);}
+        .person-pill{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:99px;background:var(--bg-input);color:var(--text-secondary);font-size:12px;font-weight:500;border:1.5px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .2s cubic-bezier(.34,1.56,.64,1);}
+        .person-pill:hover{background:var(--bg-hover);}
+        .person-pill:active{transform:scale(0.9);}
+        .person-pill.p-all{font-weight:600;}
+        .person-pill.p-gulnaz{background:var(--gulnaz-light);border-color:var(--gulnaz-color);color:var(--gulnaz-color);font-weight:600;}
+        .person-pill.p-ghazala{background:var(--ghazala-light);border-color:var(--ghazala-color);color:var(--ghazala-color);font-weight:600;}
+
+        /* Results bar */
+        .tx-results-bar{display:none;align-items:center;justify-content:space-between;padding:6px 16px 4px;flex-shrink:0;}
+        .tx-results-bar.show{display:flex;}
+        .tx-results-count{font-size:12px;color:var(--text-muted);font-weight:500;}
+        .tx-results-clear{font-size:12px;color:var(--accent);font-weight:600;cursor:pointer;background:none;border:none;padding:0;transition:color .15s;}
+        .tx-results-clear:hover{color:var(--accent-dark);}
+
+        /* TX ROWS */
+        .date-group{animation:groupIn .3s cubic-bezier(.22,1,.36,1) both;}
+        .date-group-header{padding:9px 16px 5px;position:sticky;top:0;background:rgba(245,245,247,0.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:2;display:flex;align-items:center;justify-content:space-between;}
+        .date-group-label{font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;}
+        .date-group-total{font-size:11px;font-weight:600;color:var(--text-secondary);}
+        .tx-row{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(0,0,0,.04);transition:background .12s;gap:12px;animation:rowIn .28s cubic-bezier(.22,1,.36,1) both;}
         .tx-row:last-child{border-bottom:none;}
         .tx-row:hover{background:var(--bg);}
-        .tx-emoji{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
-        .tx-row:hover .tx-emoji{transform:scale(1.1);}
+        .tx-emoji{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;transition:transform .22s cubic-bezier(.34,1.56,.64,1);}
+        .tx-row:hover .tx-emoji{transform:scale(1.12);}
         .tx-emoji.gulnaz{background:var(--gulnaz-light);}
         .tx-emoji.ghazala{background:var(--ghazala-light);}
         .tx-info{flex:1;min-width:0;}
         .tx-name{font-size:13px;font-weight:600;color:var(--text-primary);}
-        .tx-tag{display:inline-block;margin-top:2px;background:var(--accent-light);color:var(--accent-dark);font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;}
-        .tx-time{display:block;font-size:11px;color:var(--text-disabled);margin-top:2px;}
+        /* BIGGER category font in all transactions */
+        .tx-tag{display:inline-block;margin-top:2px;font-size:14px;font-weight:600;color:var(--text-secondary);}
+        .tx-time{display:block;font-size:11px;color:var(--text-disabled);margin-top:1px;}
         .tx-amount{font-size:15px;font-weight:700;text-align:right;flex-shrink:0;}
         .tx-amount.gulnaz{color:var(--gulnaz-color);}
         .tx-amount.ghazala{color:var(--ghazala-color);}
+
+        /* Empty state */
+        .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;gap:10px;animation:fadeUp .4s cubic-bezier(.22,1,.36,1);}
+        .empty-icon{font-size:38px;opacity:.55;}
+        .empty-text{font-size:15px;font-weight:500;color:var(--text-muted);text-align:center;}
+        .empty-sub{font-size:13px;color:var(--text-disabled);text-align:center;}
+
         .load-more-group{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;}
-        .btn-load-more{height:34px;padding:0 14px;border-radius:99px;background:var(--bg-input);color:var(--text-secondary);font-size:13px;font-weight:500;border:none;cursor:pointer;transition:background .15s,transform .15s;}
+        .btn-load-more{height:32px;padding:0 14px;border-radius:99px;background:var(--bg-input);color:var(--text-secondary);font-size:13px;font-weight:500;border:none;cursor:pointer;transition:background .15s,transform .15s;}
         .btn-load-more:hover{background:var(--bg-hover);}
-        .btn-load-more:active{transform:scale(0.95);}
-        .modal-footer{padding:12px 16px 16px;border-top:1px solid var(--border);flex-shrink:0;}
+        .btn-load-more:active{transform:scale(0.94);}
+        .modal-footer{padding:10px 16px 14px;border-top:1px solid var(--border);flex-shrink:0;}
 
         /* HELP MODAL */
-        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.38);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;z-index:80;}
-        .modal-sheet{width:100%;max-width:600px;max-height:92dvh;background:var(--bg-card);border-radius:var(--r-2xl) var(--r-2xl) 0 0;border:1px solid var(--border);border-bottom:none;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;animation:sheetUp .36s cubic-bezier(.22,1,.36,1) both;overflow:hidden;}
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.38);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;z-index:80;animation:overlayIn .2s;}
+        .modal-sheet{width:100%;max-width:600px;max-height:92dvh;background:var(--bg-card);border-radius:var(--r-2xl) var(--r-2xl) 0 0;border:1px solid var(--border);border-bottom:none;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;animation:sheetUp .34s cubic-bezier(.22,1,.36,1) both;overflow:hidden;}
         .sheet-handle{width:36px;height:4px;border-radius:99px;background:var(--bg-hover);margin:10px auto 0;flex-shrink:0;}
         .modal-header{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0;gap:12px;}
         .modal-title{font-size:17px;font-weight:700;color:var(--text-primary);}
@@ -258,7 +332,7 @@
         .help-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:7px;}
 
         /* TOAST */
-        #message-box{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.88);opacity:0;pointer-events:none;z-index:200;min-width:240px;max-width:320px;background:var(--bg-card);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);border:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:10px;transition:opacity .22s,transform .28s cubic-bezier(.34,1.56,.64,1);}
+        #message-box{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.86);opacity:0;pointer-events:none;z-index:200;min-width:240px;max-width:320px;background:var(--bg-card);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);border:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:10px;transition:opacity .22s,transform .28s cubic-bezier(.34,1.56,.64,1);}
         #message-box.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
         .msg-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
         #message-text{font-size:14px;font-weight:500;color:var(--text-primary);line-height:1.4;}
@@ -267,15 +341,6 @@
         .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
         .w-full{width:100%;}.flex-1{flex:1;}
         @media(max-width:400px){.auth-card{padding:28px 20px;}.form-section{padding:12px;}.owes-amount{font-size:32px;}.owes-name{font-size:18px;}}
-
-        /* Staggered form section entrance */
-        .form-section{opacity:0;animation:fadeUp 0.45s cubic-bezier(.22,1,.36,1) both;}
-        .form-section:nth-of-type(1){animation-delay:0.05s;}
-        .form-section:nth-of-type(2){animation-delay:0.10s;}
-        .form-section:nth-of-type(3){animation-delay:0.15s;}
-        .form-actions{opacity:0;animation:fadeUp 0.45s cubic-bezier(.22,1,.36,1) 0.2s both;}
-        .recent-header{opacity:0;animation:fadeUp 0.45s cubic-bezier(.22,1,.36,1) 0.25s both;}
-        .entries-card{opacity:0;animation:fadeUp 0.45s cubic-bezier(.22,1,.36,1) 0.3s both;}
     </style>
 </head>
 <body>
@@ -353,8 +418,6 @@
 
         <div class="page-scroll">
             <div class="content-wrap">
-
-                <!-- FORM -->
                 <form id="data-form" novalidate>
                     <p class="section-label">Who owes?</p>
                     <div class="form-section" style="margin-bottom:14px;">
@@ -369,7 +432,7 @@
                     <div class="form-section" style="margin-bottom:14px;padding:8px 12px;">
                         <div class="amount-wrap">
                             <span class="amount-prefix">₹</span>
-                            <input type="number" id="amount" name="amount" placeholder="0" min="0" pattern="[0-9]*" inputmode="numeric" class="amount-input">
+                            <input type="number" id="amount" name="amount" placeholder="0" min="1" pattern="[0-9]*" inputmode="numeric" class="amount-input">
                         </div>
                     </div>
                     <p class="section-label">Category</p>
@@ -415,9 +478,9 @@
                 </div>
                 <div class="entries-card">
                     <div id="recent-entries">
-                        <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:100px;margin-bottom:6px;"></div><div class="skeleton" style="height:10px;width:55px;"></div></div></div>
-                        <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:120px;margin-bottom:6px;"></div><div class="skeleton" style="height:10px;width:45px;"></div></div></div>
-                        <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:90px;margin-bottom:6px;"></div><div class="skeleton" style="height:10px;width:60px;"></div></div></div>
+                        <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:110px;margin-bottom:8px;"></div><div class="skeleton" style="height:10px;width:64px;"></div></div></div>
+                        <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:130px;margin-bottom:8px;"></div><div class="skeleton" style="height:10px;width:50px;"></div></div></div>
+                        <div class="skeleton-entry"><div class="skeleton sk-avatar"></div><div class="sk-lines"><div class="skeleton" style="height:12px;width:95px;margin-bottom:8px;"></div><div class="skeleton" style="height:10px;width:68px;"></div></div></div>
                     </div>
                     <button class="view-all-row" id="view-all-bottom-btn">
                         <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -425,7 +488,7 @@
                     </button>
                 </div>
 
-                <!-- OWES HERO — at bottom -->
+                <!-- OWES BANNER -->
                 <div id="owes-banner" class="owes-banner">
                     <div class="owes-banner-inner">
                         <div class="owes-eyebrow">Outstanding Balance</div>
@@ -447,10 +510,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div><!-- /page-home -->
+    </div>
 
     <!-- TRANSACTIONS PAGE -->
     <div id="page-transactions">
@@ -460,17 +522,65 @@
             </button>
             <span class="tx-page-title">All Transactions</span>
         </div>
+
+        <!-- Summary bar: Gulnaz total | Ghazala total | Who owes more -->
         <div class="tx-summary-bar" id="tx-summary-bar" style="display:none;">
-            <div class="tx-summary-cell"><div class="tx-summary-label">Gulnaz</div><div class="tx-summary-value gulnaz" id="tx-sum-gulnaz">—</div></div>
-            <div class="tx-summary-cell"><div class="tx-summary-label">Ghazala</div><div class="tx-summary-value ghazala" id="tx-sum-ghazala">—</div></div>
-            <div class="tx-summary-cell"><div class="tx-summary-label">Owes</div><div class="tx-summary-value owed" id="tx-sum-owed">—</div></div>
+            <div class="tx-sum-cell"><div class="tx-sum-label">Gulnaz</div><div class="tx-sum-value gulnaz" id="tx-sum-gulnaz">—</div></div>
+            <div class="tx-sum-cell"><div class="tx-sum-label">Ghazala</div><div class="tx-sum-value ghazala" id="tx-sum-ghazala">—</div></div>
+            <div class="tx-sum-cell">
+                <div class="tx-sum-label">Owes More</div>
+                <div class="tx-owes-name" id="tx-owes-name">—</div>
+                <div class="tx-owes-diff" id="tx-owes-diff"></div>
+            </div>
         </div>
-        <div class="tx-toolbar"><input type="text" id="filter-input" placeholder="Search name, category, date…" class="input"></div>
+
+        <!-- Filter / Sort toolbar -->
+        <div class="tx-toolbar">
+            <div class="tx-search-row">
+                <div class="tx-search-wrap">
+                    <svg class="tx-search-icon" width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35"/></svg>
+                    <input type="text" id="filter-input" placeholder="Search name, category…" class="input">
+                    <button id="clear-search-btn" class="tx-clear-search" title="Clear">✕</button>
+                </div>
+                <button id="filter-toggle-btn" class="btn-filter-toggle">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M7 9h10M11 14h2"/></svg>
+                    Filter
+                    <span class="filter-badge" id="filter-badge"></span>
+                </button>
+            </div>
+            <div class="tx-filter-panel" id="tx-filter-panel">
+                <div class="tx-filter-inner">
+                    <!-- Sort row -->
+                    <div class="filter-row">
+                        <span class="filter-row-label">Sort</span>
+                        <button class="sort-pill active desc" id="sort-date" data-sort="date">
+                            <span class="arr">↑</span> Date
+                        </button>
+                        <button class="sort-pill" id="sort-amount" data-sort="amount">
+                            <span class="arr">↑</span> Amount
+                        </button>
+                    </div>
+                    <div class="filter-divider"></div>
+                    <!-- Person row -->
+                    <div class="filter-row">
+                        <span class="filter-row-label">Who</span>
+                        <button class="person-pill p-all" id="pill-all" data-person="all">All</button>
+                        <button class="person-pill" id="pill-gulnaz" data-person="gulnaz">🟣 Gulnaz</button>
+                        <button class="person-pill" id="pill-ghazala" data-person="ghazala">🟠 Ghazala</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tx-results-bar" id="tx-results-bar">
+            <span class="tx-results-count" id="tx-results-count"></span>
+            <button class="tx-results-clear" id="clear-all-filters-btn">Clear filters</button>
+        </div>
+
         <div id="entries-table-container" style="flex:1;overflow-y:auto;"></div>
         <div id="load-more-container" class="modal-footer" style="text-align:center;"></div>
     </div>
-
-</div><!-- /root -->
+</div>
 
 <!-- HELP MODAL -->
 <div id="help-modal" class="modal-overlay hidden">
@@ -491,7 +601,7 @@
             </div>
             <div class="help-section">
                 <div class="help-section-title"><div class="help-icon-wrap" style="background:var(--amber-light);"><svg width="16" height="16" fill="none" stroke="var(--amber)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>Tips</div>
-                <ul class="help-list"><li><span class="help-dot" style="background:var(--amber);"></span>Use "Other" for custom categories</li><li><span class="help-dot" style="background:var(--amber);"></span>Turn off adblocker if unresponsive</li><li><span class="help-dot" style="background:var(--amber);"></span>Amounts should be whole numbers only</li></ul>
+                <ul class="help-list"><li><span class="help-dot" style="background:var(--amber);"></span>Use "Other" for custom categories</li><li><span class="help-dot" style="background:var(--amber);"></span>Turn off adblocker if unresponsive</li><li><span class="help-dot" style="background:var(--amber);"></span>Amounts must be positive whole numbers</li></ul>
             </div>
         </div>
     </div>
@@ -523,51 +633,34 @@ const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwoFc2VyGtJMtFIh2D_qf9
 const INITIAL_LOAD=50;
 let sessionStart,allEntries=[],filteredEntries=[],visibleCount=INITIAL_LOAD,deviceDetails={};
 let lastName=null,lastTag=null,msgTimer=null;
+let sortBy='date',sortDir='desc',personFilter='all';
 
 const track=(n,p={})=>{if(typeof gtag!=='undefined')gtag('event',n,p);};
 const $=id=>document.getElementById(id);
-
-/* ── Emoji map ── */
 const TAG_EMOJI={'Kirana':'🛒','Light Bill':'💡','Society':'🏘️','Gosht Kheema':'🥩','Chicken':'🍗','Mutton':'🐑','Kheema':'🫕','Bheja':'🧠','Fish':'🐟','Gosht':'🍖'};
 const tagEmoji=t=>TAG_EMOJI[t]||'🏷️';
 
-/* ── 12-hour time formatter ── */
 function fmt12(ts){
-    if(!ts)return '';
-    const d=new Date(ts);
-    if(isNaN(d))return '';
-    let h=d.getHours(),m=d.getMinutes();
-    const ampm=h>=12?'PM':'AM';
-    h=h%12||12;
-    return `${h}:${m.toString().padStart(2,'0')} ${ampm}`;
+    if(!ts)return'';const d=new Date(ts);if(isNaN(d))return'';
+    let h=d.getHours(),m=d.getMinutes();const ampm=h>=12?'PM':'AM';
+    h=h%12||12;return`${h}:${m.toString().padStart(2,'0')} ${ampm}`;
 }
+const fmt=n=>n?Number(n).toLocaleString('en-IN'):'';
 
-/* ── Page transitions ── */
+/* Page transitions */
 const pageHome=$('page-home'),pageTx=$('page-transactions');
-function openTransactions(){
-    pageHome.classList.add('page-exit');
-    pageTx.classList.add('page-enter');
-    filteredEntries=[...allEntries];visibleCount=INITIAL_LOAD;
-    $('filter-input').value='';
-    renderGrouped();
-    track('transactions_page_opened');
-}
-function closeTransactions(){
-    pageTx.classList.remove('page-enter');
-    pageHome.classList.remove('page-exit');
-    track('transactions_page_closed');
-}
+function openTransactions(){pageHome.classList.add('page-exit');pageTx.classList.add('page-enter');applyFiltersAndRender();track('transactions_page_opened');}
+function closeTransactions(){pageTx.classList.remove('page-enter');pageHome.classList.remove('page-exit');}
 
-/* ── Hamburger ── */
+/* Hamburger */
 const hamburgerBtn=$('hamburger-btn'),menuContent=$('menu-content');
 hamburgerBtn.addEventListener('click',e=>{e.stopPropagation();menuContent.classList.toggle('show');});
 document.addEventListener('click',e=>{if(!hamburgerBtn.contains(e.target)&&!menuContent.contains(e.target))menuContent.classList.remove('show');});
 
-/* ── Spinner helpers ── */
 const showSpin=(b,t,s)=>{$(b).disabled=true;$(t).style.display='none';$(s).classList.remove('hidden');};
 const hideSpin=(b,t,s,txt)=>{$(b).disabled=false;$(t).style.display='';$(t).textContent=txt;$(s).classList.add('hidden');};
 
-/* ── Toast ── */
+/* Toast */
 const showMsg=(msg,err=true)=>{
     $('message-text').textContent=msg;
     const ok=$('msg-icon-success'),er=$('msg-icon-error'),w=$('msg-icon-wrap');
@@ -578,7 +671,7 @@ const showMsg=(msg,err=true)=>{
     msgTimer=setTimeout(()=>mb.classList.remove('show'),5000);
 };
 
-/* ── Auth ── */
+/* Auth */
 $('login-form').addEventListener('submit',async e=>{
     e.preventDefault();const em=e.target.email.value,pw=e.target.password.value,rem=$('remember-me').checked;
     showSpin('login-btn','login-text','login-spinner');
@@ -607,9 +700,7 @@ $('logout-button').addEventListener('click',async()=>{
 onAuthStateChanged(auth,user=>{
     if(user){
         $('auth-container').classList.add('hidden');$('root').classList.remove('hidden');
-        $('user-email-display').textContent=user.email;
-        track('user_authenticated',{email:user.email});
-        initApp();
+        $('user-email-display').textContent=user.email;track('user_authenticated',{email:user.email});initApp();
     }else{
         $('auth-container').classList.remove('hidden');$('root').classList.add('hidden');
         $('auth-ui').classList.remove('hidden');$('contact-ui').classList.add('hidden');$('password-reset-ui').classList.add('hidden');
@@ -618,59 +709,28 @@ onAuthStateChanged(auth,user=>{
 
 function initApp(){
     sessionStart=new Date();
-    const form=$('data-form');
-    const otherBtn=$('other-chip-btn'),otherWrap=$('other-input-wrap'),otherInput=$('other-tag-input');
-    const amountInput=$('amount');
+    const form=$('data-form'),otherBtn=$('other-chip-btn'),otherWrap=$('other-input-wrap'),otherInput=$('other-tag-input'),amtIn=$('amount');
 
-    /* ── Block negative & decimal input ── */
-    amountInput.addEventListener('keydown',e=>{
-        if(e.key==='-'||e.key==='+')e.preventDefault();
-    });
-    amountInput.addEventListener('input',()=>{
-        // Strip anything that isn't a digit
-        let v=amountInput.value.replace(/[^0-9]/g,'');
-        if(v!==amountInput.value)amountInput.value=v;
-    });
-    amountInput.addEventListener('paste',e=>{
-        e.preventDefault();
-        const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,'');
-        amountInput.value=pasted;
-    });
+    /* Digit-only input */
+    amtIn.addEventListener('keydown',e=>{if(e.key==='-'||e.key==='+')e.preventDefault();});
+    amtIn.addEventListener('input',()=>{let v=amtIn.value.replace(/[^0-9]/g,'');if(v!==amtIn.value)amtIn.value=v;});
+    amtIn.addEventListener('paste',e=>{e.preventDefault();amtIn.value=(e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,'');});
 
     otherBtn.addEventListener('click',()=>{
-        const open=otherWrap.classList.toggle('open');
-        otherBtn.classList.toggle('active',open);
-        if(open){document.querySelectorAll('input[name="tag"]').forEach(r=>r.checked=false);setTimeout(()=>otherInput.focus(),50);}
-        else otherInput.value='';
+        const open=otherWrap.classList.toggle('open');otherBtn.classList.toggle('active',open);
+        if(open){document.querySelectorAll('input[name="tag"]').forEach(r=>r.checked=false);setTimeout(()=>otherInput.focus(),50);}else otherInput.value='';
     });
     otherInput.addEventListener('input',()=>{if(otherInput.value.trim())document.querySelectorAll('input[name="tag"]').forEach(r=>r.checked=false);});
 
-    /* ── Clear button — fully fixed ── */
+    /* Clear btn */
     $('clear-btn').addEventListener('click',()=>{
-        // Reset all radios manually
         document.querySelectorAll('#data-form input[type="radio"]').forEach(r=>r.checked=false);
-        // Clear amount
-        amountInput.value='';
-        // Clear other input
-        otherInput.value='';
-        otherWrap.classList.remove('open');
-        otherBtn.classList.remove('active');
-        // Restore last name
-        if(lastName){
-            const r=document.querySelector(`input[name="name"][value="${lastName}"]`);
-            if(r)r.checked=true;
-        }
-        // Restore last tag
-        if(lastTag){
-            const r=document.querySelector(`input[name="tag"][value="${lastTag}"]`);
-            if(r)r.checked=true;
-        }
-        amountInput.focus();
+        amtIn.value='';otherInput.value='';otherWrap.classList.remove('open');otherBtn.classList.remove('active');
+        if(lastName){const r=document.querySelector(`input[name="name"][value="${lastName}"]`);if(r)r.checked=true;}
+        if(lastTag){const r=document.querySelector(`input[name="tag"][value="${lastTag}"]`);if(r)r.checked=true;}
+        amtIn.focus();
     });
-
-    document.querySelectorAll('input[name="name"],input[name="tag"]').forEach(r=>{
-        r.addEventListener('change',()=>{if(r.name==='name')lastName=r.value;if(r.name==='tag')lastTag=r.value;});
-    });
+    document.querySelectorAll('input[name="name"],input[name="tag"]').forEach(r=>r.addEventListener('change',()=>{if(r.name==='name')lastName=r.value;if(r.name==='tag')lastTag=r.value;}));
 
     form.addEventListener('submit',handleSubmit);
     $('view-entries-btn').addEventListener('click',openTransactions);
@@ -678,12 +738,53 @@ function initApp(){
     $('tx-back-btn').addEventListener('click',closeTransactions);
     $('help-feedback-btn').addEventListener('click',()=>{$('help-modal').classList.remove('hidden');menuContent.classList.remove('show');});
     $('close-help-modal-btn').addEventListener('click',()=>{$('help-modal').classList.add('hidden');});
-    $('filter-input').addEventListener('input',handleFilter);
+
+    /* ── FILTER PANEL ── */
+    const filterPanel=$('tx-filter-panel'),filterToggle=$('filter-toggle-btn');
+    filterToggle.addEventListener('click',()=>{const o=filterPanel.classList.toggle('open');filterToggle.classList.toggle('active',o);});
+
+    /* Search */
+    const fi=$('filter-input'),csb=$('clear-search-btn');
+    fi.addEventListener('input',()=>{csb.classList.toggle('show',!!fi.value);applyFiltersAndRender();});
+    csb.addEventListener('click',()=>{fi.value='';csb.classList.remove('show');applyFiltersAndRender();fi.focus();});
+
+    /* Sort pills */
+    document.querySelectorAll('.sort-pill').forEach(pill=>{
+        pill.addEventListener('click',()=>{
+            const s=pill.dataset.sort;
+            if(sortBy===s){sortDir=sortDir==='desc'?'asc':'desc';}else{sortBy=s;sortDir='desc';}
+            document.querySelectorAll('.sort-pill').forEach(p=>{p.classList.remove('active','asc','desc');p.querySelector('.arr').textContent='↑';});
+            pill.classList.add('active',sortDir);
+            pill.querySelector('.arr').textContent=sortDir==='desc'?'↓':'↑';
+            applyFiltersAndRender();
+        });
+    });
+
+    /* Person pills */
+    function setPersonPill(person){
+        personFilter=person;
+        document.querySelectorAll('.person-pill').forEach(p=>{
+            p.classList.remove('p-all','p-gulnaz','p-ghazala');
+        });
+        if(person==='all')$('pill-all').classList.add('p-all');
+        else if(person==='gulnaz')$('pill-gulnaz').classList.add('p-gulnaz');
+        else $('pill-ghazala').classList.add('p-ghazala');
+        applyFiltersAndRender();
+    }
+    document.querySelectorAll('.person-pill').forEach(p=>p.addEventListener('click',()=>setPersonPill(p.dataset.person)));
+    $('pill-all').classList.add('p-all'); // default
+
+    /* Clear all filters */
+    $('clear-all-filters-btn').addEventListener('click',()=>{
+        fi.value='';csb.classList.remove('show');
+        sortBy='date';sortDir='desc';
+        document.querySelectorAll('.sort-pill').forEach(p=>{p.classList.remove('active','asc','desc');p.querySelector('.arr').textContent='↑';});
+        $('sort-date').classList.add('active','desc');$('sort-date').querySelector('.arr').textContent='↓';
+        setPersonPill('all');
+    });
 
     fetchData();getDevice();
 }
-
-const fmt=n=>n?Number(n).toLocaleString('en-IN'):'';
 
 async function getDevice(){
     deviceDetails={browserName:'Unknown',osVersion:'Unknown',manufacturer:'Unknown',deviceModel:'Unknown'};
@@ -724,10 +825,8 @@ async function handleSubmit(e){
         const sn=document.querySelector('input[name="name"]:checked')?.value||null;
         const st=document.querySelector('input[name="tag"]:checked')?.value||null;
         if(sn)lastName=sn;if(st)lastTag=st;
-        // Reset form
         document.querySelectorAll('#data-form input[type="radio"]').forEach(r=>r.checked=false);
-        $('amount').value='';
-        $('other-tag-input').value='';$('other-input-wrap').classList.remove('open');$('other-chip-btn').classList.remove('active');
+        $('amount').value='';$('other-tag-input').value='';$('other-input-wrap').classList.remove('open');$('other-chip-btn').classList.remove('active');
         if(lastName){const r=document.querySelector(`input[name="name"][value="${lastName}"]`);if(r)r.checked=true;}
         if(lastTag){const r=document.querySelector(`input[name="tag"][value="${lastTag}"]`);if(r)r.checked=true;}
         $('amount').focus();
@@ -748,12 +847,7 @@ async function fetchData(){
         allEntries=Array.isArray(data.entries)?data.entries:[];
         renderRecent(allEntries);
         updateBanner(data.summary);
-        if(data.summary){
-            $('tx-sum-gulnaz').textContent=data.summary.f1?'₹'+fmt(data.summary.f1):'₹0';
-            $('tx-sum-ghazala').textContent=data.summary.g1?'₹'+fmt(data.summary.g1):'₹0';
-            $('tx-sum-owed').textContent=data.summary.i1?'₹'+fmt(data.summary.i1):'₹0';
-            $('tx-summary-bar').style.display='flex';
-        }
+        updateSummaryBar(data.summary);
         track('data_fetch_success',{entries_count:allEntries.length});
     }catch(err){
         console.error(err);
@@ -761,14 +855,28 @@ async function fetchData(){
     }
 }
 
-function updateBanner(summary){
-    if(!summary)return;
-    const banner=$('owes-banner');
-    const name=summary.h1||'—';
+function updateSummaryBar(s){
+    if(!s)return;
+    const gAmt=Number(s.f1)||0,zAmt=Number(s.g1)||0;
+    $('tx-sum-gulnaz').textContent=gAmt?'₹'+fmt(gAmt):'₹0';
+    $('tx-sum-ghazala').textContent=zAmt?'₹'+fmt(zAmt):'₹0';
+    // Who owes more = person with the HIGHER cumulative total
+    const owesName=s.h1||'—';
+    const diff=Math.abs(gAmt-zAmt);
+    const nameEl=$('tx-owes-name');
+    nameEl.textContent=owesName;
+    nameEl.className='tx-owes-name '+(owesName.toLowerCase().includes('gulnaz')?'gulnaz':'ghazala');
+    $('tx-owes-diff').textContent=diff?'by ₹'+fmt(diff):'(equal)';
+    $('tx-summary-bar').style.display='flex';
+}
+
+function updateBanner(s){
+    if(!s)return;
+    const banner=$('owes-banner'),name=s.h1||'—';
     $('owes-name').textContent=name;
-    $('owes-amount').textContent=summary.i1?'₹'+fmt(summary.i1):'₹0';
-    $('owes-bd-gulnaz').textContent=summary.f1?'₹'+fmt(summary.f1):'₹0';
-    $('owes-bd-ghazala').textContent=summary.g1?'₹'+fmt(summary.g1):'₹0';
+    $('owes-amount').textContent=s.i1?'₹'+fmt(s.i1):'₹0';
+    $('owes-bd-gulnaz').textContent=s.f1?'₹'+fmt(s.f1):'₹0';
+    $('owes-bd-ghazala').textContent=s.g1?'₹'+fmt(s.g1):'₹0';
     banner.classList.remove('gulnaz-owes','ghazala-owes');
     banner.classList.add(name.toLowerCase().includes('gulnaz')?'gulnaz-owes':'ghazala-owes');
     banner.classList.add('visible');
@@ -779,74 +887,116 @@ function renderRecent(entries){
     if(!entries.length){el.innerHTML='<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:14px;">No entries yet.</div>';return;}
     el.innerHTML=entries.slice(0,5).map(([gAmt,zAmt,tag,ts],i)=>{
         const isG=!!gAmt,amount=gAmt||zAmt,name=isG?'Gulnaz':'Ghazala',cls=isG?'gulnaz':'ghazala';
-        const time12=fmt12(ts);
-        return `<div class="entry-item" style="animation-delay:${i*60}ms;">
+        const t=fmt12(ts);
+        return`<div class="entry-item" style="animation-delay:${i*65}ms;">
             <div class="entry-emoji ${cls}">${tagEmoji(tag)}</div>
             <div class="entry-info"><div class="entry-name">${name} dena</div><div class="entry-tag">${tag}</div></div>
-            <div class="entry-right"><div class="entry-amount ${cls}">₹ ${fmt(amount)}</div><div class="entry-date">${ts?ts.substring(0,11):''} ${time12?'· '+time12:''}</div></div>
+            <div class="entry-right"><div class="entry-amount ${cls}">₹ ${fmt(amount)}</div><div class="entry-date">${ts?ts.substring(0,11):''} ${t?'· '+t:''}</div></div>
         </div>`;
     }).join('');
 }
 
-/* ── Transactions page ── */
+/* ── Filter + sort + render ── */
+function applyFiltersAndRender(){
+    const q=$('filter-input').value.toLowerCase().trim();
+    let res=allEntries.filter(e=>!q||e.some(c=>String(c).toLowerCase().includes(q)));
+    if(personFilter==='gulnaz')res=res.filter(([g])=>!!g);
+    else if(personFilter==='ghazala')res=res.filter(([g])=>!g);
+    res=[...res].sort((a,b)=>{
+        if(sortBy==='amount'){const d=(Number(b[0]||b[1]))-(Number(a[0]||a[1]));return sortDir==='desc'?d:-d;}
+        const d=new Date(b[3])-new Date(a[3]);return sortDir==='desc'?d:-d;
+    });
+    filteredEntries=res;visibleCount=INITIAL_LOAD;
+    // Badge
+    let n=0;if(q)n++;if(personFilter!=='all')n++;if(sortBy!=='date'||sortDir!=='desc')n++;
+    const badge=$('filter-badge');
+    badge.textContent=n||'';n?badge.classList.add('show'):badge.classList.remove('show');
+    $('filter-toggle-btn').classList.toggle('active',n>0);
+    // Results bar
+    const hasFilters=q||personFilter!=='all';
+    const rb=$('tx-results-bar');
+    rb.classList.toggle('show',hasFilters);
+    if(hasFilters)$('tx-results-count').textContent=`${res.length} result${res.length!==1?'s':''}`;
+    renderGrouped();
+}
+
 function fmtDateLabel(ts){
-    if(!ts)return 'Unknown Date';
+    if(!ts)return'Unknown Date';
     const d=new Date(ts);if(isNaN(d))return ts.substring(0,11);
     const today=new Date();today.setHours(0,0,0,0);
     const yday=new Date(today);yday.setDate(yday.getDate()-1);
     const e=new Date(d);e.setHours(0,0,0,0);
-    if(e.getTime()===today.getTime())return 'Today';
-    if(e.getTime()===yday.getTime())return 'Yesterday';
+    if(e.getTime()===today.getTime())return'Today';
+    if(e.getTime()===yday.getTime())return'Yesterday';
     return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 }
-function dayKey(ts){if(!ts)return 'unknown';const d=new Date(ts);return isNaN(d)?ts.substring(0,10):d.toISOString().substring(0,10);}
+function dayKey(ts){
+    if(!ts)return'unknown';
+    const d=new Date(ts);
+    if(sortBy==='amount'){
+        // Group by month when sorted by amount
+        return isNaN(d)?'unknown':d.toISOString().substring(0,7);
+    }
+    return isNaN(d)?ts.substring(0,10):d.toISOString().substring(0,10);
+}
+function groupHeaderLabel(ts,key){
+    if(sortBy==='amount'){
+        if(!key||key==='unknown')return'Unknown';
+        const[y,m]=key.split('-');
+        return new Date(+y,+m-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+    }
+    return fmtDateLabel(ts);
+}
 
 function renderGrouped(){
     const container=$('entries-table-container'),lmc=$('load-more-container');
-    if(!filteredEntries.length){container.innerHTML='<p style="padding:24px;text-align:center;color:var(--text-muted);font-size:14px;">No transactions match your search.</p>';lmc.innerHTML='';return;}
-    const sorted=[...filteredEntries].sort((a,b)=>new Date(b[3])-new Date(a[3]));
-    const toShow=sorted.slice(0,visibleCount);
+    if(!filteredEntries.length){
+        container.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><p class="empty-text">No transactions found</p><p class="empty-sub">Try changing your search or filters</p></div>`;
+        lmc.innerHTML='';return;
+    }
+    const toShow=filteredEntries.slice(0,visibleCount);
     const groups={},order=[];
     toShow.forEach(entry=>{
         const k=dayKey(entry[3]);
-        if(!groups[k]){groups[k]={label:fmtDateLabel(entry[3]),entries:[]};order.push(k);}
+        if(!groups[k]){groups[k]={label:groupHeaderLabel(entry[3],k),entries:[],total:0};order.push(k);}
         groups[k].entries.push(entry);
+        groups[k].total+=Number(entry[0]||entry[1]);
     });
     container.innerHTML=order.map((k,gi)=>{
         const g=groups[k];
-        const rows=g.entries.map(([gAmt,zAmt,tag,ts])=>{
+        const rows=g.entries.map(([gAmt,zAmt,tag,ts],ri)=>{
             const isG=!!gAmt,amount=gAmt||zAmt,name=isG?'Gulnaz':'Ghazala',cls=isG?'gulnaz':'ghazala';
-            const time12=fmt12(ts);
-            return `<div class="tx-row">
+            const t=fmt12(ts);
+            return`<div class="tx-row" style="animation-delay:${(gi*4+ri)*22}ms;">
                 <div class="tx-emoji ${cls}">${tagEmoji(tag)}</div>
-                <div class="tx-info"><div class="tx-name">${name} dena</div><span class="tx-tag">${tag}</span>${time12?`<span class="tx-time">${time12}</span>`:''}
+                <div class="tx-info">
+                    <div class="tx-name">${name} dena</div>
+                    <span class="tx-tag">${tag}</span>
+                    ${t?`<span class="tx-time">${t}</span>`:''}
                 </div>
                 <div class="tx-amount ${cls}">₹ ${fmt(amount)}</div>
             </div>`;
         }).join('');
-        return `<div class="date-group" style="animation-delay:${gi*40}ms;">
-            <div class="date-group-header"><span class="date-group-label">${g.label}</span></div>
+        return`<div class="date-group" style="animation-delay:${gi*38}ms;">
+            <div class="date-group-header">
+                <span class="date-group-label">${g.label}</span>
+                <span class="date-group-total">₹ ${fmt(g.total)}</span>
+            </div>
             <div style="background:var(--bg-card);border-top:1px solid var(--border);">${rows}</div>
         </div>`;
     }).join('');
-    renderLoadMore(sorted.length);
+    renderLoadMore(filteredEntries.length);
 }
 
 function renderLoadMore(total){
     const c=$('load-more-container');
-    if(visibleCount>=total){c.innerHTML=`<p style="font-size:12px;color:var(--text-muted);">All ${total} transactions shown.</p>`;return;}
+    if(visibleCount>=total){c.innerHTML=`<p style="font-size:12px;color:var(--text-muted);">All ${total} transaction${total!==1?'s':''} shown.</p>`;return;}
     const rem=total-visibleCount;
     let html=`<div class="load-more-group"><span style="font-size:12px;color:var(--text-muted);margin-right:4px;">Load:</span>`;
     [50,100,200].filter(v=>rem>=v).forEach(v=>html+=`<button class="btn-load-more" data-a="${v}">${v}</button>`);
     html+=`<button class="btn-load-more" data-a="${rem}">All (${rem})</button></div>`;
     c.innerHTML=html;
     c.querySelectorAll('.btn-load-more').forEach(btn=>btn.addEventListener('click',e=>{visibleCount+=parseInt(e.currentTarget.dataset.a,10);renderGrouped();}));
-}
-
-function handleFilter(){
-    const q=$('filter-input').value.toLowerCase();
-    filteredEntries=allEntries.filter(e=>e.some(c=>String(c).toLowerCase().includes(q)));
-    visibleCount=INITIAL_LOAD;renderGrouped();
 }
 </script>
 </body>
