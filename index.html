@@ -71,7 +71,7 @@
         .input:focus{border-color:var(--border-focus);background:#fff;box-shadow:0 0 0 3px rgba(59,122,255,0.12);}
         .amount-wrap{display:flex;align-items:center;background:var(--bg-input);border:1.5px solid transparent;border-radius:var(--r-md);transition:border-color .18s,box-shadow .18s,background .18s;overflow:hidden;}
         .amount-wrap:focus-within{border-color:var(--border-focus);background:#fff;box-shadow:0 0 0 3px rgba(59,122,255,0.12);}
-        .amount-prefix{padding:0 2px 0 14px;font-size:22px;font-weight:700;color:var(--text-muted);line-height:1;flex-shrink:0;user-select:none;transition:color .18s;font-family:'DM Sans',sans-serif;}
+        .amount-prefix{padding:0 4px 0 14px;font-size:22px;font-weight:600;color:var(--text-muted);line-height:1;flex-shrink:0;user-select:none;transition:color .18s;}
         .amount-wrap:focus-within .amount-prefix{color:var(--text-primary);}
         .amount-input{flex:1;height:56px;background:transparent;border:none;outline:none;font-family:var(--font-sans);font-size:26px;font-weight:700;color:var(--text-primary);padding:0 14px 0 6px;letter-spacing:-0.02em;}
         .amount-input::placeholder{color:var(--text-disabled);font-weight:400;font-size:22px;}
@@ -137,22 +137,22 @@
         .content-wrap{max-width:440px;margin:0 auto;}
 
         /* ══ OWES HERO BANNER ══ */
-        .owes-banner{display:none;margin-top:16px;margin-bottom:0;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-md);}
+        .owes-banner{display:none;margin-bottom:18px;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-md);}
         .owes-banner.visible{display:block;animation:owesIn 0.55s cubic-bezier(.22,1,.36,1) both;}
-        .owes-banner-inner{padding:13px 16px 12px;}
+        .owes-banner-inner{padding:20px 22px 18px;}
         .owes-banner.gulnaz-owes .owes-banner-inner{background:linear-gradient(140deg,#4C1D95 0%,#6D28D9 50%,#8B5CF6 100%);}
         .owes-banner.ghazala-owes .owes-banner-inner{background:linear-gradient(140deg,#78350F 0%,#B45309 50%,#D97706 100%);}
-        .owes-eyebrow{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:4px;}
-        .owes-row{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin-bottom:1px;}
-        .owes-name{font-family:var(--font-serif);font-size:17px;color:#fff;line-height:1.1;}
-        .owes-verb{font-size:12px;color:rgba(255,255,255,0.65);font-weight:500;}
-        .owes-amount{font-family:var(--font-serif);font-size:30px;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:1px;}
-        .owes-amount-sub{font-size:10px;color:rgba(255,255,255,0.45);font-weight:500;margin-bottom:8px;}
-        .owes-breakdown{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.15);padding-top:8px;}
+        .owes-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:8px;}
+        .owes-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+        .owes-name{font-family:var(--font-serif);font-size:26px;color:#fff;line-height:1.1;}
+        .owes-verb{font-size:15px;color:rgba(255,255,255,0.65);font-weight:500;}
+        .owes-amount{font-family:var(--font-serif);font-size:52px;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:4px;}
+        .owes-amount-sub{font-size:12px;color:rgba(255,255,255,0.5);font-weight:500;margin-bottom:14px;}
+        .owes-breakdown{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.15);padding-top:14px;}
         .owes-breakdown-cell{flex:1;text-align:center;}
         .owes-breakdown-cell+.owes-breakdown-cell{border-left:1px solid rgba(255,255,255,0.15);}
-        .owes-bd-label{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:2px;}
-        .owes-bd-value{font-size:13px;font-weight:700;color:#fff;}
+        .owes-bd-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;}
+        .owes-bd-value{font-size:17px;font-weight:700;color:#fff;}
 
         /* RECENT */
         .recent-header{display:flex;align-items:center;justify-content:space-between;margin:4px 0 10px;}
@@ -167,7 +167,7 @@
         .entry-emoji.ghazala{background:var(--ghazala-light);}
         .entry-info{flex:1;min-width:0;}
         .entry-name{font-size:13px;font-weight:600;color:var(--text-primary);}
-        .entry-tag{font-size:14px;color:var(--text-secondary);margin-top:2px;font-weight:500;}
+        .entry-tag{font-size:12px;color:var(--text-muted);margin-top:1px;}
         .entry-right{text-align:right;flex-shrink:0;margin-left:10px;}
         .entry-amount{font-size:15px;font-weight:700;}
         .entry-amount.gulnaz{color:var(--gulnaz-color);}
@@ -207,7 +207,7 @@
         .tx-emoji.ghazala{background:var(--ghazala-light);}
         .tx-info{flex:1;min-width:0;}
         .tx-name{font-size:13px;font-weight:600;color:var(--text-primary);}
-        .tx-tag{display:inline-block;margin-top:2px;background:var(--accent-light);color:var(--accent-dark);font-size:13px;font-weight:600;padding:2px 9px;border-radius:99px;}
+        .tx-tag{display:inline-block;margin-top:2px;background:var(--accent-light);color:var(--accent-dark);font-size:11px;font-weight:600;padding:1px 7px;border-radius:99px;}
         .tx-amount{font-size:15px;font-weight:700;text-align:right;flex-shrink:0;}
         .tx-amount.gulnaz{color:var(--gulnaz-color);}
         .tx-amount.ghazala{color:var(--ghazala-color);}
@@ -239,7 +239,7 @@
         .hidden{display:none!important;}
         .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
         .w-full{width:100%;}.flex-1{flex:1;}
-        @media(max-width:400px){.auth-card{padding:28px 20px;}.form-section{padding:12px;}.owes-amount{font-size:26px;}.owes-name{font-size:15px;}}
+        @media(max-width:400px){.auth-card{padding:28px 20px;}.form-section{padding:12px;}.owes-amount{font-size:40px;}.owes-name{font-size:21px;}}
     </style>
 </head>
 <body>
@@ -281,7 +281,7 @@
         <div id="contact-ui" class="hidden">
             <h1 class="auth-title" style="margin-bottom:6px;">Create Account</h1>
             <p class="auth-sub" style="margin-bottom:20px;">To get access, email us and we'll set you up:</p>
-            <a href="/cdn-cgi/l/email-protection#2c41496c564d454802435a44" class="contact-link"><span class="__cf_email__" data-cfemail="4a272f0a302b232e64253c22">[email&#160;protected]</span></a>
+            <a href="mailto:me@zaid.ovh" class="contact-link">me@zaid.ovh</a>
             <p class="auth-sub" style="text-align:center;margin-bottom:20px;">You'll be notified once your account is ready.</p>
             <button id="go-back-button" class="btn-ghost w-full">← Back to Sign In</button>
         </div>
@@ -318,6 +318,29 @@
         <div class="page-scroll">
             <div class="content-wrap">
 
+                <!-- OWES HERO -->
+                <div id="owes-banner" class="owes-banner">
+                    <div class="owes-banner-inner">
+                        <div class="owes-eyebrow">Outstanding Balance</div>
+                        <div class="owes-row">
+                            <span class="owes-name" id="owes-name">—</span>
+                            <span class="owes-verb">owes</span>
+                        </div>
+                        <div class="owes-amount" id="owes-amount">₹0</div>
+                        <div class="owes-amount-sub">total pending</div>
+                        <div class="owes-breakdown">
+                            <div class="owes-breakdown-cell">
+                                <div class="owes-bd-label">Gulnaz</div>
+                                <div class="owes-bd-value" id="owes-bd-gulnaz">—</div>
+                            </div>
+                            <div class="owes-breakdown-cell">
+                                <div class="owes-bd-label">Ghazala</div>
+                                <div class="owes-bd-value" id="owes-bd-ghazala">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- FORM -->
                 <form id="data-form" novalidate>
                     <p class="section-label">Who owes?</p>
@@ -333,7 +356,7 @@
                     <div class="form-section" style="margin-bottom:14px;padding:8px 12px;">
                         <div class="amount-wrap">
                             <span class="amount-prefix">₹</span>
-                            <input type="text" id="amount" name="amount" placeholder="0" inputmode="numeric" pattern="[0-9]*" class="amount-input">
+                            <input type="number" id="amount" name="amount" placeholder="0" pattern="[0-9]*" inputmode="numeric" class="amount-input">
                         </div>
                     </div>
                     <p class="section-label">Category</p>
@@ -389,29 +412,6 @@
                     </button>
                 </div>
 
-                <!-- OWES HERO — at bottom -->
-                <div id="owes-banner" class="owes-banner">
-                    <div class="owes-banner-inner">
-                        <div class="owes-eyebrow">Outstanding Balance</div>
-                        <div class="owes-row">
-                            <span class="owes-name" id="owes-name">—</span>
-                            <span class="owes-verb">owes</span>
-                        </div>
-                        <div class="owes-amount" id="owes-amount">₹0</div>
-                        <div class="owes-amount-sub">total pending</div>
-                        <div class="owes-breakdown">
-                            <div class="owes-breakdown-cell">
-                                <div class="owes-bd-label">Gulnaz</div>
-                                <div class="owes-bd-value" id="owes-bd-gulnaz">—</div>
-                            </div>
-                            <div class="owes-breakdown-cell">
-                                <div class="owes-bd-label">Ghazala</div>
-                                <div class="owes-bd-value" id="owes-bd-ghazala">—</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div><!-- /page-home -->
@@ -451,7 +451,7 @@
             </div>
             <div class="help-section">
                 <div class="help-section-title"><div class="help-icon-wrap" style="background:var(--accent-light);"><svg width="16" height="16" fill="none" stroke="var(--accent)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>Contact</div>
-                <ul class="help-list"><li><span class="help-dot" style="background:var(--accent);"></span>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f49991b48e959d90da9b829c">[email&#160;protected]</a></li><li><span class="help-dot" style="background:var(--accent);"></span>Response within 24–48 hours</li></ul>
+                <ul class="help-list"><li><span class="help-dot" style="background:var(--accent);"></span>Email: me@zaid.ovh</li><li><span class="help-dot" style="background:var(--accent);"></span>Response within 24–48 hours</li></ul>
             </div>
             <div class="help-section">
                 <div class="help-section-title"><div class="help-icon-wrap" style="background:var(--amber-light);"><svg width="16" height="16" fill="none" stroke="var(--amber)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>Tips</div>
@@ -469,7 +469,7 @@
     <p id="message-text"></p>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<script type="module">
 import { initializeApp as initA1 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
 const FC={apiKey:"AIzaSyA5bKSAZN0JHAK_atwbSRz4dCTJ8NaH4vI",authDomain:"auth-demo-9a4bc.firebaseapp.com",projectId:"auth-demo-9a4bc",storageBucket:"auth-demo-9a4bc.firebasestorage.app",messagingSenderId:"554871726025",appId:"1:554871726025:web:ec8d1171f6a85b13c65218",measurementId:"G-J95YDM55T8"};
@@ -582,34 +582,11 @@ function initApp(){
     });
     otherInput.addEventListener('input',()=>{if(otherInput.value.trim())document.querySelectorAll('input[name="tag"]').forEach(r=>r.checked=false);});
 
-    /* Block negative, decimal, letters — allow digits only */
-    const amountEl=$('amount');
-    amountEl.addEventListener('keydown',e=>{
-        // Allow: backspace, delete, tab, arrows, home, end
-        const allowed=['Backspace','Delete','Tab','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
-        if(allowed.includes(e.key))return;
-        // Block anything that isn't a digit
-        if(!/^\d$/.test(e.key))e.preventDefault();
-    });
-    amountEl.addEventListener('input',()=>{
-        // Strip any non-digit that might have slipped in (paste, autofill, etc.)
-        const pos=amountEl.selectionStart;
-        const cleaned=amountEl.value.replace(/[^0-9]/g,'');
-        if(amountEl.value!==cleaned){amountEl.value=cleaned;try{amountEl.setSelectionRange(pos-1,pos-1);}catch(e){}}
-    });
-
     $('clear-btn').addEventListener('click',()=>{
-        // Uncheck all radios explicitly
-        document.querySelectorAll('#data-form input[type="radio"]').forEach(r=>r.checked=false);
-        // Clear amount
-        amountEl.value='';
-        // Clear other tag input and close panel
-        otherInput.value='';
-        otherWrap.classList.remove('open');
-        otherBtn.classList.remove('active');
-        // Clear remembered selections so next Clear is also clean
-        lastName=null;lastTag=null;
-        amountEl.focus();
+        form.reset();otherWrap.classList.remove('open');otherBtn.classList.remove('active');otherInput.value='';
+        if(lastName){const r=document.querySelector(`input[name="name"][value="${lastName}"]`);if(r)r.checked=true;}
+        if(lastTag){const r=document.querySelector(`input[name="tag"][value="${lastTag}"]`);if(r)r.checked=true;}
+        $('amount').focus();
     });
 
     document.querySelectorAll('input[name="name"],input[name="tag"]').forEach(r=>{
@@ -628,20 +605,6 @@ function initApp(){
 }
 
 const fmt=n=>n?Number(n).toLocaleString('en-IN'):'';
-
-/* Format timestamp: date + 12hr time for recent; time-only for tx rows */
-function fmtTime(ts){
-    if(!ts)return '';
-    const d=new Date(ts);
-    if(isNaN(d))return ts.substring(0,11);
-    return d.toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit',hour12:true});
-}
-function fmtTimeOnly(ts){
-    if(!ts)return '';
-    const d=new Date(ts);
-    if(isNaN(d))return '';
-    return d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true});
-}
 
 async function getDevice(){
     deviceDetails={browserName:'Unknown',osVersion:'Unknown',manufacturer:'Unknown',deviceModel:'Unknown'};
@@ -682,11 +645,7 @@ async function handleSubmit(e){
         const sn=document.querySelector('input[name="name"]:checked')?.value||null;
         const st=document.querySelector('input[name="tag"]:checked')?.value||null;
         if(sn)lastName=sn;if(st)lastTag=st;
-        // Reset form fields manually (don't use form.reset() which clears everything including memory)
-        $('amount').value='';
-        document.querySelectorAll('#data-form input[type="radio"]').forEach(r=>r.checked=false);
-        $('other-tag-input').value='';$('other-input-wrap').classList.remove('open');$('other-chip-btn').classList.remove('active');
-        // Re-select last used name and tag for convenience
+        e.target.reset();$('other-tag-input').value='';$('other-input-wrap').classList.remove('open');$('other-chip-btn').classList.remove('active');
         if(lastName){const r=document.querySelector(`input[name="name"][value="${lastName}"]`);if(r)r.checked=true;}
         if(lastTag){const r=document.querySelector(`input[name="tag"][value="${lastTag}"]`);if(r)r.checked=true;}
         $('amount').focus();
@@ -741,7 +700,7 @@ function renderRecent(entries){
         return `<div class="entry-item" style="animation-delay:${i*55}ms;">
             <div class="entry-emoji ${cls}">${tagEmoji(tag)}</div>
             <div class="entry-info"><div class="entry-name">${name} dena</div><div class="entry-tag">${tag}</div></div>
-            <div class="entry-right"><div class="entry-amount ${cls}">₹ ${fmt(amount)}</div><div class="entry-date">${fmtTime(ts)}</div></div>
+            <div class="entry-right"><div class="entry-amount ${cls}">₹ ${fmt(amount)}</div><div class="entry-date">${ts?ts.substring(0,11):''}</div></div>
         </div>`;
     }).join('');
 }
@@ -772,16 +731,12 @@ function renderGrouped(){
     });
     container.innerHTML=order.map((k,gi)=>{
         const g=groups[k];
-        const rows=g.entries.map(([gAmt,zAmt,tag,ts])=>{
+        const rows=g.entries.map(([gAmt,zAmt,tag])=>{
             const isG=!!gAmt,amount=gAmt||zAmt,name=isG?'Gulnaz':'Ghazala',cls=isG?'gulnaz':'ghazala';
-            const time=fmtTimeOnly(ts);
             return `<div class="tx-row">
                 <div class="tx-emoji ${cls}">${tagEmoji(tag)}</div>
                 <div class="tx-info"><div class="tx-name">${name} dena</div><span class="tx-tag">${tag}</span></div>
-                <div style="text-align:right;flex-shrink:0;">
-                    <div class="tx-amount ${cls}">₹ ${fmt(amount)}</div>
-                    <div style="font-size:11px;color:var(--text-disabled);margin-top:2px;">${time}</div>
-                </div>
+                <div class="tx-amount ${cls}">₹ ${fmt(amount)}</div>
             </div>`;
         }).join('');
         return `<div class="date-group" style="animation-delay:${gi*35}ms;">
@@ -800,4 +755,14 @@ function renderLoadMore(total){
     [50,100,200].filter(v=>rem>=v).forEach(v=>html+=`<button class="btn-load-more" data-a="${v}">${v}</button>`);
     html+=`<button class="btn-load-more" data-a="${rem}">All (${rem})</button></div>`;
     c.innerHTML=html;
-    c.querySelectorAll('.btn-load-more').forEach(btn=>btn.addEve
+    c.querySelectorAll('.btn-load-more').forEach(btn=>btn.addEventListener('click',e=>{visibleCount+=parseInt(e.currentTarget.dataset.a,10);renderGrouped();}));
+}
+
+function handleFilter(){
+    const q=$('filter-input').value.toLowerCase();
+    filteredEntries=allEntries.filter(e=>e.some(c=>String(c).toLowerCase().includes(q)));
+    visibleCount=INITIAL_LOAD;renderGrouped();
+}
+</script>
+</body>
+</html>
