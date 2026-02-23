@@ -198,9 +198,8 @@
         .tx-owes-name{font-size:13px;font-weight:700;text-transform:uppercase;}
         .tx-owes-name.gulnaz{color:var(--gulnaz-color);}
         .tx-owes-name.ghazala{color:var(--ghazala-color);}
-        .tx-owes-diff{font-size:10px;font-weight:500;margin-top:1px;}
-		.tx-owes-diff.gulnaz{color:var(--gulnaz-color);}
-        .tx-owes-diff.ghazala{color:var(--ghazala-color);}
+        .tx-owes-diff{font-size:13px;font-weight:500;text-transform:uppercase;margin-top:1px;color:var(--text-muted);}
+
         .tx-toolbar{flex-shrink:0;background:var(--bg-card);border-bottom:1px solid var(--border);}
         .tx-search-row{display:flex;align-items:center;gap:8px;padding:10px 12px 8px;}
         .tx-search-wrap{flex:1;position:relative;}
@@ -361,7 +360,7 @@
                                 <div class="chip"><input type="radio" name="tag" id="tag-gosht"        value="Gosht">        <label for="tag-gosht">🍖 Gosht</label></div>
                                 <div class="chip"><input type="radio" name="tag" id="tag-kheema"       value="Kheema">       <label for="tag-kheema">🫕 Kheema</label></div>
                                 
-                                <div class="chip"><input type="radio" name="tag" id="tag-mutton"       value="Mutton">       <label for="tag-mutton">🐑 Mutton</label></div>
+                                <div class="chip"><input type="radio" name="tag" id="tag-mutton"       value="Mutton">       <label for="tag-mutton">🐐 Mutton</label></div>
                                 
                                 <div class="chip"><input type="radio" name="tag" id="tag-bheja"        value="Bheja">        <label for="tag-bheja">🧠 Bheja</label></div>
                                 <div class="chip"><input type="radio" name="tag" id="tag-chicken"      value="Chicken">      <label for="tag-chicken">🍗 Chicken</label></div>
@@ -441,8 +440,8 @@
             <div class="tx-sum-cell"><div class="tx-sum-label">Gulnaz</div><div class="tx-sum-value gulnaz" id="tx-sum-gulnaz">—</div></div>
             <div class="tx-sum-cell"><div class="tx-sum-label">Ghazala</div><div class="tx-sum-value ghazala" id="tx-sum-ghazala">—</div></div>
             <div class="tx-sum-cell">
-                <div class="tx-sum-label">TALLY</div>
-                <div class="tx-owes-name" id="tx-owes-name">—</div>
+                
+                <div class="tx-owes-name" id="tx-owes-name"> dena</div>
                 <div class="tx-owes-diff" id="tx-owes-diff"></div>
             </div>
         </div>
@@ -518,7 +517,7 @@ let sortBy='date',sortDir='desc';
 
 const track=(n,p={})=>{if(typeof gtag!=='undefined')gtag('event',n,p);};
 const $=id=>document.getElementById(id);
-const TAG_EMOJI={'Kirana':'🛒','Light Bill':'💡','Society':'🏘️','Gosht Kheema':'🥩','Chicken':'🍗','Mutton':'🐑','Kheema':'🫕','Bheja':'🧠','Fish':'🐟','Gosht':'🍖'};
+const TAG_EMOJI={'Kirana':'🛒','Light Bill':'💡','Society':'🏘️','Gosht Kheema':'🥩','Chicken':'🍗','Mutton':'🐐','Kheema':'🫕','Bheja':'🧠','Fish':'🐟','Gosht':'🍖'};
 const tagEmoji=t=>TAG_EMOJI[t]||'🏷️';
 
 function haptic(type='medium'){
