@@ -46,7 +46,6 @@
         @keyframes chipPop{0%{transform:scale(0.88)}55%{transform:scale(1.06)}100%{transform:scale(1)}}
         @keyframes bannerSlide{from{opacity:0;transform:translateY(22px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
         @keyframes dotBounce{0%,80%,100%{transform:scale(0);opacity:.3}40%{transform:scale(1);opacity:1}}
-        @keyframes filterBarIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
         @keyframes rowIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
         @keyframes overlayIn{from{opacity:0}to{opacity:1}}
         .skeleton{border-radius:6px;background:linear-gradient(90deg,var(--bg-input) 25%,var(--bg-hover) 50%,var(--bg-input) 75%);background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite;}
@@ -196,10 +195,12 @@
         .tx-sum-value{font-size:14px;font-weight:700;}
         .tx-sum-value.gulnaz{color:var(--gulnaz-color);}
         .tx-sum-value.ghazala{color:var(--ghazala-color);}
-        .tx-owes-name{font-size:13px;font-weight:700;}
+        .tx-owes-name{font-size:13px;font-weight:700;text-transform:uppercase;}
         .tx-owes-name.gulnaz{color:var(--gulnaz-color);}
         .tx-owes-name.ghazala{color:var(--ghazala-color);}
-        .tx-owes-diff{font-size:10px;font-weight:500;color:var(--text-muted);margin-top:1px;}
+        .tx-owes-diff{font-size:10px;font-weight:500;margin-top:1px;}
+		.tx-owes-diff.gulnaz{color:var(--gulnaz-color);}
+        .tx-owes-diff.ghazala{color:var(--ghazala-color);}
         .tx-toolbar{flex-shrink:0;background:var(--bg-card);border-bottom:1px solid var(--border);}
         .tx-search-row{display:flex;align-items:center;gap:8px;padding:10px 12px 8px;}
         .tx-search-wrap{flex:1;position:relative;}
@@ -207,31 +208,6 @@
         .tx-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;}
         .tx-clear-search{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:var(--text-disabled);color:#fff;font-size:10px;display:none;align-items:center;justify-content:center;cursor:pointer;border:none;line-height:1;font-weight:700;}
         .tx-clear-search.show{display:flex;}
-        .btn-filter-toggle{display:flex;align-items:center;gap:5px;height:38px;padding:0 12px;border-radius:var(--r-md);background:var(--bg-input);color:var(--text-secondary);font-size:13px;font-weight:600;border:none;cursor:pointer;transition:background .15s,color .15s,transform .15s;white-space:nowrap;flex-shrink:0;}
-        .btn-filter-toggle:hover{background:var(--bg-hover);color:var(--text-primary);}
-        .btn-filter-toggle:active{transform:scale(0.94);}
-        .btn-filter-toggle.active{background:var(--accent-light);color:var(--accent-dark);}
-        .filter-badge{min-width:16px;height:16px;background:var(--accent);color:#fff;border-radius:99px;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px;}
-        .filter-badge.show{display:flex;}
-        .tx-filter-panel{overflow:hidden;max-height:0;opacity:0;transition:max-height .32s cubic-bezier(.22,1,.36,1),opacity .22s;}
-        .tx-filter-panel.open{max-height:240px;opacity:1;}
-        .tx-filter-inner{padding:0 12px 12px;display:flex;flex-direction:column;gap:10px;animation:filterBarIn .28s cubic-bezier(.22,1,.36,1) both;}
-        .filter-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
-        .filter-row-label{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);flex-shrink:0;min-width:36px;}
-        .filter-divider{height:1px;background:var(--border);}
-        .sort-pill{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 11px;border-radius:99px;background:var(--bg-input);color:var(--text-secondary);font-size:12px;font-weight:500;border:1.5px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .2s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;}
-        .sort-pill:hover{background:var(--bg-hover);}
-        .sort-pill:active{transform:scale(0.9);}
-        .sort-pill.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark);font-weight:600;}
-        .sort-pill .arr{display:inline-block;transition:transform .22s;}
-        .sort-pill.desc .arr{transform:rotate(0deg);}
-        .sort-pill.asc .arr{transform:rotate(180deg);}
-        .person-pill{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:99px;background:var(--bg-input);color:var(--text-secondary);font-size:12px;font-weight:500;border:1.5px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .2s cubic-bezier(.34,1.56,.64,1);}
-        .person-pill:hover{background:var(--bg-hover);}
-        .person-pill:active{transform:scale(0.9);}
-        .person-pill.p-all{font-weight:600;}
-        .person-pill.p-gulnaz{background:var(--gulnaz-light);border-color:var(--gulnaz-color);color:var(--gulnaz-color);font-weight:600;}
-        .person-pill.p-ghazala{background:var(--ghazala-light);border-color:var(--ghazala-color);color:var(--ghazala-color);font-weight:600;}
         .tx-results-bar{display:none;align-items:center;justify-content:space-between;padding:6px 16px 4px;flex-shrink:0;}
         .tx-results-bar.show{display:flex;}
         .tx-results-count{font-size:12px;color:var(--text-muted);font-weight:500;}
@@ -382,15 +358,18 @@
                                 <div class="chip"><input type="radio" name="tag" id="tag-lightbill"    value="Light Bill">   <label for="tag-lightbill">💡 Light Bill</label></div>
                                 <div class="chip"><input type="radio" name="tag" id="tag-society"      value="Society">      <label for="tag-society">🏘️ Society</label></div>
                                 <div class="chip"><input type="radio" name="tag" id="tag-gosht-kheema" value="Gosht Kheema"> <label for="tag-gosht-kheema">🥩 Gosht Kheema</label></div>
-                                <div class="chip"><input type="radio" name="tag" id="tag-chicken"      value="Chicken">      <label for="tag-chicken">🍗 Chicken</label></div>
-                                <div class="chip"><input type="radio" name="tag" id="tag-mutton"       value="Mutton">       <label for="tag-mutton">🐑 Mutton</label></div>
-                                <div class="chip"><input type="radio" name="tag" id="tag-kheema"       value="Kheema">       <label for="tag-kheema">🫕 Kheema</label></div>
-                                <div class="chip"><input type="radio" name="tag" id="tag-bheja"        value="Bheja">        <label for="tag-bheja">🧠 Bheja</label></div>
-                                <div class="chip"><input type="radio" name="tag" id="tag-fish"         value="Fish">         <label for="tag-fish">🐟 Fish</label></div>
                                 <div class="chip"><input type="radio" name="tag" id="tag-gosht"        value="Gosht">        <label for="tag-gosht">🍖 Gosht</label></div>
+                                <div class="chip"><input type="radio" name="tag" id="tag-kheema"       value="Kheema">       <label for="tag-kheema">🫕 Kheema</label></div>
+                                
+                                <div class="chip"><input type="radio" name="tag" id="tag-mutton"       value="Mutton">       <label for="tag-mutton">🐑 Mutton</label></div>
+                                
+                                <div class="chip"><input type="radio" name="tag" id="tag-bheja"        value="Bheja">        <label for="tag-bheja">🧠 Bheja</label></div>
+                                <div class="chip"><input type="radio" name="tag" id="tag-chicken"      value="Chicken">      <label for="tag-chicken">🍗 Chicken</label></div>
+                                <div class="chip"><input type="radio" name="tag" id="tag-fish"         value="Fish">         <label for="tag-fish">🐟 Fish</label></div>
+                                
                                 <button type="button" class="other-expand-chip" id="other-chip-btn">
                                     <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                                    Other
+                                    Other...
                                 </button>
                             </div>
                             <div class="other-input-wrap" id="other-input-wrap">
@@ -462,7 +441,7 @@
             <div class="tx-sum-cell"><div class="tx-sum-label">Gulnaz</div><div class="tx-sum-value gulnaz" id="tx-sum-gulnaz">—</div></div>
             <div class="tx-sum-cell"><div class="tx-sum-label">Ghazala</div><div class="tx-sum-value ghazala" id="tx-sum-ghazala">—</div></div>
             <div class="tx-sum-cell">
-                <div class="tx-sum-label">Owes More</div>
+                <div class="tx-sum-label">TALLY</div>
                 <div class="tx-owes-name" id="tx-owes-name">—</div>
                 <div class="tx-owes-diff" id="tx-owes-diff"></div>
             </div>
@@ -471,35 +450,14 @@
             <div class="tx-search-row">
                 <div class="tx-search-wrap">
                     <svg class="tx-search-icon" width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35"/></svg>
-                    <input type="text" id="filter-input" placeholder="Search name, category…" class="input">
+                    <input type="text" id="filter-input" placeholder="Search name, category and dates…" class="input">
                     <button id="clear-search-btn" class="tx-clear-search" title="Clear">✕</button>
-                </div>
-                <button id="filter-toggle-btn" class="btn-filter-toggle">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M7 9h10M11 14h2"/></svg>
-                    Filter
-                    <span class="filter-badge" id="filter-badge"></span>
-                </button>
-            </div>
-            <div class="tx-filter-panel" id="tx-filter-panel">
-                <div class="tx-filter-inner">
-                    <div class="filter-row">
-                        <span class="filter-row-label">Sort</span>
-                        <button class="sort-pill active desc" id="sort-date" data-sort="date"><span class="arr">↑</span> Date</button>
-                        <button class="sort-pill" id="sort-amount" data-sort="amount"><span class="arr">↑</span> Amount</button>
-                    </div>
-                    <div class="filter-divider"></div>
-                    <div class="filter-row">
-                        <span class="filter-row-label">Who</span>
-                        <button class="person-pill p-all" id="pill-all" data-person="all">All</button>
-                        <button class="person-pill" id="pill-gulnaz" data-person="gulnaz">🟣 Gulnaz</button>
-                        <button class="person-pill" id="pill-ghazala" data-person="ghazala">🟠 Ghazala</button>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="tx-results-bar" id="tx-results-bar">
             <span class="tx-results-count" id="tx-results-count"></span>
-            <button class="tx-results-clear" id="clear-all-filters-btn">Clear filters</button>
+            <button class="tx-results-clear" id="clear-all-filters-btn">Clear search</button>
         </div>
         <div id="entries-table-container" style="flex:1;overflow-y:auto;"></div>
         <div id="load-more-container" class="modal-footer" style="text-align:center;"></div>
@@ -556,14 +514,13 @@ const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwoFc2VyGtJMtFIh2D_qf9
 const INITIAL_LOAD=50;
 let sessionStart,allEntries=[],filteredEntries=[],visibleCount=INITIAL_LOAD,deviceDetails={};
 let lastName=null,lastTag=null,msgTimer=null;
-let sortBy='date',sortDir='desc',personFilter='all';
+let sortBy='date',sortDir='desc';
 
 const track=(n,p={})=>{if(typeof gtag!=='undefined')gtag('event',n,p);};
 const $=id=>document.getElementById(id);
 const TAG_EMOJI={'Kirana':'🛒','Light Bill':'💡','Society':'🏘️','Gosht Kheema':'🥩','Chicken':'🍗','Mutton':'🐑','Kheema':'🫕','Bheja':'🧠','Fish':'🐟','Gosht':'🍖'};
 const tagEmoji=t=>TAG_EMOJI[t]||'🏷️';
 
-// ── CHANGE 2: Haptic feedback helper (Android vibration API) ──
 function haptic(type='medium'){
     if(!navigator.vibrate)return;
     switch(type){
@@ -593,7 +550,6 @@ document.addEventListener('click',e=>{if(!hamburgerBtn.contains(e.target)&&!menu
 const showSpin=(b,t,s)=>{$(b).disabled=true;$(t).style.display='none';$(s).classList.remove('hidden');};
 const hideSpin=(b,t,s,txt)=>{$(b).disabled=false;$(t).style.display='';$(t).textContent=txt;$(s).classList.add('hidden');};
 
-// ── CHANGE 3: Pop-up duration set to 1500ms ──
 const showMsg=(msg,err=true)=>{
     $('message-text').textContent=msg;
     const ok=$('msg-icon-success'),er=$('msg-icon-error'),w=$('msg-icon-wrap');
@@ -654,25 +610,18 @@ function initApp(){
     });
     otherInput.addEventListener('input',()=>{if(otherInput.value.trim())document.querySelectorAll('input[name="tag"]').forEach(r=>r.checked=false);});
 
-    // ── CHANGE 1: Clear button now clears ALL fields — name, amount, AND category ──
     $('clear-btn').addEventListener('click',()=>{
         haptic('heavy');
-        // Clear ALL radio inputs (name + tag)
         document.querySelectorAll('#data-form input[type="radio"]').forEach(r=>r.checked=false);
-        // Clear amount
         amtIn.value='';
-        // Reset other tag
         otherInput.value='';
         otherWrap.classList.remove('open');
         otherBtn.classList.remove('active');
-        // Reset memory — next clear is truly blank
         lastName=null;
         lastTag=null;
-        // Blur any focused element so keyboard doesn't open
         if(document.activeElement) document.activeElement.blur();
     });
 
-    // Track last-used selections (for post-submit restore, not for clear)
     document.querySelectorAll('input[name="name"],input[name="tag"]').forEach(r=>r.addEventListener('change',()=>{
         haptic('light');
         if(r.name==='name')lastName=r.value;
@@ -686,43 +635,14 @@ function initApp(){
     $('help-feedback-btn').addEventListener('click',()=>{haptic('light');$('help-modal').classList.remove('hidden');menuContent.classList.remove('show');});
     $('close-help-modal-btn').addEventListener('click',()=>{haptic('light');$('help-modal').classList.add('hidden');});
 
-    const filterPanel=$('tx-filter-panel'),filterToggle=$('filter-toggle-btn');
-    filterToggle.addEventListener('click',()=>{haptic('light');const o=filterPanel.classList.toggle('open');filterToggle.classList.toggle('active',o);});
-
     const fi=$('filter-input'),csb=$('clear-search-btn');
     fi.addEventListener('input',()=>{csb.classList.toggle('show',!!fi.value);applyFiltersAndRender();});
     csb.addEventListener('click',()=>{haptic('light');fi.value='';csb.classList.remove('show');applyFiltersAndRender();fi.focus();});
 
-    document.querySelectorAll('.sort-pill').forEach(pill=>{
-        pill.addEventListener('click',()=>{
-            haptic('light');
-            const s=pill.dataset.sort;
-            if(sortBy===s){sortDir=sortDir==='desc'?'asc':'desc';}else{sortBy=s;sortDir='desc';}
-            document.querySelectorAll('.sort-pill').forEach(p=>{p.classList.remove('active','asc','desc');p.querySelector('.arr').textContent='↑';});
-            pill.classList.add('active',sortDir);
-            pill.querySelector('.arr').textContent=sortDir==='desc'?'↓':'↑';
-            applyFiltersAndRender();
-        });
-    });
-
-    function setPersonPill(person){
-        personFilter=person;
-        document.querySelectorAll('.person-pill').forEach(p=>p.classList.remove('p-all','p-gulnaz','p-ghazala'));
-        if(person==='all')$('pill-all').classList.add('p-all');
-        else if(person==='gulnaz')$('pill-gulnaz').classList.add('p-gulnaz');
-        else $('pill-ghazala').classList.add('p-ghazala');
-        applyFiltersAndRender();
-    }
-    document.querySelectorAll('.person-pill').forEach(p=>p.addEventListener('click',()=>{haptic('light');setPersonPill(p.dataset.person);}));
-    $('pill-all').classList.add('p-all');
-
     $('clear-all-filters-btn').addEventListener('click',()=>{
         haptic('medium');
         fi.value='';csb.classList.remove('show');
-        sortBy='date';sortDir='desc';
-        document.querySelectorAll('.sort-pill').forEach(p=>{p.classList.remove('active','asc','desc');p.querySelector('.arr').textContent='↑';});
-        $('sort-date').classList.add('active','desc');$('sort-date').querySelector('.arr').textContent='↓';
-        setPersonPill('all');
+        applyFiltersAndRender();
     });
 
     fetchData();getDevice();
@@ -773,7 +693,6 @@ async function handleSubmit(e){
         $('amount').value='';$('other-tag-input').value='';$('other-input-wrap').classList.remove('open');$('other-chip-btn').classList.remove('active');
         if(lastName){const r=document.querySelector(`input[name="name"][value="${lastName}"]`);if(r)r.checked=true;}
         if(lastTag){const r=document.querySelector(`input[name="tag"][value="${lastTag}"]`);if(r)r.checked=true;}
-        $('amount').focus();
         fetchData();track('form_submit_success',{name,amount,tag});
     }catch(err){
         console.error(err);showMsg("Couldn't save. Please contact us.");
@@ -808,7 +727,7 @@ function updateSummaryBar(s){
     const nameEl=$('tx-owes-name');
     nameEl.textContent=owesName;
     nameEl.className='tx-owes-name '+(owesName.toLowerCase().includes('gulnaz')?'gulnaz':'ghazala');
-    $('tx-owes-diff').textContent=diff?'by ₹'+fmt(diff):'(equal)';
+    $('tx-owes-diff').textContent=diff?'dena ₹'+fmt(diff):'(equal)';
     $('tx-summary-bar').style.display='flex';
 }
 
@@ -841,18 +760,11 @@ function renderRecent(entries){
 function applyFiltersAndRender(){
     const q=$('filter-input').value.toLowerCase().trim();
     let res=allEntries.filter(e=>!q||e.some(c=>String(c).toLowerCase().includes(q)));
-    if(personFilter==='gulnaz')res=res.filter(([g])=>!!g);
-    else if(personFilter==='ghazala')res=res.filter(([g])=>!g);
     res=[...res].sort((a,b)=>{
-        if(sortBy==='amount'){const d=(Number(b[0]||b[1]))-(Number(a[0]||a[1]));return sortDir==='desc'?d:-d;}
-        const d=new Date(b[3])-new Date(a[3]);return sortDir==='desc'?d:-d;
+        const d=new Date(b[3])-new Date(a[3]);return d;
     });
     filteredEntries=res;visibleCount=INITIAL_LOAD;
-    let n=0;if(q)n++;if(personFilter!=='all')n++;if(sortBy!=='date'||sortDir!=='desc')n++;
-    const badge=$('filter-badge');
-    badge.textContent=n||'';n?badge.classList.add('show'):badge.classList.remove('show');
-    $('filter-toggle-btn').classList.toggle('active',n>0);
-    const hasFilters=q||personFilter!=='all';
+    const hasFilters=!!q;
     const rb=$('tx-results-bar');
     rb.classList.toggle('show',hasFilters);
     if(hasFilters)$('tx-results-count').textContent=`${res.length} result${res.length!==1?'s':''}`;
@@ -872,29 +784,20 @@ function fmtDateLabel(ts){
 function dayKey(ts){
     if(!ts)return'unknown';
     const d=new Date(ts);
-    if(sortBy==='amount')return isNaN(d)?'unknown':d.toISOString().substring(0,7);
     return isNaN(d)?ts.substring(0,10):d.toISOString().substring(0,10);
-}
-function groupHeaderLabel(ts,key){
-    if(sortBy==='amount'){
-        if(!key||key==='unknown')return'Unknown';
-        const[y,m]=key.split('-');
-        return new Date(+y,+m-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
-    }
-    return fmtDateLabel(ts);
 }
 
 function renderGrouped(){
     const container=$('entries-table-container'),lmc=$('load-more-container');
     if(!filteredEntries.length){
-        container.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><p class="empty-text">No transactions found</p><p class="empty-sub">Try changing your search or filters</p></div>`;
+        container.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><p class="empty-text">No transactions found</p><p class="empty-sub">Try a different search</p></div>`;
         lmc.innerHTML='';return;
     }
     const toShow=filteredEntries.slice(0,visibleCount);
     const groups={},order=[];
     toShow.forEach(entry=>{
         const k=dayKey(entry[3]);
-        if(!groups[k]){groups[k]={label:groupHeaderLabel(entry[3],k),entries:[],total:0};order.push(k);}
+        if(!groups[k]){groups[k]={label:fmtDateLabel(entry[3]),entries:[],total:0};order.push(k);}
         groups[k].entries.push(entry);
         groups[k].total+=Number(entry[0]||entry[1]);
     });
