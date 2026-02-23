@@ -190,7 +190,7 @@
         .tx-page-header{display:flex;align-items:center;padding:10px 6px 8px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(245,245,247,0.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);gap:4px;flex-shrink:0;}
         .tx-page-title{font-family:var(--font-serif);font-size:21px;color:var(--text-primary);flex:1;}
         .tx-summary-bar{display:flex;align-items:stretch;border-bottom:1px solid var(--border);flex-shrink:0;}
-        .tx-sum-cell{flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--border);}
+        .tx-sum-cell{flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;}
         .tx-sum-cell:last-child{border-right:none;}
         .tx-sum-label{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;}
         .tx-sum-value{font-size:14px;font-weight:700;}
@@ -462,7 +462,7 @@
             <div class="tx-sum-cell"><div class="tx-sum-label">Gulnaz</div><div class="tx-sum-value gulnaz" id="tx-sum-gulnaz">—</div></div>
             <div class="tx-sum-cell"><div class="tx-sum-label">Ghazala</div><div class="tx-sum-value ghazala" id="tx-sum-ghazala">—</div></div>
             <div class="tx-sum-cell">
-                <div class="tx-sum-label">Tally</div>
+                <div class="tx-sum-label">Owes More</div>
                 <div class="tx-owes-name" id="tx-owes-name">—</div>
                 <div class="tx-owes-diff" id="tx-owes-diff"></div>
             </div>
@@ -668,7 +668,8 @@ function initApp(){
         // Reset memory — next clear is truly blank
         lastName=null;
         lastTag=null;
-        amtIn.focus();
+        // Blur any focused element so keyboard doesn't open
+        if(document.activeElement) document.activeElement.blur();
     });
 
     // Track last-used selections (for post-submit restore, not for clear)
@@ -807,7 +808,7 @@ function updateSummaryBar(s){
     const nameEl=$('tx-owes-name');
     nameEl.textContent=owesName;
     nameEl.className='tx-owes-name '+(owesName.toLowerCase().includes('gulnaz')?'gulnaz':'ghazala');
-    $('tx-owes-diff').textContent=diff?'dena ₹'+fmt(diff):'(equal)';
+    $('tx-owes-diff').textContent=diff?'by ₹'+fmt(diff):'(equal)';
     $('tx-summary-bar').style.display='flex';
 }
 
