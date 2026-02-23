@@ -462,7 +462,7 @@
             <div class="tx-sum-cell"><div class="tx-sum-label">Gulnaz</div><div class="tx-sum-value gulnaz" id="tx-sum-gulnaz">—</div></div>
             <div class="tx-sum-cell"><div class="tx-sum-label">Ghazala</div><div class="tx-sum-value ghazala" id="tx-sum-ghazala">—</div></div>
             <div class="tx-sum-cell">
-                <div class="tx-sum-label">Owes More</div>
+                <div class="tx-sum-label">Tally</div>
                 <div class="tx-owes-name" id="tx-owes-name">—</div>
                 <div class="tx-owes-diff" id="tx-owes-diff"></div>
             </div>
@@ -807,7 +807,7 @@ function updateSummaryBar(s){
     const nameEl=$('tx-owes-name');
     nameEl.textContent=owesName;
     nameEl.className='tx-owes-name '+(owesName.toLowerCase().includes('gulnaz')?'gulnaz':'ghazala');
-    $('tx-owes-diff').textContent=diff?'by ₹'+fmt(diff):'(equal)';
+    $('tx-owes-diff').textContent=diff?'dena ₹'+fmt(diff):'(equal)';
     $('tx-summary-bar').style.display='flex';
 }
 
