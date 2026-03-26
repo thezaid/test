@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-/* ─── RESET ─────────────────────────────────────────────── */
+/* ─── RESET ────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0d1117;--surface:#161b22;--surface2:#1c2330;--surface3:#212a38;
@@ -17,6 +17,7 @@
   --accent:#f0b429;--accent2:#e09e20;
   --red:#f85149;--green:#3fb950;--blue:#58a6ff;
   --r:8px;--rl:12px;
+  --hdr:58px;
   --mono:'IBM Plex Mono',monospace;--sans:'Outfit',sans-serif;
   --sh:0 4px 28px rgba(0,0,0,.5);--sh-sm:0 2px 8px rgba(0,0,0,.35);
 }
@@ -26,12 +27,12 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* ─── HEADER ─────────────────────────────────────────────── */
+/* ─── HEADER ──────────────────────────────────────────── */
 .header{
   position:sticky;top:0;z-index:200;
   background:rgba(13,17,23,.93);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
-  padding:0 20px;height:58px;
+  padding:0 20px;height:var(--hdr);
   display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:600;font-size:.9rem;color:var(--text);text-decoration:none;flex-shrink:0}
@@ -39,26 +40,16 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .logo-name{white-space:nowrap;letter-spacing:.06em}
 .logo-name em{font-style:normal;color:var(--muted)}
 .hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.btn-ghost{
-  background:var(--surface2);border:1px solid var(--border);color:var(--muted);
-  border-radius:var(--r);padding:7px 13px;
-  font-family:var(--sans);font-size:.78rem;font-weight:500;cursor:pointer;
-  transition:all .18s;display:flex;align-items:center;gap:6px;white-space:nowrap;
-}
+.btn-ghost{background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:var(--r);padding:7px 13px;font-family:var(--sans);font-size:.78rem;font-weight:500;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .btn-ghost:hover{border-color:var(--border2);color:var(--text)}
-.btn-primary{
-  background:var(--accent);border:none;border-radius:var(--r);color:#000;
-  font-family:var(--sans);font-weight:700;font-size:.82rem;
-  padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;
-  transition:background .18s,transform .1s;
-}
+.btn-primary{background:var(--accent);border:none;border-radius:var(--r);color:#000;font-family:var(--sans);font-weight:700;font-size:.82rem;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:background .18s,transform .1s}
 .btn-primary:hover{background:var(--accent2)}
 .btn-primary:active{transform:scale(.97)}
 
-/* ─── MAIN ───────────────────────────────────────────────── */
+/* ─── MAIN ────────────────────────────────────────────── */
 .main{max-width:1440px;margin:0 auto;padding:22px 20px 60px}
 
-/* ─── STATUS BAR ─────────────────────────────────────────── */
+/* ─── STATUS BAR ──────────────────────────────────────── */
 .status-bar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
 .s-dot{width:8px;height:8px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .3s}
 .s-dot.ok{background:var(--green);box-shadow:0 0 7px var(--green)}
@@ -67,37 +58,24 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .s-text{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
 .s-sync{font-family:var(--mono);font-size:.72rem;color:var(--muted2);margin-left:auto}
-.s-refresh{
-  margin-left:6px;background:transparent;border:1px solid var(--border);
-  border-radius:5px;padding:3px 8px;cursor:pointer;
-  color:var(--muted2);font-size:.7rem;transition:all .15s;white-space:nowrap;
-}
+.s-refresh{margin-left:6px;background:transparent;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;color:var(--muted2);font-size:.7rem;transition:all .15s;white-space:nowrap}
 .s-refresh:hover{border-color:var(--border2);color:var(--text)}
 
-/* ─── STATS ──────────────────────────────────────────────── */
+/* ─── STATS ───────────────────────────────────────────── */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 16px}
 .stat-lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted2);margin-bottom:4px}
 .stat-val{font-family:var(--mono);font-size:1.5rem;font-weight:600;line-height:1}
 .stat-sub{font-size:.7rem;color:var(--muted2);margin-top:3px}
 
-/* ─── CONTROLS ───────────────────────────────────────────── */
+/* ─── CONTROLS ROW ────────────────────────────────────── */
 .controls{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
 .search-wrap{position:relative;flex:1;min-width:180px}
 .search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted2);pointer-events:none}
-.search-inp{
-  width:100%;background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--r);padding:8px 12px 8px 34px;
-  color:var(--text);font-family:var(--sans);font-size:.83rem;outline:none;transition:border-color .18s;
-}
+.search-inp{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 12px 8px 34px;color:var(--text);font-family:var(--sans);font-size:.83rem;outline:none;transition:border-color .18s}
 .search-inp::placeholder{color:var(--muted2)}
 .search-inp:focus{border-color:var(--border2)}
-.ctrl-btn{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  color:var(--muted);font-family:var(--mono);font-size:.75rem;
-  padding:8px 13px;cursor:pointer;transition:all .18s;
-  display:flex;align-items:center;gap:6px;white-space:nowrap;
-}
+.ctrl-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);color:var(--muted);font-family:var(--mono);font-size:.75rem;padding:8px 13px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .ctrl-btn:hover{border-color:var(--border2);color:var(--text)}
 .ctrl-btn.on{border-color:var(--accent);color:var(--accent)}
 .view-toggle{display:flex;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;flex-shrink:0}
@@ -105,63 +83,169 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .view-btn.on{background:var(--surface3);color:var(--text)}
 .view-btn:not(:last-child){border-right:1px solid var(--border)}
 
-/* ─── FILTER CHIPS ───────────────────────────────────────── */
-.filter-bar{overflow-x:auto;margin-bottom:22px;padding-bottom:2px}
+/* ─── FILTER SECTION ──────────────────────────────────── */
+.filter-section{margin-bottom:20px;display:flex;flex-direction:column;gap:10px}
+
+/* Airline chips */
+.filter-bar{overflow-x:auto;padding-bottom:2px}
 .filter-bar::-webkit-scrollbar{height:2px}
 .chip-row{display:flex;gap:7px;width:max-content}
-.chip{
-  background:var(--surface);border:1px solid var(--border);border-radius:6px;
-  padding:5px 14px;font-size:.76rem;font-weight:500;cursor:pointer;
-  transition:all .18s;white-space:nowrap;color:var(--muted);
-}
+.chip{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:5px 14px;font-size:.76rem;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap;color:var(--muted)}
 .chip:hover{border-color:var(--border2);color:var(--text)}
 .chip.on{font-weight:600}
 
-/* ─── GRID VIEW ──────────────────────────────────────────── */
+/* Origin / Destination dropdowns */
+.route-filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.route-filter-group{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.route-filter-lbl{font-size:.72rem;font-weight:500;color:var(--muted2);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.route-select{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:.78rem;padding:6px 10px;outline:none;cursor:pointer;transition:border-color .18s;appearance:none;min-width:140px;max-width:200px}
+.route-select:focus{border-color:var(--border2)}
+.route-select option{background:var(--surface2)}
+.route-filter-clear{background:transparent;border:1px solid var(--border);border-radius:5px;padding:5px 10px;cursor:pointer;color:var(--muted2);font-size:.72rem;transition:all .15s;white-space:nowrap}
+.route-filter-clear:hover{border-color:var(--border2);color:var(--text)}
+.route-filter-clear.hidden{display:none}
+
+/* ─── GRID VIEW ───────────────────────────────────────── */
 .flights-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
 
-/* ─── GANTT VIEW ─────────────────────────────────────────── */
+/* ─── GANTT VIEW ──────────────────────────────────────── */
+/* The gantt is a pure timeline — no info column, bars carry all content */
 .gantt-wrap{
-  display:none;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;
+  display:none;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--rl);
+  overflow:hidden;
 }
-.gantt-wrap.visible{display:block}
-.gantt-head{
-  display:flex;align-items:center;padding:12px 16px;
-  border-bottom:1px solid var(--border);gap:12px;
-  position:sticky;top:58px;background:var(--surface);z-index:10;
+.gantt-wrap.visible{display:flex;flex-direction:column}
+
+/* Sticky hour-ruler header */
+.gantt-ruler{
+  position:sticky;
+  top:var(--hdr);
+  z-index:10;
+  background:var(--surface2);
+  border-bottom:2px solid var(--border2);
+  display:flex;
+  align-items:stretch;
+  /* match row padding: 0 16px, minus 60px for actions */
+  padding:0 16px;
+  height:32px;
+  flex-shrink:0;
 }
-.gantt-lbl-col{width:170px;flex-shrink:0;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted2)}
-.gantt-tl-head{flex:1;overflow:hidden}
-.gantt-hours{display:flex;width:100%}
-.gantt-hr{flex:1;font-family:var(--mono);font-size:.6rem;color:var(--muted2);text-align:center;padding-bottom:2px}
-.gantt-actions-head{width:68px;flex-shrink:0}
-.gantt-body{overflow-x:auto}
+.gantt-ruler-inner{
+  flex:1;
+  position:relative;
+  display:flex;
+}
+.gantt-hr-mark{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  position:relative;
+  border-left:1px solid var(--border2);
+}
+.gantt-hr-mark:first-child{border-left:none}
+.gantt-hr-label{
+  font-family:var(--mono);
+  font-size:.6rem;
+  color:var(--muted);
+  position:absolute;
+  top:4px;
+  left:3px;
+  white-space:nowrap;
+}
+/* now-line */
+.gantt-now-line{
+  position:absolute;
+  top:0;bottom:0;
+  width:2px;
+  background:var(--accent);
+  opacity:.8;
+  z-index:4;
+  pointer-events:none;
+}
+.gantt-now-line::before{
+  content:'';
+  position:absolute;
+  top:-1px;left:-4px;
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
+/* Gantt rows */
+.gantt-body{overflow-y:auto}
 .gantt-row{
-  display:flex;align-items:center;padding:0 16px;
-  border-bottom:1px solid var(--border);min-height:52px;gap:12px;transition:background .15s;
+  display:flex;
+  align-items:center;
+  padding:7px 16px;
+  border-bottom:1px solid var(--border);
+  gap:10px;
+  min-height:60px;
+  transition:background .15s;
+  position:relative;
 }
 .gantt-row:last-child{border-bottom:none}
 .gantt-row:hover{background:var(--surface2)}
-.gantt-row:hover .gantt-acts{opacity:1}
-.gantt-info{width:170px;flex-shrink:0;display:flex;flex-direction:column;gap:2px}
-.gantt-fno{font-family:var(--mono);font-size:.82rem;font-weight:600}
-.gantt-sub{font-size:.67rem;color:var(--muted)}
-.gantt-track{flex:1;position:relative;height:28px}
-.gantt-bg{position:absolute;inset:0;display:flex;pointer-events:none}
-.gantt-bg-line{flex:1;border-left:1px solid var(--border)}
-.gantt-bar{
-  position:absolute;top:50%;transform:translateY(-50%);
-  height:20px;border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:.6rem;font-weight:600;
-  overflow:hidden;white-space:nowrap;padding:0 6px;
-  cursor:default;transition:filter .15s;min-width:6px;
-}
-.gantt-bar:hover{filter:brightness(1.15)}
-.gantt-acts{display:flex;gap:4px;flex-shrink:0;opacity:0;transition:opacity .15s;width:68px;justify-content:flex-end}
+.gantt-row:hover .gantt-acts{opacity:1;pointer-events:all}
 
-/* ─── FLIGHT CARD ────────────────────────────────────────── */
+/* Timeline track (full width) */
+.gantt-track{
+  flex:1;
+  position:relative;
+  height:44px;
+  min-width:0;
+}
+/* Hour grid lines inside track */
+.gantt-grid{
+  position:absolute;inset:0;
+  display:flex;
+  pointer-events:none;
+}
+.gantt-grid-line{
+  flex:1;
+  border-left:1px solid var(--border);
+  height:100%;
+}
+.gantt-grid-line:first-child{border-left:none}
+
+/* The flight bar */
+.gantt-bar{
+  position:absolute;
+  top:50%;transform:translateY(-50%);
+  height:36px;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  padding:0 10px;
+  gap:6px;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:default;
+  transition:filter .15s, box-shadow .15s;
+  min-width:4px;
+  box-shadow:0 1px 6px rgba(0,0,0,.35);
+}
+.gantt-bar:hover{filter:brightness(1.12);box-shadow:0 2px 12px rgba(0,0,0,.45)}
+.gantt-bar-sep{opacity:.4;font-size:.65rem;flex-shrink:0}
+.gantt-bar-fno{
+  font-family:var(--mono);font-size:.72rem;font-weight:700;flex-shrink:0;
+}
+.gantt-bar-route{font-family:var(--mono);font-size:.68rem;flex-shrink:0}
+.gantt-bar-times{font-family:var(--mono);font-size:.65rem;opacity:.85;flex-shrink:0}
+.gantt-bar-ac{font-size:.63rem;opacity:.75;flex-shrink:0}
+
+/* Hover actions (right side) */
+.gantt-acts{
+  display:flex;gap:4px;flex-shrink:0;
+  opacity:0;pointer-events:none;
+  transition:opacity .15s;
+  width:60px;justify-content:flex-end;
+}
+
+/* ─── FLIGHT CARD ─────────────────────────────────────── */
 .fc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .18s,transform .15s,box-shadow .18s}
 .fc:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--sh)}
 .fc-stripe{height:3px}
@@ -189,15 +273,16 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .fc-note{font-size:.72rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:190px}
 .fc-id{font-family:var(--mono);font-size:.65rem;color:var(--muted2);flex-shrink:0}
 
-/* ─── EMPTY / SKELETON ───────────────────────────────────── */
+/* ─── EMPTY / SKELETON ────────────────────────────────── */
 .empty{grid-column:1/-1;text-align:center;padding:60px 24px}
 .empty-ico{font-size:2.6rem;opacity:.35;margin-bottom:14px}
 .empty-title{font-size:.95rem;color:var(--muted);margin-bottom:6px}
 .empty-sub{font-size:.78rem;color:var(--muted2)}
+.gantt-empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:.82rem}
 .skel{background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:var(--r)}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* ─── MODAL ──────────────────────────────────────────────── */
+/* ─── MODAL ───────────────────────────────────────────── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .18s}
 .overlay.open{opacity:1;pointer-events:all}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);width:100%;max-width:500px;max-height:92vh;overflow-y:auto;box-shadow:var(--sh);transform:translateY(14px) scale(.98);transition:transform .24s cubic-bezier(.16,1,.3,1)}
@@ -225,7 +310,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .btn-save:hover{background:var(--accent2)}
 .btn-save:disabled{opacity:.6;cursor:not-allowed}
 
-/* ─── CONFIG MODAL ───────────────────────────────────────── */
+/* ─── CONFIG MODAL ────────────────────────────────────── */
 .cfg-row{display:flex;gap:8px}
 .cfg-row .fi{flex:1;font-family:var(--mono);font-size:.76rem}
 .cfg-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-top:14px}
@@ -239,7 +324,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .tab-pills{display:flex;gap:6px;margin-bottom:10px}
 .tab-pill{background:var(--surface3);border:1px solid var(--border2);border-radius:5px;padding:3px 10px;font-family:var(--mono);font-size:.7rem;color:var(--accent)}
 
-/* ─── CONFIRM ────────────────────────────────────────────── */
+/* ─── CONFIRM ─────────────────────────────────────────── */
 .conf-ovl{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .15s}
 .conf-ovl.open{opacity:1;pointer-events:all}
 .conf-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:26px;width:100%;max-width:340px;box-shadow:var(--sh);transform:scale(.94);transition:transform .2s cubic-bezier(.16,1,.3,1)}
@@ -251,7 +336,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .btn-del{background:var(--red);border:none;color:#fff;border-radius:var(--r);padding:8px 18px;font-family:var(--sans);font-size:.83rem;font-weight:700;cursor:pointer;transition:opacity .14s}
 .btn-del:hover{opacity:.85}
 
-/* ─── TOAST ──────────────────────────────────────────────── */
+/* ─── TOAST ───────────────────────────────────────────── */
 .toast-wrap{position:fixed;bottom:20px;right:20px;z-index:500;display:flex;flex-direction:column;gap:7px;pointer-events:none}
 .toast{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:11px 15px;font-size:.8rem;display:flex;align-items:center;gap:8px;box-shadow:var(--sh-sm);max-width:300px;pointer-events:all;animation:tIn .22s cubic-bezier(.16,1,.3,1)}
 .toast.ok{border-left:3px solid var(--green)}
@@ -259,7 +344,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .toast.inf{border-left:3px solid var(--blue)}
 @keyframes tIn{from{transform:translateX(14px);opacity:0}to{transform:none;opacity:1}}
 
-/* ─── RESPONSIVE ─────────────────────────────────────────── */
+/* ─── RESPONSIVE ──────────────────────────────────────── */
 @media(max-width:700px){
   .main{padding:14px 12px 50px}
   .stats-row{grid-template-columns:repeat(2,1fr)}
@@ -267,6 +352,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   .fg-grid{grid-template-columns:1fr}
   .fg-full{grid-column:1}
   .logo-name{display:none}
+  .route-filters{flex-direction:column;align-items:flex-start}
 }
 @media(max-width:420px){
   .hdr-right .btn-ghost span{display:none}
@@ -275,7 +361,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 </head>
 <body>
 
-<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<!-- ── HEADER ─────────────────────────────────────────────────── -->
 <header class="header">
   <a class="logo" href="#">
     <div class="logo-mark">✈</div>
@@ -293,7 +379,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   </div>
 </header>
 
-<!-- ── MAIN ────────────────────────────────────────────────────── -->
+<!-- ── MAIN ───────────────────────────────────────────────────── -->
 <main class="main">
 
   <!-- Status -->
@@ -318,29 +404,51 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input class="search-inp" id="searchInp" type="text" placeholder="Search flight, airline, airport, aircraft…" oninput="applyFilters()" />
     </div>
-    <button class="ctrl-btn" id="sortBtn" onclick="toggleSort()">
+    <!-- sort defaults to "By Time" (on) -->
+    <button class="ctrl-btn on" id="sortBtn" onclick="toggleSort()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="9" y2="18"/></svg>
-      <span id="sortLbl">Default</span>
+      <span id="sortLbl">By Time</span>
     </button>
+    <!-- view defaults to gantt -->
     <div class="view-toggle">
-      <button class="view-btn on" id="vGrid" title="Card view" onclick="setView('grid')">
+      <button class="view-btn" id="vGrid" title="Card view" onclick="setView('grid')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       </button>
-      <button class="view-btn" id="vGantt" title="Gantt timeline view" onclick="setView('gantt')">
+      <button class="view-btn on" id="vGantt" title="Gantt timeline" onclick="setView('gantt')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="5" y1="18" x2="18" y2="18"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- Filter chips -->
-  <div class="filter-bar">
-    <div class="chip-row" id="chipRow">
-      <button class="chip on" style="background:var(--accent);border-color:var(--accent);color:#000" data-f="all" onclick="setFilter('all',this)">All Flights</button>
+  <!-- Filters: Airline chips + Origin/Dest dropdowns -->
+  <div class="filter-section">
+    <!-- Airline filter chips -->
+    <div class="filter-bar">
+      <div class="chip-row" id="chipRow">
+        <button class="chip on" style="background:var(--accent);border-color:var(--accent);color:#000" data-f="all" onclick="setFilter('all',this)">All Airlines</button>
+      </div>
+    </div>
+
+    <!-- Origin / Destination selects -->
+    <div class="route-filters">
+      <div class="route-filter-group">
+        <span class="route-filter-lbl">Origin</span>
+        <select class="route-select" id="filterOrigin" onchange="applyFilters()">
+          <option value="">All Origins</option>
+        </select>
+      </div>
+      <div class="route-filter-group">
+        <span class="route-filter-lbl">Dest</span>
+        <select class="route-select" id="filterDest" onchange="applyFilters()">
+          <option value="">All Destinations</option>
+        </select>
+      </div>
+      <button class="route-filter-clear" id="clearRouteBtn" onclick="clearRouteFilters()">✕ Clear Route</button>
     </div>
   </div>
 
-  <!-- Grid -->
-  <div class="flights-grid" id="flightsGrid">
+  <!-- Card grid (hidden by default — gantt is default) -->
+  <div class="flights-grid" id="flightsGrid" style="display:none">
     <div class="empty">
       <div class="empty-ico">✈</div>
       <div class="empty-title">No flights loaded</div>
@@ -348,19 +456,22 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
     </div>
   </div>
 
-  <!-- Gantt -->
-  <div class="gantt-wrap" id="ganttWrap">
-    <div class="gantt-head">
-      <div class="gantt-lbl-col">Flight</div>
-      <div class="gantt-tl-head"><div class="gantt-hours" id="ganttHours"></div></div>
-      <div class="gantt-actions-head"></div>
+  <!-- Gantt (visible by default) -->
+  <div class="gantt-wrap visible" id="ganttWrap">
+    <!-- Sticky hour ruler — no flight column, pure timeline -->
+    <div class="gantt-ruler" id="ganttRuler">
+      <div class="gantt-ruler-inner" id="ganttRulerInner">
+        <!-- Hour marks injected by JS -->
+      </div>
     </div>
-    <div class="gantt-body" id="ganttBody"></div>
+    <div class="gantt-body" id="ganttBody">
+      <div class="gantt-empty">Connect your Google Sheet to load flights</div>
+    </div>
   </div>
 
 </main>
 
-<!-- ── ADD / EDIT MODAL ────────────────────────────────────────── -->
+<!-- ── ADD / EDIT MODAL ──────────────────────────────────────── -->
 <div class="overlay" id="flightOvl">
   <div class="modal">
     <div class="m-head">
@@ -387,7 +498,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   </div>
 </div>
 
-<!-- ── CONFIG MODAL ───────────────────────────────────────────── -->
+<!-- ── CONFIG MODAL ──────────────────────────────────────────── -->
 <div class="overlay" id="cfgOvl">
   <div class="modal" style="max-width:560px">
     <div class="m-head">
@@ -395,12 +506,11 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
       <button class="m-close" onclick="closeConfig()">✕</button>
     </div>
     <div class="m-body">
-      <p style="font-size:.79rem;color:var(--muted);line-height:1.65;margin-bottom:14px">Paste your deployed Google Apps Script Web App URL. The script must be published with <strong style="color:var(--text)">Anyone</strong> access.</p>
+      <p style="font-size:.79rem;color:var(--muted);line-height:1.65;margin-bottom:14px">Paste your deployed Google Apps Script Web App URL. Must be published with <strong style="color:var(--text)">Anyone</strong> access.</p>
       <div class="cfg-row">
         <input class="fi" id="cfgUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec" />
         <button class="btn-save" onclick="connectSheet()" style="flex-shrink:0;padding:8px 16px">Connect</button>
       </div>
-
       <div class="cfg-box">
         <div class="cfg-box-lbl">3 TABS REQUIRED</div>
         <div class="tab-pills">
@@ -422,19 +532,17 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
           <tr><td>origin / dest</td><td>IATA codes from Airports tab</td></tr>
           <tr><td>aircraft</td><td><em>e.g. B777-300ER</em></td></tr>
           <tr><td>start / end</td><td>HH:MM 24-hour</td></tr>
-          <tr><td>notes</td><td>Optional free text</td></tr>
+          <tr><td>notes</td><td>Optional</td></tr>
         </table>
       </div>
-
       <div class="cfg-box" style="margin-top:10px">
         <div class="cfg-box-lbl">SETUP STEPS</div>
         <ol style="padding-left:16px">
-          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Create a Google Sheet with 3 tabs: <strong style="color:var(--text)">Airlines</strong>, <strong style="color:var(--text)">Airports</strong>, <strong style="color:var(--text)">Flights</strong></li>
-          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Open <strong style="color:var(--text)">Extensions → Apps Script</strong> and paste the provided script</li>
-          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Run <strong style="color:var(--text)">setupHeaders()</strong> once to initialise headers &amp; formatting</li>
-          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Populate Airlines and Airports tabs, then run <strong style="color:var(--text)">applyDataValidation()</strong></li>
-          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Deploy as <strong style="color:var(--text)">Web App → Anyone can access</strong></li>
-          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Paste the URL above and click Connect</li>
+          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Create sheet with tabs <strong style="color:var(--text)">Airlines</strong>, <strong style="color:var(--text)">Airports</strong>, <strong style="color:var(--text)">Flights</strong></li>
+          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Paste script via <strong style="color:var(--text)">Extensions → Apps Script</strong></li>
+          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Run <strong style="color:var(--text)">setupHeaders()</strong> then <strong style="color:var(--text)">applyDataValidation()</strong></li>
+          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Deploy → <strong style="color:var(--text)">Web App → Anyone can access</strong></li>
+          <li style="font-size:.76rem;color:var(--muted);line-height:1.9">Paste URL above and click Connect</li>
         </ol>
       </div>
     </div>
@@ -442,7 +550,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   </div>
 </div>
 
-<!-- ── CONFIRM DELETE ─────────────────────────────────────────── -->
+<!-- ── CONFIRM DELETE ────────────────────────────────────────── -->
 <div class="conf-ovl" id="confOvl">
   <div class="conf-box">
     <div class="conf-icon">🗑</div>
@@ -460,18 +568,20 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   STATE
+   STATE  — defaults: gantt view, time sort
 ═══════════════════════════════════════════════════════ */
 const S = {
-  url:      localStorage.getItem('fops_url') || '',
-  flights:  [],
-  airlines: [],   // [{name, color}]
-  airports: {},   // { CODE: 'Full Name' }
-  colors:   {},   // { airlineName: hex }
-  filter:   'all',
-  sort:     'default',
-  view:     'grid',
-  editId:   null,
+  url:          localStorage.getItem('fops_url') || '',
+  flights:      [],
+  airlines:     [],   // [{name, color}]
+  airports:     {},   // { CODE: 'Full Name' }
+  colors:       {},   // { airlineName: hex }
+  filter:       'all',
+  filterOrigin: '',
+  filterDest:   '',
+  sort:         'time',   // default: time
+  view:         'gantt',  // default: gantt
+  editId:       null,
 };
 window._list = [];
 
@@ -479,7 +589,7 @@ window._list = [];
    INIT
 ═══════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  buildGanttHours();
+  buildGanttRuler();
   if (S.url) {
     document.getElementById('cfgUrl').value = S.url;
     loadAll();
@@ -492,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function api(params) {
   if (!S.url) { toast('No sheet connected', 'err'); return null; }
   try {
-    const res  = await fetch(`${S.url}?${new URLSearchParams(params)}`);
+    const res = await fetch(`${S.url}?${new URLSearchParams(params)}`);
     return await res.json();
   } catch (e) { toast('Network error: ' + e.message, 'err'); return null; }
 }
@@ -522,16 +632,17 @@ async function loadAll() {
 
   if (fRes?.success) {
     S.flights = fRes.data || [];
-    setStatus('ok', `Connected · ${S.flights.length} flight${S.flights.length !== 1 ? 's' : ''} · ${S.airlines.length} airline${S.airlines.length !== 1 ? 's' : ''} · ${Object.keys(S.airports).length} airports`);
+    setStatus('ok', `Connected · ${S.flights.length} flights · ${S.airlines.length} airlines · ${Object.keys(S.airports).length} airports`);
     document.getElementById('sSync').textContent = 'synced ' + new Date().toLocaleTimeString();
     document.getElementById('sRefresh').style.display = 'inline-flex';
     buildChips();
+    buildRouteFilterOptions();
     buildSelects();
     updateStats();
     applyFilters();
   } else {
     setStatus('err', 'Failed to load — check URL and sheet tab names');
-    renderEmpty('Could not load data', 'Verify the Web App URL and that tab names are Airlines / Airports / Flights');
+    renderEmpty('Could not load data', 'Verify the Web App URL and tab names: Airlines / Airports / Flights');
   }
 }
 
@@ -564,7 +675,7 @@ async function saveFlight() {
 async function deleteFlight(id) {
   const f = S.flights.find(x => x.id == id);
   document.getElementById('confSub').textContent = f
-    ? `Remove ${f.flightNo}  (${f.origin} → ${f.dest})? This cannot be undone.`
+    ? `Remove ${f.flightNo} (${f.origin} → ${f.dest})? This cannot be undone.`
     : 'This action cannot be undone.';
   document.getElementById('confDelBtn').onclick = async () => {
     closeConfirm();
@@ -614,13 +725,26 @@ function buildSelects() {
 /* ═══════════════════════════════════════════════════════
    MODALS
 ═══════════════════════════════════════════════════════ */
-function openAddModal()  { S.editId=null; resetForm(); document.getElementById('mTitle').textContent='Add Flight'; document.getElementById('saveBtn').textContent='Add Flight'; document.getElementById('flightOvl').classList.add('open'); }
-function openEditModal(id) { const f=S.flights.find(x=>x.id==id); if(!f) return; S.editId=id; fillForm(f); document.getElementById('mTitle').textContent='Edit Flight'; document.getElementById('saveBtn').textContent='Save Changes'; document.getElementById('flightOvl').classList.add('open'); }
+function openAddModal()  {
+  S.editId = null; resetForm();
+  document.getElementById('mTitle').textContent = 'Add Flight';
+  document.getElementById('saveBtn').textContent = 'Add Flight';
+  document.getElementById('flightOvl').classList.add('open');
+}
+function openEditModal(id) {
+  const f = S.flights.find(x => x.id == id); if (!f) return;
+  S.editId = id; fillForm(f);
+  document.getElementById('mTitle').textContent = 'Edit Flight';
+  document.getElementById('saveBtn').textContent = 'Save Changes';
+  document.getElementById('flightOvl').classList.add('open');
+}
 function closeModal()   { document.getElementById('flightOvl').classList.remove('open'); }
 function openConfig()   { document.getElementById('cfgOvl').classList.add('open'); }
 function closeConfig()  { document.getElementById('cfgOvl').classList.remove('open'); }
 function closeConfirm() { document.getElementById('confOvl').classList.remove('open'); }
-document.querySelectorAll('.overlay').forEach(el => el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); }));
+document.querySelectorAll('.overlay').forEach(el =>
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); })
+);
 
 function connectSheet() {
   const url = document.getElementById('cfgUrl').value.trim();
@@ -634,65 +758,119 @@ function connectSheet() {
 ═══════════════════════════════════════════════════════ */
 function setFilter(val, el) {
   S.filter = val;
-  document.querySelectorAll('.chip').forEach(c => { c.classList.remove('on'); c.style.cssText=''; });
+  document.querySelectorAll('.chip').forEach(c => { c.classList.remove('on'); c.style.cssText = ''; });
   el.classList.add('on');
-  if (val==='all') { el.style.background='var(--accent)'; el.style.borderColor='var(--accent)'; el.style.color='#000'; }
-  else { const col=el.dataset.color||'#58a6ff'; el.style.background=col; el.style.borderColor=col; el.style.color=isDark(col)?'#fff':'#000'; }
+  if (val === 'all') {
+    el.style.background = 'var(--accent)';
+    el.style.borderColor = 'var(--accent)';
+    el.style.color = '#000';
+  } else {
+    const col = el.dataset.color || '#58a6ff';
+    el.style.background = col;
+    el.style.borderColor = col;
+    el.style.color = isDark(col) ? '#fff' : '#000';
+  }
+  applyFilters();
+}
+
+function clearRouteFilters() {
+  S.filterOrigin = '';
+  S.filterDest   = '';
+  document.getElementById('filterOrigin').value = '';
+  document.getElementById('filterDest').value   = '';
+  document.getElementById('clearRouteBtn').classList.add('hidden');
   applyFilters();
 }
 
 function toggleSort() {
-  S.sort = S.sort==='default' ? 'time' : 'default';
-  document.getElementById('sortBtn').classList.toggle('on', S.sort==='time');
-  document.getElementById('sortLbl').textContent = S.sort==='time' ? 'By Time' : 'Default';
+  S.sort = S.sort === 'default' ? 'time' : 'default';
+  document.getElementById('sortBtn').classList.toggle('on', S.sort === 'time');
+  document.getElementById('sortLbl').textContent = S.sort === 'time' ? 'By Time' : 'Default';
   applyFilters();
 }
 
 function setView(v) {
   S.view = v;
-  document.getElementById('vGrid').classList.toggle('on',  v==='grid');
-  document.getElementById('vGantt').classList.toggle('on', v==='gantt');
-  document.getElementById('flightsGrid').style.display = v==='grid' ? 'grid' : 'none';
-  document.getElementById('ganttWrap').classList.toggle('visible', v==='gantt');
-  if (v==='gantt') renderGantt(window._list);
+  document.getElementById('vGrid').classList.toggle('on',  v === 'grid');
+  document.getElementById('vGantt').classList.toggle('on', v === 'gantt');
+  document.getElementById('flightsGrid').style.display = v === 'grid' ? 'grid' : 'none';
+  const gw = document.getElementById('ganttWrap');
+  if (v === 'gantt') gw.classList.add('visible');
+  else gw.classList.remove('visible');
+  if (v === 'gantt') renderGantt(window._list);
 }
 
 function applyFilters() {
-  const q = document.getElementById('searchInp').value.toLowerCase();
+  const q  = document.getElementById('searchInp').value.toLowerCase();
+  const fo = document.getElementById('filterOrigin').value;
+  const fd = document.getElementById('filterDest').value;
+
+  // track state
+  S.filterOrigin = fo;
+  S.filterDest   = fd;
+  const hasRoute = fo || fd;
+  document.getElementById('clearRouteBtn').classList.toggle('hidden', !hasRoute);
+
   let list = [...S.flights];
-  if (S.filter!=='all') list = list.filter(f => f.airline===S.filter);
-  if (q) list = list.filter(f =>
-    [f.flightNo,f.airline,f.origin,f.dest,f.aircraft,f.notes,
-     S.airports[f.origin],S.airports[f.dest]]
-    .some(v=>(v||'').toLowerCase().includes(q))
+  if (S.filter !== 'all') list = list.filter(f => f.airline === S.filter);
+  if (fo) list = list.filter(f => f.origin === fo);
+  if (fd) list = list.filter(f => f.dest   === fd);
+  if (q)  list = list.filter(f =>
+    [f.flightNo, f.airline, f.origin, f.dest, f.aircraft, f.notes,
+     S.airports[f.origin], S.airports[f.dest]]
+    .some(v => (v||'').toLowerCase().includes(q))
   );
-  list = S.sort==='time'
-    ? [...list].sort((a,b)=>t2m(a.start)-t2m(b.start))
-    : [...list].sort((a,b)=>(+a.id||0)-(+b.id||0));
+
+  list = S.sort === 'time'
+    ? [...list].sort((a,b) => t2m(a.start) - t2m(b.start))
+    : [...list].sort((a,b) => (+a.id||0) - (+b.id||0));
+
   window._list = list;
-  if (S.view==='grid') renderCards(list);
+  if (S.view === 'grid') renderCards(list);
   else renderGantt(list);
 }
 
-function t2m(t) { if(!t) return 9999; const[h,m]=t.split(':').map(Number); return h*60+m; }
+function t2m(t) {
+  if (!t) return 9999;
+  const [h,m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
 
 /* ═══════════════════════════════════════════════════════
-   RENDER — CHIPS & STATS
+   BUILD CHIPS & ROUTE SELECTS
 ═══════════════════════════════════════════════════════ */
 function buildChips() {
-  const airlines = [...new Set(S.flights.map(f=>f.airline).filter(Boolean))];
-  const isAll = S.filter==='all';
-  const allC  = `<button class="chip ${isAll?'on':''}" style="${isAll?'background:var(--accent);border-color:var(--accent);color:#000':''}" data-f="all" onclick="setFilter('all',this)">All Flights</button>`;
+  const airlines = [...new Set(S.flights.map(f => f.airline).filter(Boolean))];
+  const isAll = S.filter === 'all';
+  const allC = `<button class="chip ${isAll?'on':''}" style="${isAll?'background:var(--accent);border-color:var(--accent);color:#000':''}" data-f="all" onclick="setFilter('all',this)">All Airlines</button>`;
   const chips = airlines.map(a => {
-    const col=S.colors[a]||'#58a6ff'; const isOn=S.filter===a;
-    const sty=isOn?`background:${col};border-color:${col};color:${isDark(col)?'#fff':'#000'}`:'';
+    const col = S.colors[a] || '#58a6ff';
+    const isOn = S.filter === a;
+    const sty = isOn ? `background:${col};border-color:${col};color:${isDark(col)?'#fff':'#000'}` : '';
     return `<button class="chip ${isOn?'on':''}" style="${sty}" data-f="${esc(a)}" data-color="${col}" onclick="setFilter('${esc(a)}',this)">${esc(a)}</button>`;
   }).join('');
   document.getElementById('chipRow').innerHTML = allC + chips;
 }
 
+function buildRouteFilterOptions() {
+  // Collect distinct origins and dests from loaded flights
+  const origins = [...new Set(S.flights.map(f => f.origin).filter(Boolean))].sort();
+  const dests   = [...new Set(S.flights.map(f => f.dest).filter(Boolean))].sort();
+
+  const mkOpts = (codes, placeholder) =>
+    `<option value="">${placeholder}</option>` +
+    codes.map(c => `<option value="${c}">${c}${S.airports[c] ? ' — ' + esc(S.airports[c]) : ''}</option>`).join('');
+
+  document.getElementById('filterOrigin').innerHTML = mkOpts(origins, 'All Origins');
+  document.getElementById('filterDest').innerHTML   = mkOpts(dests,   'All Destinations');
+
+  // Restore previous selections if they still exist
+  if (S.filterOrigin) document.getElementById('filterOrigin').value = S.filterOrigin;
+  if (S.filterDest)   document.getElementById('filterDest').value   = S.filterDest;
+}
+
 function updateStats() {
-  const f=S.flights;
+  const f = S.flights;
   document.getElementById('stFlights').textContent  = f.length;
   document.getElementById('stAirlines').textContent = S.airlines.length || [...new Set(f.map(x=>x.airline))].filter(Boolean).length;
   document.getElementById('stAirports').textContent = Object.keys(S.airports).length || [...new Set([...f.map(x=>x.origin),...f.map(x=>x.dest)])].filter(Boolean).length;
@@ -704,12 +882,17 @@ function updateStats() {
 ═══════════════════════════════════════════════════════ */
 function renderCards(list) {
   const grid = document.getElementById('flightsGrid');
-  if (!list.length) { grid.innerHTML=`<div class="empty"><div class="empty-ico">🔍</div><div class="empty-title">No flights match</div><div class="empty-sub">Adjust the filter or search query</div></div>`; return; }
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty"><div class="empty-ico">🔍</div><div class="empty-title">No flights match</div><div class="empty-sub">Adjust filters or search</div></div>`;
+    return;
+  }
   grid.innerHTML = list.map(f => {
-    const col=S.colors[f.airline]||'#58a6ff', txt=isDark(col)?'#fff':'#000';
-    const dur=calcDur(f.start,f.end), pct=calcProg(f.start,f.end);
-    const origName=S.airports[f.origin]||f.origin||'—';
-    const destName=S.airports[f.dest]||f.dest||'—';
+    const col = S.colors[f.airline] || '#58a6ff';
+    const txt = isDark(col) ? '#fff' : '#000';
+    const dur = calcDur(f.start, f.end);
+    const pct = calcProg(f.start, f.end);
+    const oN  = S.airports[f.origin] || f.origin || '—';
+    const dN  = S.airports[f.dest]   || f.dest   || '—';
     return `
     <div class="fc">
       <div class="fc-stripe" style="background:${col}"></div>
@@ -719,14 +902,14 @@ function renderCards(list) {
           <div class="fc-fno">${esc(f.flightNo||'—')}</div>
         </div>
         <div class="fc-acts">
-          <button class="ibt" title="Edit" onclick="openEditModal(${f.id})"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-          <button class="ibt del" title="Delete" onclick="deleteFlight(${f.id})"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+          <button class="ibt" title="Edit" onclick="openEditModal(${f.id})">${SVG_EDIT}</button>
+          <button class="ibt del" title="Delete" onclick="deleteFlight(${f.id})">${SVG_DEL}</button>
         </div>
       </div>
       <div class="fc-route">
         <div class="rn">
           <div class="rn-code">${esc(f.origin||'—')}</div>
-          <div class="rn-city" title="${esc(origName)}">${esc(origName)}</div>
+          <div class="rn-city" title="${esc(oN)}">${esc(oN)}</div>
         </div>
         <div class="rl-mid">
           <div class="rl-dur">${dur}</div>
@@ -735,7 +918,7 @@ function renderCards(list) {
         </div>
         <div class="rn" style="text-align:right">
           <div class="rn-code">${esc(f.dest||'—')}</div>
-          <div class="rn-city" title="${esc(destName)}">${esc(destName)}</div>
+          <div class="rn-city" title="${esc(dN)}">${esc(dN)}</div>
         </div>
       </div>
       <div class="fc-times">
@@ -743,7 +926,7 @@ function renderCards(list) {
         <div style="text-align:right"><div class="tb-lbl">Arrival</div><div class="tb-val">${esc(f.end||'—')}</div></div>
       </div>
       <div class="fc-foot">
-        <div class="fc-note" title="${esc(f.notes||'')}">${f.notes?'📝 '+esc(f.notes):'<span style="opacity:.35">No notes</span>'}</div>
+        <div class="fc-note" title="${esc(f.notes||'')}">${f.notes ? '📝 ' + esc(f.notes) : '<span style="opacity:.35">No notes</span>'}</div>
         <div class="fc-id">#${f.id}</div>
       </div>
     </div>`;
@@ -752,40 +935,80 @@ function renderCards(list) {
 
 /* ═══════════════════════════════════════════════════════
    RENDER — GANTT
+   Pure timeline: no info column.
+   Each bar carries: flightNo · origin→dest · start–end · aircraft
 ═══════════════════════════════════════════════════════ */
-function buildGanttHours() {
-  document.getElementById('ganttHours').innerHTML =
-    Array.from({length:25},(_,i)=>`<div class="gantt-hr">${(i%24).toString().padStart(2,'0')}</div>`).join('');
+const HOUR_COUNT = 24;
+const TOT_MIN    = HOUR_COUNT * 60;
+
+function buildGanttRuler() {
+  // 24 columns, one per hour
+  const inner = document.getElementById('ganttRulerInner');
+  inner.innerHTML = Array.from({length: HOUR_COUNT}, (_, i) => {
+    const label = i.toString().padStart(2,'0') + ':00';
+    return `<div class="gantt-hr-mark"><span class="gantt-hr-label">${label}</span></div>`;
+  }).join('');
 }
 
 function renderGantt(list) {
   const body = document.getElementById('ganttBody');
-  if (!list.length) { body.innerHTML=`<div style="padding:40px;text-align:center;color:var(--muted);font-size:.82rem">No flights to display</div>`; return; }
-  const TOT=1440;
-  const bgLines = Array.from({length:24},()=>`<div class="gantt-bg-line"></div>`).join('');
+
+  if (!list.length) {
+    body.innerHTML = `<div class="gantt-empty">No flights match the current filters</div>`;
+    return;
+  }
+
+  // Current-time "now" line percentage
+  const now = new Date();
+  const nowPct = ((now.getHours() * 60 + now.getMinutes()) / TOT_MIN * 100).toFixed(2);
+
+  // Reusable grid-line background (24 columns)
+  const gridLines = Array.from({length: HOUR_COUNT}, () =>
+    `<div class="gantt-grid-line"></div>`
+  ).join('');
+
   body.innerHTML = list.map(f => {
-    const col=S.colors[f.airline]||'#58a6ff', txt=isDark(col)?'#fff':'#000';
-    const sm=t2m(f.start), em=t2m(f.end);
-    const dur=calcDur(f.start,f.end);
-    let left=sm===9999?0:(sm/TOT)*100;
-    let width=em===9999||sm===9999?0:((em-sm)/TOT)*100;
-    if(width<0) width+=100;
-    width=Math.max(width,.5);
+    const col = S.colors[f.airline] || '#58a6ff';
+    const txt = isDark(col) ? '#fff' : '#000';
+    const sm  = t2m(f.start);
+    const em  = t2m(f.end);
+    const dur = calcDur(f.start, f.end);
+
+    // Position & width as % of 24h
+    const leftPct  = sm === 9999 ? 0 : (sm / TOT_MIN * 100);
+    let   widthPct = (em === 9999 || sm === 9999) ? 0 : ((em - sm) / TOT_MIN * 100);
+    if (widthPct < 0) widthPct += 100; // overnight wrap
+    widthPct = Math.max(widthPct, 0.4);
+
+    // Bar content — all the requested info
+    const barContent = `
+      <span class="gantt-bar-fno">${esc(f.flightNo)}</span>
+      <span class="gantt-bar-sep">·</span>
+      <span class="gantt-bar-route">${esc(f.origin)} → ${esc(f.dest)}</span>
+      <span class="gantt-bar-sep">·</span>
+      <span class="gantt-bar-times">${esc(f.start||'?')}–${esc(f.end||'?')}</span>
+      <span class="gantt-bar-sep">·</span>
+      <span class="gantt-bar-ac">✈ ${esc(f.aircraft||'—')}</span>
+    `;
+
+    const tooltip = `${f.flightNo} | ${f.origin}→${f.dest} | ${f.start}–${f.end} (${dur}) | ${f.aircraft||'—'} | ${f.airline}`;
+
     return `
     <div class="gantt-row">
-      <div class="gantt-info">
-        <div class="gantt-fno" style="color:${col}">${esc(f.flightNo||'—')}</div>
-        <div class="gantt-sub">${esc(f.origin||'?')} → ${esc(f.dest||'?')} · ${esc(f.airline||'')}</div>
-      </div>
       <div class="gantt-track">
-        <div class="gantt-bg">${bgLines}</div>
-        <div class="gantt-bar" style="left:${left.toFixed(2)}%;width:${width.toFixed(2)}%;background:${col};color:${txt}" title="${esc(f.flightNo)} ${esc(f.start)}–${esc(f.end)} (${dur})">
-          <span style="overflow:hidden;text-overflow:ellipsis">${esc(f.flightNo)}</span>
+        <div class="gantt-grid">${gridLines}</div>
+        <!-- now-line -->
+        <div class="gantt-now-line" style="left:${nowPct}%"></div>
+        <!-- flight bar -->
+        <div class="gantt-bar"
+             style="left:${leftPct.toFixed(2)}%;width:${widthPct.toFixed(2)}%;background:${col};color:${txt}"
+             title="${esc(tooltip)}">
+          ${barContent}
         </div>
       </div>
       <div class="gantt-acts">
-        <button class="ibt" title="Edit" onclick="openEditModal(${f.id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="ibt del" title="Delete" onclick="deleteFlight(${f.id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+        <button class="ibt" title="Edit" onclick="openEditModal(${f.id})">${SVG_EDIT}</button>
+        <button class="ibt del" title="Delete" onclick="deleteFlight(${f.id})">${SVG_DEL}</button>
       </div>
     </div>`;
   }).join('');
@@ -795,66 +1018,91 @@ function renderGantt(list) {
    SKELETONS / EMPTY
 ═══════════════════════════════════════════════════════ */
 function renderSkeletons() {
-  document.getElementById('flightsGrid').innerHTML = Array(6).fill(0).map(()=>`
-    <div class="fc" style="pointer-events:none">
-      <div class="fc-stripe skel" style="height:3px"></div>
-      <div style="padding:13px 14px;display:flex;gap:10px;align-items:center">
-        <div class="skel" style="height:20px;width:82px;border-radius:4px"></div>
-        <div class="skel" style="height:16px;width:50px;border-radius:4px;margin-left:auto"></div>
-      </div>
-      <div style="padding:8px 14px 12px;display:flex;gap:14px;align-items:center">
-        <div class="skel" style="height:38px;width:54px;border-radius:4px"></div>
-        <div class="skel" style="height:14px;flex:1;border-radius:4px"></div>
-        <div class="skel" style="height:38px;width:54px;border-radius:4px"></div>
-      </div>
-      <div style="padding:9px 14px;display:flex;justify-content:space-between;border-top:1px solid var(--border)">
-        <div class="skel" style="height:14px;width:50px"></div><div class="skel" style="height:14px;width:50px"></div>
-      </div>
-    </div>`).join('');
+  if (S.view === 'gantt') {
+    document.getElementById('ganttBody').innerHTML = Array(6).fill(0).map(() => `
+      <div class="gantt-row">
+        <div class="gantt-track">
+          <div class="gantt-grid">${Array.from({length:HOUR_COUNT},()=>'<div class="gantt-grid-line"></div>').join('')}</div>
+          <div class="skel" style="position:absolute;top:50%;transform:translateY(-50%);height:36px;border-radius:6px;left:5%;width:30%"></div>
+        </div>
+        <div style="width:60px"></div>
+      </div>`).join('');
+  } else {
+    document.getElementById('flightsGrid').innerHTML = Array(6).fill(0).map(() => `
+      <div class="fc" style="pointer-events:none">
+        <div class="fc-stripe skel" style="height:3px"></div>
+        <div style="padding:13px 14px;display:flex;gap:10px;align-items:center">
+          <div class="skel" style="height:20px;width:82px;border-radius:4px"></div>
+          <div class="skel" style="height:16px;width:50px;border-radius:4px;margin-left:auto"></div>
+        </div>
+        <div style="padding:8px 14px 12px;display:flex;gap:14px;align-items:center">
+          <div class="skel" style="height:38px;width:54px;border-radius:4px"></div>
+          <div class="skel" style="height:14px;flex:1;border-radius:4px"></div>
+          <div class="skel" style="height:38px;width:54px;border-radius:4px"></div>
+        </div>
+        <div style="padding:9px 14px;display:flex;justify-content:space-between;border-top:1px solid var(--border)">
+          <div class="skel" style="height:14px;width:50px"></div>
+          <div class="skel" style="height:14px;width:50px"></div>
+        </div>
+      </div>`).join('');
+  }
 }
 
 function renderEmpty(title, sub) {
-  document.getElementById('flightsGrid').innerHTML=`<div class="empty"><div class="empty-ico">⚠️</div><div class="empty-title">${esc(title)}</div><div class="empty-sub">${esc(sub)}</div></div>`;
+  if (S.view === 'gantt') {
+    document.getElementById('ganttBody').innerHTML = `<div class="gantt-empty">⚠️ ${esc(title)} — ${esc(sub)}</div>`;
+  } else {
+    document.getElementById('flightsGrid').innerHTML = `<div class="empty"><div class="empty-ico">⚠️</div><div class="empty-title">${esc(title)}</div><div class="empty-sub">${esc(sub)}</div></div>`;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
    STATUS / TOAST
 ═══════════════════════════════════════════════════════ */
 function setStatus(type, msg) {
-  document.getElementById('sDot').className='s-dot '+type;
-  document.getElementById('sText').textContent=msg;
+  document.getElementById('sDot').className  = 's-dot ' + type;
+  document.getElementById('sText').textContent = msg;
 }
 
-function toast(msg, type='inf') {
-  const w=document.getElementById('toastWrap');
-  const el=document.createElement('div');
-  el.className=`toast ${type}`;
-  const ic={ok:'✓',err:'✕',inf:'ℹ'}, cc={ok:'var(--green)',err:'var(--red)',inf:'var(--blue)'};
-  el.innerHTML=`<span style="color:${cc[type]||cc.inf};font-size:.9rem">${ic[type]||'·'}</span>${esc(msg)}`;
-  w.appendChild(el); setTimeout(()=>el.remove(),3600);
+function toast(msg, type = 'inf') {
+  const w  = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  const ic = {ok:'✓',err:'✕',inf:'ℹ'};
+  const cc = {ok:'var(--green)',err:'var(--red)',inf:'var(--blue)'};
+  el.innerHTML = `<span style="color:${cc[type]||cc.inf};font-size:.9rem">${ic[type]||'·'}</span>${esc(msg)}`;
+  w.appendChild(el);
+  setTimeout(() => el.remove(), 3600);
 }
 
 /* ═══════════════════════════════════════════════════════
    UTILS
 ═══════════════════════════════════════════════════════ */
 function isDark(hex) {
-  const c=(hex||'#888').replace('#','');
-  return ((parseInt(c.substr(0,2),16)*299+parseInt(c.substr(2,2),16)*587+parseInt(c.substr(4,2),16)*114)/1000)<128;
+  const c = (hex||'#888').replace('#','');
+  return ((parseInt(c.substr(0,2),16)*299 + parseInt(c.substr(2,2),16)*587 + parseInt(c.substr(4,2),16)*114) / 1000) < 128;
 }
-function calcDur(s,e) {
-  if(!s||!e) return '—';
-  let d=t2m(e)-t2m(s); if(d<0)d+=1440;
+function calcDur(s, e) {
+  if (!s || !e) return '—';
+  let d = t2m(e) - t2m(s);
+  if (d < 0) d += 1440;
   return `${Math.floor(d/60)}h ${(d%60).toString().padStart(2,'0')}m`;
 }
-function calcProg(s,e) {
-  if(!s||!e) return 0;
-  const now=new Date(), nm=now.getHours()*60+now.getMinutes(), sm=t2m(s), em=t2m(e);
-  if(nm<sm) return 0; if(nm>em) return 100;
+function calcProg(s, e) {
+  if (!s || !e) return 0;
+  const nm = new Date().getHours()*60 + new Date().getMinutes();
+  const sm = t2m(s), em = t2m(e);
+  if (nm < sm) return 0;
+  if (nm > em) return 100;
   return Math.round((nm-sm)/(em-sm)*100);
 }
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+/* Shared SVG icons (avoids repetition in templates) */
+const SVG_EDIT = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+const SVG_DEL  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>`;
 </script>
 </body>
 </html>
