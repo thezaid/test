@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Wealth Projection Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/recharts@2.10.0/dist/Recharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
+    <style>
+        * { font-family: 'Nunito', sans-serif; }
+        ::selection { background-color: #bfdbfe; }
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-color: white !important; }
+            ::-webkit-scrollbar { display: none; }
+        }
+        .year-picker-container { position: relative; }
+        .animate-in { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        input[type="text"]::-webkit-outer-spin-button,
+        input[type="text"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-[#fbfbfd] text-gray-900 selection:bg-blue-200">
+
+    <div id="app"></div>
+
+    <script>
+        // ===== UTILITY FUNCTIONS =====
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0
+            }).format(value);
+        };
+
+        const formatNumber = (value) => {
+            return new Intl.NumberFormat('en-US', {
+                maximumFractionDigits: 1
+            }).format(value);
+        };
+
+        const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        // ===== STATE MANAGEMENT =====
+        const state = {
+            // Core Parameters
+            startYear: 2026,
+            initialCapital: 50000,
+            totalYears: 30,
+            baseReturnRate: 8,
+            compoundingFrequency: 'yearly',
+            expandedYear: null,
+            isCardsScrolled: false,
+            showAdvanced: false,
+
+            // Contributions
+            annualContribution: 12000,
+            contributionYears: 20,
+            contributionGrowth: 0,
+            contributionGrowthType: 'percent',
+
+            // Advanced Toggles
+            enableInflation: false,
+            enableZakat: false,
+            enableWithdrawal: false,
+            enableMultiAsset: false,
+            enableEvents: false,
+
+            // Advanced Settings
+            inflationRate: 3,
+            zakatRate: 2.5,
+            withdrawalType: 'percent',
+            withdrawalValue: 4,
+            withdrawalTimingType: 'index',
+            withdrawalStartYearIndex: 21,
+            withdrawalStartCalYear: 2046,
+
+            portfolio: [
+                { id: 1, name: 'US Stocks', allocation: 70, returnRate: 10 },
+                { id: 2, name: 'Bonds', allocation: 30, returnRate: 4 }
+            ],
+
+            events: [
+                { id: 1, timingType: 'index', yearIndex: 5, calendarYear: 2030, type: 'inject', amount: 50000, description: 'Inheritance' },
+                { id: 2, timingType: 'index', yearIndex: 10, calendarYear: 2035, type: 'remove', amount: 30000, description: 'Car Purchase' }
+            ],
+
+            // Print Modal
+            showPrintModal: false,
+            printDetails: {
+                author: '',
+                date: new Date().toISOString().split('T')[0],
+                comments: ''
+            }
+        };
+
+        // ===== CALCULATION ENGINE =====
+        function calculateProjection() {
+            const data = [];
+            let currentBalance = state.initialCapital;
+            let totalInvested = state.initialCapital;
+            let totalReturns = 0;
+            let totalZakatPaid = 0;
+            let totalWithdrawn = 0;
+            let currentContributionAmount = state.annualContribution;
+
+            let effectiveRate = state.baseReturnRate / 100;
+            if (state.compoundingFrequency === 'monthly') {
+                effectiveRate = Math.pow(1 + effectiveRate / 12, 12) - 1;
+            }
+
+            const totalAllocation = state.portfolio.reduce((acc, curr) => acc + curr.allocation, 0);
+            const blendedReturnRate = state.enableMultiAsset
+                ? state.portfolio.reduce((acc, curr) => acc + (curr.allocation / 100) * curr.returnRate, 0)
+                : state.baseReturnRate;
+
+            for (let year = 1; year <= state.totalYears; year++) {
+                const calendarYear = state.startYear + year - 1;
+                let startingBalance = currentBalance;
+                let contribution = 0;
+                let withdrawal = 0;
+                let eventInjection = 0;
+                let eventRemoval = 0;
+                let eventLabels = [];
+
+                // Regular Contributions
+                if (year <= state.contributionYears) {
+                    contribution = currentContributionAmount;
+                    if (state.contributionGrowthType === 'percent') {
+                        currentContributionAmount *= (1 + (state.contributionGrowth / 100));
+                    } else {
+                        currentContributionAmount += state.contributionGrowth;
+                    }
+                }
+
+                // Specific Events
+                if (state.enableEvents) {
+                    state.events.forEach(e => {
+                        let eventIndexYear = e.yearIndex;
+                        if (e.timingType === 'year' && e.calendarYear) {
+                            eventIndexYear = e.calendarYear - state.startYear + 1;
+                        }
+
+                        if (eventIndexYear === year) {
+                            if (e.type === 'inject') {
+                                eventInjection += e.amount;
+                                if (e.description) eventLabels.push(`+ ${e.description}`);
+                            }
+                            if (e.type === 'remove') {
+                                eventRemoval += e.amount;
+                                if (e.description) eventLabels.push(`- ${e.description}`);
+                            }
+                        }
+                    });
+                }
+
+                // Regular Withdrawals
+                let effectiveWithdrawalStartYear = state.withdrawalStartYearIndex;
+                if (state.withdrawalTimingType === 'year' && state.withdrawalStartCalYear) {
+                    effectiveWithdrawalStartYear = state.withdrawalStartCalYear - state.startYear + 1;
+                }
+
+                if (state.enableWithdrawal && year >= effectiveWithdrawalStartYear) {
+                    if (state.withdrawalType === 'percent') {
+                        withdrawal = (startingBalance + contribution + eventInjection - eventRemoval) * (state.withdrawalValue / 100);
+                    } else {
+                        withdrawal = state.withdrawalValue;
+                    }
+                }
+
+                let monthlyData = [];
+                let growth = 0;
+                let zakatAmount = 0;
+                let endBalance = 0;
+
+                if (state.compoundingFrequency === 'monthly') {
+                    let currentMonthBalance = startingBalance;
+                    const monthlyRate = (blendedReturnRate / 100) / 12;
+                    const mContrib = contribution / 12;
+                    const mWithdraw = withdrawal / 12;
+
+                    for (let m = 1; m <= 12; m++) {
+                        let mEventNet = (m === 1) ? (eventInjection - eventRemoval) : 0;
+                        let mWorkingBalance = currentMonthBalance + mContrib + mEventNet - mWithdraw;
+                        if (mWorkingBalance < 0) mWorkingBalance = 0;
+
+                        let mGrowth = mWorkingBalance * monthlyRate;
+                        growth += mGrowth;
+
+                        let mZakat = 0;
+                        let mBalanceBeforeZakat = mWorkingBalance + mGrowth;
+                        if (m === 12 && state.enableZakat && mBalanceBeforeZakat > 0) {
+                            mZakat = mBalanceBeforeZakat * (state.zakatRate / 100);
+                            zakatAmount = mZakat;
+                        }
+
+                        let mEndBalance = mBalanceBeforeZakat - mZakat;
+                        monthlyData.push({
+                            month: m,
+                            startBalance: currentMonthBalance,
+                            invest: mContrib,
+                            events: mEventNet,
+                            withdrawal: mWithdraw,
+                            growth: mGrowth,
+                            zakat: mZakat,
+                            endBalance: mEndBalance
+                        });
+                        currentMonthBalance = mEndBalance;
+                    }
+                    endBalance = currentMonthBalance;
+                    totalReturns += growth;
+                    totalZakatPaid += zakatAmount;
+                } else {
+                    let workingBalance = startingBalance + contribution + eventInjection - eventRemoval - withdrawal;
+                    if (workingBalance < 0) workingBalance = 0;
+
+                    growth = workingBalance * effectiveRate;
+                    totalReturns += growth;
+
+                    let balanceBeforeZakat = workingBalance + growth;
+                    if (state.enableZakat && balanceBeforeZakat > 0) {
+                        zakatAmount = balanceBeforeZakat * (state.zakatRate / 100);
+                        totalZakatPaid += zakatAmount;
+                    }
+
+                    endBalance = balanceBeforeZakat - zakatAmount;
+                }
+
+                totalInvested += contribution + eventInjection;
+                totalWithdrawn += withdrawal + eventRemoval;
+                currentBalance = endBalance;
+
+                let realBalance = currentBalance;
+                if (state.enableInflation) {
+                    realBalance = currentBalance / Math.pow(1 + (state.inflationRate / 100), year);
+                }
+
+                data.push({
+                    year,
+                    calendarYear,
+                    startingBalance,
+                    contribution,
+                    withdrawal,
+                    netEvents: eventInjection - eventRemoval,
+                    eventLabels,
+                    growth,
+                    zakatAmount,
+                    endBalance: currentBalance,
+                    realBalance,
+                    monthlyData,
+                    totalInvested,
+                    totalReturns,
+                    totalZakatPaid,
+                    totalWithdrawn
+                });
+            }
+
+            return data;
+        }
+
+        // ===== RENDER FUNCTIONS =====
+        function render() {
+            const projectionData = calculateProjection();
+            const finalYear = projectionData[projectionData.length - 1] || {};
+
+            const html = `
+                <div class="min-h-screen bg-[#fbfbfd] text-gray-900" style="font-family: 'Nunito', sans-serif;">
+                    <!-- Header -->
+                    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-gray-200/60 shadow-sm">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                            <div class="flex items-center justify-between gap-4">
+                                <h1 class="text-2xl font-extrabold text-gray-900">💰 Wealth Projector</h1>
+                                <div class="flex gap-3 overflow-x-auto pb-1">
+                                    <div class="flex-shrink-0 px-4 py-2 bg-blue-50 border border-blue-100 rounded-xl">
+                                        <div class="text-xs font-bold text-blue-600 uppercase tracking-wider">Final Balance</div>
+                                        <div class="text-sm font-extrabold text-blue-900">${formatCurrency(finalYear?.endBalance || 0)}</div>
+                                    </div>
+                                    <div class="flex-shrink-0 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-xl">
+                                        <div class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Total Returns</div>
+                                        <div class="text-sm font-bold text-emerald-700">+${formatCurrency(finalYear?.totalReturns || 0)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Main Content -->
+                    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            
+                            <!-- Left: Controls -->
+                            <div class="w-full lg:w-[380px] flex-shrink-0 space-y-6">
+                                <!-- Core Settings -->
+                                <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-sm space-y-6">
+                                    <h2 class="text-lg font-bold flex items-center gap-2 text-gray-800">⚙️ Core Parameters</h2>
+                                    
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Start Year</label>
+                                            <input type="number" value="${state.startYear}" onchange="updateState('startYear', parseInt(this.value))" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Duration (years)</label>
+                                            <input type="number" value="${state.totalYears}" onchange="updateState('totalYears', parseInt(this.value))" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Initial Capital (₹)</label>
+                                        <input type="number" value="${state.initialCapital}" onchange="updateState('initialCapital', parseFloat(this.value))" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                    </div>
+
+                                    <!-- Contributions -->
+                                    <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-4">
+                                        <div class="text-sm font-semibold text-gray-700">📈 Contributions</div>
+                                        
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-xs font-medium text-gray-600 mb-1">Base Addition (₹)</label>
+                                                <input type="number" value="${state.annualContribution}" onchange="updateState('annualContribution', parseFloat(this.value))" class="w-full px-2 py-2 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-medium text-gray-600 mb-1">Duration (years)</label>
+                                                <input type="number" value="${state.contributionYears}" onchange="updateState('contributionYears', parseInt(this.value))" class="w-full px-2 py-2 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-600 mb-1">Annual Growth</label>
+                                            <div class="flex gap-2">
+                                                <input type="number" value="${state.contributionGrowth}" onchange="updateState('contributionGrowth', parseFloat(this.value))" class="flex-1 px-2 py-2 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                                <select onchange="updateState('contributionGrowthType', this.value)" class="px-2 py-2 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                                    <option value="percent" ${state.contributionGrowthType === 'percent' ? 'selected' : ''}>%</option>
+                                                    <option value="amount" ${state.contributionGrowthType === 'amount' ? 'selected' : ''}>₹</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Returns -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Expected Return (%)</label>
+                                        <input type="number" value="${state.baseReturnRate}" onchange="updateState('baseReturnRate', parseFloat(this.value))" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Compounding</label>
+                                        <select onchange="updateState('compoundingFrequency', this.value)" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                            <option value="yearly" ${state.compoundingFrequency === 'yearly' ? 'selected' : ''}>Yearly</option>
+                                            <option value="monthly" ${state.compoundingFrequency === 'monthly' ? 'selected' : ''}>Monthly</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Advanced Toggle -->
+                                <button onclick="toggleAdvanced()" class="w-full p-6 bg-white border border-gray-200/80 rounded-3xl text-lg font-bold text-gray-800 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                    <span>🔧 Advanced Modeling</span>
+                                    <span>${state.showAdvanced ? '▼' : '▶'}</span>
+                                </button>
+
+                                ${state.showAdvanced ? `
+                                    <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-sm space-y-4 animate-in">
+                                        <!-- Inflation -->
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" ${state.enableInflation ? 'checked' : ''} onchange="updateState('enableInflation', this.checked)" class="mr-2">
+                                            <span class="font-semibold text-gray-800">Enable Inflation</span>
+                                        </label>
+                                        ${state.enableInflation ? `
+                                            <div class="pl-6 pb-2 border-b border-gray-200">
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Inflation Rate (%)</label>
+                                                <input type="number" value="${state.inflationRate}" onchange="updateState('inflationRate', parseFloat(this.value))" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                            </div>
+                                        ` : ''}
+
+                                        <!-- Zakat -->
+                                        <label class="flex items-center cursor-pointer pt-2">
+                                            <input type="checkbox" ${state.enableZakat ? 'checked' : ''} onchange="updateState('enableZakat', this.checked)" class="mr-2">
+                                            <span class="font-semibold text-gray-800">Enable Zakat</span>
+                                        </label>
+                                        ${state.enableZakat ? `
+                                            <div class="pl-6 pb-2 border-b border-gray-200">
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Zakat Rate (%)</label>
+                                                <input type="number" value="${state.zakatRate}" onchange="updateState('zakatRate', parseFloat(this.value))" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                            </div>
+                                        ` : ''}
+
+                                        <!-- Withdrawals -->
+                                        <label class="flex items-center cursor-pointer pt-2">
+                                            <input type="checkbox" ${state.enableWithdrawal ? 'checked' : ''} onchange="updateState('enableWithdrawal', this.checked)" class="mr-2">
+                                            <span class="font-semibold text-gray-800">Enable Withdrawal Phase</span>
+                                        </label>
+                                        ${state.enableWithdrawal ? `
+                                            <div class="pl-6 space-y-3 pb-2 border-b border-gray-200">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Start Withdrawals (Year)</label>
+                                                    <input type="number" value="${state.withdrawalStartYearIndex}" onchange="updateState('withdrawalStartYearIndex', parseInt(this.value))" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Withdrawal Amount</label>
+                                                    <div class="flex gap-2">
+                                                        <input type="number" value="${state.withdrawalValue}" onchange="updateState('withdrawalValue', parseFloat(this.value))" class="flex-1 px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                                        <select onchange="updateState('withdrawalType', this.value)" class="px-3 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                                                            <option value="percent" ${state.withdrawalType === 'percent' ? 'selected' : ''}>%</option>
+                                                            <option value="amount" ${state.withdrawalType === 'amount' ? 'selected' : ''}>₹</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            <!-- Right: Chart & Table -->
+                            <div class="flex-1 space-y-6">
+                                <!-- Chart Container -->
+                                <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-sm h-[400px]">
+                                    <h2 class="text-lg font-bold mb-4 text-gray-800">📊 Wealth Trajectory</h2>
+                                    <div id="chart-container" class="w-full h-full flex items-center justify-center bg-gray-50 rounded-2xl text-gray-500">
+                                        <div class="text-center">
+                                            <div class="text-3xl mb-2">📈</div>
+                                            <p>Interactive chart rendering requires additional library</p>
+                                            <p class="text-sm mt-2">Data table below shows detailed breakdown</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Data Table -->
+                                <div class="bg-white rounded-3xl overflow-hidden border border-gray-200/80 shadow-sm">
+                                    <div class="p-6 border-b border-gray-100 bg-white">
+                                        <h2 class="text-lg font-bold text-gray-800">📋 Annual Breakdown</h2>
+                                    </div>
+                                    <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
+                                        <table class="w-full text-xs sm:text-sm text-left">
+                                            <thead class="text-xs text-gray-500 uppercase tracking-wider bg-gray-100 sticky top-0 z-10 border-b border-gray-200">
+                                                <tr>
+                                                    <th class="px-4 py-3 font-bold">Year</th>
+                                                    <th class="px-4 py-3 font-bold">Start Balance</th>
+                                                    <th class="px-4 py-3 font-bold text-blue-600">Investment</th>
+                                                    ${state.enableEvents ? '<th class="px-4 py-3 font-bold text-purple-600">Events</th>' : ''}
+                                                    ${state.enableWithdrawal ? '<th class="px-4 py-3 font-bold text-red-500">Withdraw</th>' : ''}
+                                                    <th class="px-4 py-3 font-bold text-emerald-600">Growth</th>
+                                                    ${state.enableZakat ? '<th class="px-4 py-3 font-bold text-amber-600">Zakat</th>' : ''}
+                                                    <th class="px-4 py-3 font-bold bg-gray-200/50">End Balance</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100 bg-white">
+                                                ${projectionData.map(row => `
+                                                    <tr class="hover:bg-blue-50/30 transition-colors">
+                                                        <td class="px-4 py-3 font-bold text-gray-900 whitespace-nowrap">${row.calendarYear}</td>
+                                                        <td class="px-4 py-3 font-medium text-gray-600 whitespace-nowrap">${formatCurrency(row.startingBalance)}</td>
+                                                        <td class="px-4 py-3 font-semibold text-blue-600 whitespace-nowrap">${row.contribution > 0 ? '+' + formatCurrency(row.contribution) : '-'}</td>
+                                                        ${state.enableEvents ? `<td class="px-4 py-3 font-semibold text-purple-600 whitespace-nowrap">${row.netEvents !== 0 ? (row.netEvents > 0 ? '+' : '') + formatCurrency(row.netEvents) : '-'}</td>` : ''}
+                                                        ${state.enableWithdrawal ? `<td class="px-4 py-3 font-semibold text-red-500 whitespace-nowrap">${row.withdrawal > 0 ? '-' + formatCurrency(row.withdrawal) : '-'}</td>` : ''}
+                                                        <td class="px-4 py-3 font-semibold text-emerald-600 whitespace-nowrap">+${formatCurrency(row.growth)}</td>
+                                                        ${state.enableZakat ? `<td class="px-4 py-3 font-semibold text-amber-600 whitespace-nowrap">${row.zakatAmount > 0 ? '-' + formatCurrency(row.zakatAmount) : '-'}</td>` : ''}
+                                                        <td class="px-4 py-3 font-extrabold text-gray-900 bg-gray-50/30 whitespace-nowrap">${formatCurrency(row.endBalance)}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            `;
+
+            document.getElementById('app').innerHTML = html;
+        }
+
+        // ===== STATE MANAGEMENT =====
+        function updateState(key, value) {
+            state[key] = value;
+            render();
+        }
+
+        function toggleAdvanced() {
+            state.showAdvanced = !state.showAdvanced;
+            render();
+        }
+
+        // Initial render
+        render();
+    </script>
+
+</body>
+</html>
